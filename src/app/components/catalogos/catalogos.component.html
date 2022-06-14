@@ -1,0 +1,262 @@
+<div class="col-lg-12 col-md-12 col-sm-12 ">
+    <div class="panel panel-default">
+        <div class="panel-body camposForm">
+            <form>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="form-group col-lg-2 col-md-3 col-sm-3 col-xs-6">
+                                <label class="frmLblColor">Categoría</label>
+                                <select [(ngModel)]="dataBusqueda.ClaveCategoria" name="slcCategoria" class="form-control" (change)="consultar()">
+                                    <option  value="0">Seleccionar</option>
+                                    <option *ngFor="let item of this.cmbCategorias" value="{{ item.codigo }}">{{ item.codigo }} - {{ item.descripcion}}</option>
+                                </select> </div>
+                            <div class="form-group col-lg-2 col-md-3 col-sm-3 col-xs-5" style="padding-top: 22px;">
+                                <button type="button " class="btn btn-azul btn-azul-fix col-md-12 col-xs-12" data-toggle="modal" data-target="#modalRegistrarModificarTabla"> Registrar/Modificar tabla</button>
+                            </div>
+                            <div class="form-group col-lg-2 col-md-3 col-sm-3 col-xs-3" style="padding-top: 22px;">
+                                <button type="button" class="btn btn-azul btn-azul-fix col-md-12 col-xs-12" (click)="Limpiar()"><i class="fa fa-file-o"></i> Limpiar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="col-lg-12 col-md-12 col-sm-12 ">
+    <div class="form-group col-lg-2 col-md-2 col-xs-12" style="padding-top: 22px;" *ngIf="dataBusqueda.ClaveCategoria != '0'; else elseBlock">
+        <button type="button" class="btn btn-azul btn-azul-fix col-md-12 col-xs-12" data-toggle="modal" data-target="#modalAgregarElementoNuevo"> Agregar elemento nuevo <i class="fa fa-plus"></i> </button>
+    </div>
+    <ng-template #elseBlock>
+        <div class="form-group col-lg-2 col-md-2 col-xs-12" style="padding-top: 22px;">
+            <button type="button" class="btn btn-azul btn-azul-fix col-md-12 col-xs-12" (click)="avisoModalAgregarNuevoElemento()"> Agregar elemento nuevo <i class="fa fa-plus"></i> </button>
+        </div>
+    </ng-template>
+</div>
+<div>
+
+    <div class="col-lg-12 col-md-12 col-sm-12 marg-prim">
+        <!--div de la tabla -->
+        <div class="panel panel-default">
+            <div class="panel-body camposForm">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h5 class="titulo"><b>Resultados</b></h5>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <mat-table [dataSource]="dataSource" class="table table-hover">
+                        <mat-header-row *matHeaderRowDef="columnas; sticky: true"></mat-header-row>
+                        <mat-row *matRowDef="let row; columns: columnas;"></mat-row>
+                        <ng-container matColumnDef="item">
+                            <mat-header-cell *matHeaderCellDef>
+                                <div>Item</div>
+
+                            </mat-header-cell>
+                            <mat-cell class="duration-cell" *matCellDef="let lesson; let i=index">{{i+1}}</mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="descripcion">
+                            <mat-header-cell *matHeaderCellDef>
+                                <div>Descripción</div>
+
+                            </mat-header-cell>
+                            <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.Descripcion}}</mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="monto">
+                            <mat-header-cell *matHeaderCellDef>
+                                <div>Monto</div>
+
+                            </mat-header-cell>
+                            <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.Monto}}</mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="descripcionCorta">
+                            <mat-header-cell *matHeaderCellDef>
+                                <div>Descripción corta</div>
+
+                            </mat-header-cell>
+                            <mat-cell class="duration-cell" *matCellDef="let lesson">{{ lesson.DescripcionCorta }} </mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef="codigoAdicional">
+                            <mat-header-cell *matHeaderCellDef>
+                                <div>Código adicional</div>
+
+                            </mat-header-cell>
+                            <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.CodigoAdicional}}</mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef="codigoSistema">
+                            <mat-header-cell *matHeaderCellDef>
+                                <div>Código sistema</div>
+
+                            </mat-header-cell>
+                            <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.CodigoSistema}}</mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef="estado">
+                            <mat-header-cell *matHeaderCellDef>
+                                <div>Estado</div>
+
+                            </mat-header-cell>
+                            <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.StrEstado}}</mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="acciones">
+                            <mat-header-cell *matHeaderCellDef>
+                                <div>Acciones</div>
+
+                            </mat-header-cell>
+                            <mat-cell class="duration-cell" *matCellDef="let lesson">
+                                <i style="color:#0090B2" class="fa fa-edit" (click)="ObtenerDatosElementoSeleccionado(lesson)" data-toggle="modal" data-target="#modalModificarElemento">&nbsp;</i>
+                                <i style="color:#0090B2" class="fa fa-toggle-on" (click)="CambiarEstado(lesson)"></i>
+                            </mat-cell>
+                        </ng-container>
+                    </mat-table>
+                    <mat-paginator [length]="100" [pageSize]="10" [pageSizeOptions]="[ 10, 20, 50]" [showFirstLastButtons]="true"></mat-paginator>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<!-- Inician Modales -->
+
+<!-- Modal para Registrar/Modificar tabla -->
+<div class="modal fade" id="modalRegistrarModificarTabla" role="dialog" style="margin-top: 70px;" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="width: auto;">
+            <div class="modal-header">
+                <button type="button" class="close" (click)="salirModalRegistrarModificarTabla()">&times;</button>
+                <h4 class="modal-title text-center"><b>Registrar/modificar tabla</b></h4>
+            </div>
+            <div class="modal-body" style="height:150px">
+                <div class="col-lg-12 col-md-12 col-xs-12">
+                    <div class="form-group col-lg-6 col-md-6 col-xs-6">
+                        <label class="frmLblColor">Código tabla</label>
+                        <input id="Cod_Tabla" type="text" [(ngModel)]="dataBusqueda.CodigoTabla" name="NoDocumetnto" class="form-control form-control-sm" oninput="this.value = this.value.toUpperCase()" [maxlength]="3" (keypress)="lettersOnly($event)">
+                    </div>
+                    <div class="form-group col-lg-6 col-md-6 col-xs-6">
+                        <label class="frmLblColor">Descripción de tabla</label>
+                        <input id="Descripcion_Tabla" type="text" [(ngModel)]="dataBusqueda.Descripcion" name="NoDocumetnto" class="form-control form-control-sm" oninput="this.value = this.value.toUpperCase()" (keypress)="onlyAlphaNumeric($event)">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="background-color:white">
+                <div style="text-align: center">
+                    <button type="button" class='btn btn-azul btn-azul-fix' id="btnConfirmarLiquidacion" (click)="RegistrarTabla()">Guardar</button>
+                    <button type="button" class="btn btn-azul btn-azul-fix" id="btnCancelarLiquidacion" (click)="salirModalRegistrarModificarTabla()">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal para agregar elemento nuevo -->
+<div class="modal fade" id="modalAgregarElementoNuevo" role="dialog" style="margin-top: 70px;" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="width: auto;">
+            <div class="modal-header">
+                <button type="button" class="close" (click)="salirModalAgregarElementoNuevo()">&times;</button>
+                <h4 class="modal-title text-center"><b>Agregar elemento nuevo</b></h4>
+            </div>
+            <div class="modal-body" style="height:200px">
+                <div>
+                    <div class="col-lg-12 col-md-12 col-xs-12">
+                        <div class="form-group col-lg-4 col-md-4 col-xs-4">
+                            <label class="frmLblColor">Código tabla</label>
+                            <input id="CodigoTablaNuevo" type="text" [(ngModel)]="dataRegistro.CodigoTabla" name="CodigoTablaNuevo" class="form-control form-control-sm" [disabled]="true">
+                        </div>
+                        <div class="form-group col-lg-4 col-md-4 col-xs-4">
+                            <label class="frmLblColor">Descripción de tabla</label>
+                            <input id="descripcionNuevo" type="text" [(ngModel)]="dataRegistro.Descripcion" name="NoDocumetnto" class="form-control form-control-sm" oninput="this.value = this.value.toUpperCase()">
+                        </div>
+                        <div class="form-group col-lg-4 col-md-4 col-xs-4">
+                            <label class="frmLblColor">Descripción corta</label>
+                            <input id="descripcionCortaNuevo" type="text" [(ngModel)]="dataRegistro.DescripcionCorta" name="NoDocumetnto" class="form-control form-control-sm" oninput="this.value = this.value.toUpperCase()" (keypress)="onlyAlphaNumeric($event)">
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-xs-12">
+                        <div class="form-group col-lg-4 col-md-4 col-xs-4">
+                            <label class="frmLblColor">Código adicional</label>
+                            <input id="codigoAdicionalNuevo" type="text" [(ngModel)]="dataRegistro.CodigoAdicional" name="NoDocumetnto" class="form-control form-control-sm" oninput="this.value = this.value.toUpperCase()" (keypress)="onlyAlphaNumeric($event)">
+                        </div>
+                        <div class="form-group col-lg-4 col-md-4 col-xs-4">
+                            <label class="frmLblColor">Monto</label>
+                            <input id="montoNuevo" type="text" [(ngModel)]="dataRegistro.Monto" name="NoDocumetnto" class="form-control form-control-sm" (keypress)="numberDecimal($event)">
+                        </div>
+                        <div class="form-group col-lg-4 col-md-4 col-xs-4">
+                            <label class="frmLblColor">Estado</label>
+                            <select [(ngModel)]="dataRegistro.Estado" name="estadoNuevo" class="form-control" [disabled]="true"> 
+                            <option  value="S">Activo</option>
+                            <option  value="N">Inactivo</option>
+                        </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="background-color:white">
+                <div style="text-align: center">
+                    <button type="button" class='btn btn-azul btn-azul-fix' id="btnAgregarElemento" (click)="AgregarElementoNuevo()">Guardar</button>
+                    <button type="button" class="btn btn-azul btn-azul-fix" id="btnCancelarAgregarElemento" (click)="salirModalAgregarElementoNuevo()">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para modificar elemento -->
+<div class="modal fade" id="modalModificarElemento" role="dialog" style="margin-top: 70px;" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="width: auto;">
+            <div class="modal-header">
+                <button type="button" class="close" (click)="salirModificarElemento()">&times;</button>
+                <h4 class="modal-title text-center"><b>Modificar elemento</b></h4>
+            </div>
+            <div class="modal-body" style="height:200px">
+                <div>
+                    <div class="col-lg-12 col-md-12 col-xs-12">
+                        <div class="form-group col-lg-4 col-md-4 col-xs-4">
+                            <label class="frmLblColor">Código tabla</label>
+                            <input id="CodigoTablaModificar" type="text" [(ngModel)]="dataRegistro.CodigoTabla" name="CodigoTablaNuevo" class="form-control form-control-sm" [disabled]="true">
+                        </div>
+                        <div class="form-group col-lg-4 col-md-4 col-xs-4">
+                            <label class="frmLblColor">Descripción de tabla</label>
+                            <input id="descripcionModificar" type="text" [(ngModel)]="dataRegistro.Descripcion" name="NoDocumetnto" class="form-control form-control-sm" oninput="this.value = this.value.toUpperCase()">
+                        </div>
+                        <div class="form-group col-lg-4 col-md-4 col-xs-4">
+                            <label class="frmLblColor">Descripción corta</label>
+                            <input id="descripcionCortaModificar" type="text" [(ngModel)]="dataRegistro.DescripcionCorta" name="NoDocumetnto" class="form-control form-control-sm" oninput="this.value = this.value.toUpperCase()" (keypress)="onlyAlphaNumeric($event)">
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-xs-12">
+                        <div class="form-group col-lg-4 col-md-4 col-xs-4">
+                            <label class="frmLblColor">Código adicional</label>
+                            <input id="codigoAdicionalModificar" type="text" [(ngModel)]="dataRegistro.CodigoAdicional" name="NoDocumetnto" class="form-control form-control-sm" oninput="this.value = this.value.toUpperCase()" (keypress)="onlyAlphaNumeric($event)">
+                        </div>
+                        <div class="form-group col-lg-4 col-md-4 col-xs-4">
+                            <label class="frmLblColor">Monto</label>
+                            <input id="montoModificar" type="text" [(ngModel)]="dataRegistro.Monto" name="NoDocumetnto" class="form-control form-control-sm" (keypress)="numberDecimal($event)">
+                        </div>
+                        <div class="form-group col-lg-4 col-md-4 col-xs-4">
+                            <label class="frmLblColor">Estado</label>
+                            <select [(ngModel)]="dataRegistro.Estado" name="slcCategoria" class="form-control" [disabled]="true"> 
+                            <option  value="S">Activo</option>
+                            <option  value="N">Inactivo</option>
+                        </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="background-color:white">
+                <div style="text-align: center">
+                    <button type="button" class='btn btn-azul btn-azul-fix' id="btnModificarElemento" (click)="ModficarElemento()">Guardar</button>
+                    <button type="button" class="btn btn-azul btn-azul-fix" id="btnCancelarModificarElemento" (click)="salirModalModificarElemento()">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

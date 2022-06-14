@@ -1,0 +1,145 @@
+<div class="col-lg-12 col-md-12 col-sm-12">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h5 class="titulo" style="margin: 0px;">
+                <b>Ingrese mes y año a generar</b>
+            </h5>
+        </div>
+        <div class="panel-body camposForm">
+            <form>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="form-group col-lg-2 col-md-4 col-xs-12">
+                                <label class=" frmLblColor">Periodo de Pago</label>
+                                <input type="month" name="Periodo" class="form-control form-control-sm" [(ngModel)]="fecha" [max]="date">
+                            </div>
+
+                            <div class="form-group col-lg-2 col-md-4 col-xs-12" style="padding-top: 22px;">
+                                <button type="button" class="btn btn-azul btn-azul-fix col-md-12 col-xs-12" (click)="descargar()">
+                  <i class="fa fa-download"></i> Descargar
+                </button>
+                            </div>
+                            <div class="form-group col-lg-2 col-md-4 col-xs-12" style="padding-top: 22px;">
+                                <button type="button" class="btn btn-azul btn-azul-fix col-md-12 col-xs-12" (click)="limpiar()">
+                  <i class="fa fa-file"></i> Limpiar
+                </button>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+                <div class=" row ">
+
+                    <div [hidden]="contigo!=true" class="form-group col-lg-2 col-md-2 col-sm-2 column40 ">
+                        <label class="frmLblColor ">Cargar Documento CONTIGO</label>
+                        <input type="text" class="form-control" [(ngModel)]="fileName" name="fileName" disabled>
+                        <input type="file" (change)="detectFiles($event)" class="form-control hidden" #fileInput id="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" [(ngModel)]="fileNameArch" name="fileNameArch">
+                    </div>
+                    <div [hidden]="contigo!=true" class="form-group col-lg-2 col-md-2 col-sm-2 column5 ">
+                        <div style="margin-top: 22px; ">
+                            <button type="button" (click)="fileInput.click()" class="btn btn-azul btn-azul-fix col-md-12 col-xs-12"> <i class="glyphicon glyphicon-cloud-upload"></i>&nbsp;Cargar</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class=" row ">
+
+                    <div [hidden]="pension65!=true" class="form-group col-lg-2 col-md-2 col-sm-2 column40 ">
+                        <label class="frmLblColor ">Cargar Documento Pensión 65</label>
+                        <input type="text" class="form-control" [(ngModel)]="fileName2" name="fileName2" disabled>
+                        <input type="file" (change)="detectFilesPension($event)" class="form-control hidden" #fileInput2 id="file2" accept="text/plain" [(ngModel)]="fileNameArch2" name="fileNameArch2">
+                    </div>
+                    <div [hidden]="pension65!=true" class="form-group col-lg-2 col-md-2 col-sm-2 column5 ">
+                        <div style="margin-top: 22px; ">
+                            <button type="button" (click)="fileInput2.click()" class="btn btn-azul btn-azul-fix col-md-12 col-xs-12"> <i class="glyphicon glyphicon-cloud-upload"></i>&nbsp;Cargar</button>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+<div class="col-lg-12 col-md-12 col-sm-12 ">
+    <div class="panel panel-default">
+        <div class="panel-heading" style="padding-top: 0px; padding-bottom: 0px;">
+            <h5 class="titulo"><b>Seleccione informes a descargar:</b></h5>
+        </div>
+        <div class="panel-body camposForm">
+            <form>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <form class="form-inline">
+                                <div class="col-md-12 lista">
+                                    <div class="form-group col-md-4">
+                                        <label class="frmLblColor">
+                                          <input type="checkbox" name="selectedAll" [(ngModel)]="selectedAll" (change)="valor($event)"><span class="label-text">&nbsp;&nbsp;Todos</span></label>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label class="frmLblColor">
+                                        <input type="checkbox" name="remision" [(ngModel)]="remision" (change)="valor($event)"> <span class="label-text">&nbsp;&nbsp;Remisión  de información referida a las tasas  de Cotización de Pensiones</span></label>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="row">
+                            <form class="form-inline">
+                                <div class="col-md-12 lista">
+
+                                    <div class="form-group col-md-4">
+                                        <label class="frmLblColor"><input type="checkbox" name="contigo" (change)="valor($event)" [(ngModel)]="contigo"> <span class="label-text">&nbsp;&nbsp;Programa CONTIGO</span></label>
+                                    </div>
+
+                                    <div class="form-group col-md-4">
+                                        <label class="frmLblColor"><input type="checkbox" name="vigentes" (change)="valor($event)" [(ngModel)]="vigentes"> <span class="label-text">&nbsp;&nbsp;Información sobre pólizas de seguro vigentes</span></label>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="row">
+                            <form class="form-inline">
+                                <div class="col-md-12 lista">
+                                    <div class="form-group col-md-4">
+                                        <label class="frmLblColor"><input type="checkbox" name="pension65" (change)="valor($event)" [(ngModel)]="pension65"> <span class="label-text">&nbsp;&nbsp;Programa PENSIÓN 65</span></label>
+                                    </div>
+
+                                    <div class="form-group col-md-4">
+                                        <label class="frmLblColor"><input type="checkbox" name="essalud" (change)="valor($event)" [(ngModel)]="essalud"> <span class="label-text">&nbsp;&nbsp;Archivo para Essalud</span></label>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="row">
+                            <form class="form-inline">
+                                <div class="col-md-12 lista">
+                                    <div class="form-group col-md-4">
+                                        <label class="frmLblColor"><input type="checkbox" name="planilla" (change)="valor($event)" [(ngModel)]="planilla"> <span class="label-text">&nbsp;&nbsp;Planilla de Pago de Pensiones</span></label>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label class="frmLblColor"><input type="checkbox" name="cotizacion" (change)="valor($event)" [(ngModel)]="cotizacion"> <span class="label-text">&nbsp;&nbsp;Planilla de Pago de Essalud</span></label>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="row">
+                            <form class="form-inline">
+                                <div class="col-md-12 lista">
+                                    <div class="form-group col-md-4">
+                                        <label class="frmLblColor"><input type="checkbox" name="beneficios" (change)="valor($event)" [(ngModel)]="beneficios"> <span class="label-text">&nbsp;&nbsp;Información estadística de beneficios</span></label>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label class="frmLblColor"><input type="checkbox" name="jubilacion" (change)="valor($event)" [(ngModel)]="jubilacion"> <span class="label-text">&nbsp;&nbsp;Pagos a Pensionistas de Jubilación por RRVV</span></label>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>

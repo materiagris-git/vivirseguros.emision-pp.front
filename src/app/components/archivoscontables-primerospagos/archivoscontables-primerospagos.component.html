@@ -1,0 +1,71 @@
+<form (ngSubmit)="onSubmit(formFechas)" #formFechas="ngForm">
+    <!--div de la clase formulario -->
+    <div class="col-lg-12 col-md-12 col-sm-12 marg-prim">
+        <div class="col-lg-12 col-md-12 col-sm-12 grid title-pad">
+            <label class="title">Fecha Búsqueda</label>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12 marg-prim grid">
+            <div class="col-lg-4 col-md-4 col-sm-4 margin-in">
+                <label class="text">Vencimientos Desde</label>
+                <div>
+                    <input type="date" class="form-control" required id="FecDesde" [(ngModel)]="FecDesde" name="FecDesde" />
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 margin-in">
+                <label class="text">Vencimientos Hasta</label>
+                <div>
+                    <input type="date" class="form-control" required id="FecHasta" [(ngModel)]="FecHasta" name="FecHasta" />
+                </div>
+            </div>
+            <!--
+            <div class="col-lg-4 col-md-4 col-sm-4 margin-in">
+                <label class="text">Hasta</label>
+                <div>
+                    <input type="date" class="form-control" required id="FecHasta" [(ngModel)]="FecHasta" name="FecHasta" />
+                </div>
+            </div>-->
+        </div>
+    </div>
+
+    <div class="col-lg-12 col-md-12 col-sm-12 marg-prim">
+        <!--div de la tabla -->
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover tableBorder text-center">
+                <thead>
+                    <tr>
+                        <th scope="col">Nombre del Archivo</th>
+                        <th scope="col">N° de datos</th>
+                        <th scope="col">Fecha</th>
+                        <th scope="col">Hora</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let archivo of archivos">
+                        <td class="t-m">{{archivo.NombreArchivo}}</td>
+                        <td class="t-m">{{archivo.Numero_Datos}}</td>
+                        <td class="t-m">{{archivo.Fecha}}</td>
+                        <td class="t-m">{{archivo.Hora}}</td>
+                    </tr>
+            </table>
+        </div>
+
+    </div>
+
+    <div class="col-lg-12 col-md-12 col-sm-12 marg-prim">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12 right">
+                    <button type="button" class="btn btn-op btn-sm" (click)="clear()">
+                <i class="far fa-file icon"></i>Limpiar
+              </button>
+                </div>
+                <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12 right">
+                    <button type="submit" class="btn btn-op btn-sm">
+                        <i class="fa fa-upload icon"></i>Generar
+                      </button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</form>

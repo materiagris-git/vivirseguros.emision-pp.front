@@ -1,0 +1,80 @@
+.btn-op {
+  background-color: #0096b7;
+  color: #bcfbff;
+  box-shadow: none !important;
+  font-weight: bold;
+  width: 130px;
+  height: 35px;
+  font-size: 11px;
+}
+
+.title {
+  color: #3695ab;
+  font-size: 12px;
+}
+
+.title-pad {
+  padding-top: 5px;
+}
+
+.margin-in {
+  padding-left: 0px;
+}
+
+.marg-prim {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.grid {
+  border: 1px solid #e3e3e3;
+}
+
+.text {
+  color: #9c9c9c;
+  font-size: 11px;
+}
+
+table {
+  border: 2px solid #e3e3e3;
+}
+
+thead,
+th,
+.t-m {
+  text-align-last: center;
+  color: #9c9c9c;
+  border: 1px solid #e3e3e3;
+}
+
+td {
+  border-top: 1px solid white;
+  border-bottom: 1px solid white;
+  border-left: 1px solid #e3e3e3;
+  border-right: 1px solid #e3e3e3;
+}
+
+.right {
+  float: right;
+  text-align: right;
+}
+
+.fix-btn {
+  padding-top: 25px;
+}
+
+.icon {
+  font-size: 15px;
+  padding: 5px;
+}
+
+@media (max-width: 600px) {
+  .btn-op {
+    width: 100px;
+  }
+  .right {
+    float: left;
+    text-align: center;
+    padding-top: 5px;
+  }
+}

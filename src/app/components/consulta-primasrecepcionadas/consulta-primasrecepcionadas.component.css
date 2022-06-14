@@ -1,0 +1,354 @@
+.sep {
+    height: 5px;
+    width: 20px;
+    background-color: gray;
+    margin-top: 13px;
+    margin-bottom: 13px;
+}
+
+.btn-azul-fix {
+    font-size: 11px;
+}
+
+.inpLg {
+    width: 100%;
+}
+
+.sel-fix {
+    width: 100%;
+}
+
+.btn-fix {
+    margin-top: 17px;
+}
+
+.mat-table {
+    height: auto;
+    overflow: auto;
+    background-color: #ffffff;
+}
+
+.mat-cell {
+    height: 60px;
+    border-bottom: 1px solid lightgray;
+}
+
+.mat-header-row,
+.mat-row,
+.mat-footer-row {
+    display: inline-flex;
+    align-items: center;
+    width: 100%;
+}
+
+.mat-cell,
+.mat-header-cell {
+    color: black;
+    display: block;
+    background-color: #ffffff;
+    text-align: center;
+    font-size: 11px;
+    padding: 15px 0px;
+}
+
+.mat-header-cell {
+    color: black;
+    background-color: #ffffff;
+    display: block;
+    font-size: 12px;
+}
+
+.mat-header-cell,
+.mat-header-row {
+    padding: 0px !important;
+    min-height: 20px !important;
+}
+
+.mat-column-numPol {
+    word-wrap: break-word !important;
+    white-space: unset !important;
+    flex: 0 0 8% !important;
+    width: 8% !important;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word;
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+}
+
+
+/* (1366x768) WXGA Display */
+
+@media screen and (max-width: 1366px) {
+    .mat-column-direccion {
+        word-wrap: break-word !important;
+        white-space: unset !important;
+        flex: 0 0 30% !important;
+        width: 30% !important;
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+        word-break: break-word;
+        -ms-hyphens: auto;
+        -moz-hyphens: auto;
+        -webkit-hyphens: auto;
+        hyphens: auto;
+    }
+}
+
+
+/* Large desktops and laptops */
+
+@media (min-width: 1200px) and (max-width: 1400px) {
+    .btn-azul-fix {
+        width: 90%;
+    }
+}
+
+
+/* Landscape tablets and medium desktops */
+
+@media (min-width: 992px) and (max-width: 1199px) {
+    .inpLg {
+        width: 100%;
+    }
+    .mr {
+        margin-right: 12px;
+    }
+    .btnAlign {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+}
+
+
+/* Portrait tablets and small desktops */
+
+@media (min-width: 768px) and (max-width: 991px) {
+    .inpLg {
+        width: 100%;
+    }
+    .mr {
+        margin-right: 12px;
+    }
+    .btnAlign {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+    .mat-cell,
+    .mat-footer-cell,
+    .mat-header-cell {
+        flex: none;
+        width: 18% !important;
+        /*Aqui pon lo que quieras width: 20&*/
+        overflow-x: auto;
+        color: black;
+        background-color: #ffffff;
+        text-align: center;
+    }
+    .mr {
+        margin-right: 0px;
+        margin-bottom: 12px;
+    }
+    .mat-column-numPol {
+        word-wrap: break-word !important;
+        white-space: unset !important;
+        flex: 0 0 10% !important;
+        width: 10% !important;
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+        word-break: break-word;
+        -ms-hyphens: auto;
+        -moz-hyphens: auto;
+        -webkit-hyphens: auto;
+        hyphens: auto;
+    }
+    .mat-column-direccion {
+        word-wrap: break-word !important;
+        white-space: unset !important;
+        flex: 0 0 40% !important;
+        width: 40% !important;
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+        word-break: break-word;
+        -ms-hyphens: auto;
+        -moz-hyphens: auto;
+        -webkit-hyphens: auto;
+        hyphens: auto;
+    }
+    .mat-column-distrito {
+        word-wrap: break-word !important;
+        white-space: unset !important;
+        flex: 0 0 20% !important;
+        width: 20% !important;
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+        word-break: break-word;
+        -ms-hyphens: auto;
+        -moz-hyphens: auto;
+        -webkit-hyphens: auto;
+        hyphens: auto;
+    }
+}
+
+
+/* Landscape phones and portrait tablets */
+
+@media (max-width: 767px) {
+    .inpLg {
+        width: 100%;
+    }
+    .btnCenter {
+        text-align: center;
+    }
+    .mr {
+        margin-right: 12px;
+    }
+    .mat-cell,
+    .mat-footer-cell,
+    .mat-header-cell {
+        flex: none;
+        width: 25% !important;
+        /*Aqui pon lo que quieras width: 20&*/
+        overflow-x: auto;
+        color: black;
+        background-color: #ffffff;
+        text-align: center;
+    }
+    .mat-column-numPol {
+        word-wrap: break-word !important;
+        white-space: unset !important;
+        flex: 0 0 20% !important;
+        width: 20% !important;
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+        word-break: break-word;
+        -ms-hyphens: auto;
+        -moz-hyphens: auto;
+        -webkit-hyphens: auto;
+        hyphens: auto;
+    }
+    .mat-column-direccion {
+        word-wrap: break-word !important;
+        white-space: unset !important;
+        flex: 0 0 40% !important;
+        width: 40% !important;
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+        word-break: break-word;
+        -ms-hyphens: auto;
+        -moz-hyphens: auto;
+        -webkit-hyphens: auto;
+        hyphens: auto;
+    }
+    .mat-column-distrito {
+        word-wrap: break-word !important;
+        white-space: unset !important;
+        flex: 0 0 30% !important;
+        width: 30% !important;
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+        word-break: break-word;
+        -ms-hyphens: auto;
+        -moz-hyphens: auto;
+        -webkit-hyphens: auto;
+        hyphens: auto;
+    }
+}
+
+
+/* Portrait phones and smaller */
+
+@media (max-width: 480px) {
+    button {
+        width: 60%;
+    }
+    .mr {
+        margin-right: 0px;
+        margin-bottom: 12px;
+    }
+    .btnCenter {
+        text-align: center;
+    }
+    .mat-cell,
+    .mat-footer-cell,
+    .mat-header-cell {
+        flex: none;
+        width: 40% !important;
+        /*Aqui pon lo que quieras width: 20&*/
+        overflow-x: auto;
+        color: black;
+        background-color: #ffffff;
+        text-align: center;
+    }
+    .mat-column-numPol {
+        word-wrap: break-word !important;
+        white-space: unset !important;
+        flex: 0 0 30% !important;
+        width: 30% !important;
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+        word-break: break-word;
+        -ms-hyphens: auto;
+        -moz-hyphens: auto;
+        -webkit-hyphens: auto;
+        hyphens: auto;
+    }
+    .mat-column-direccion {
+        word-wrap: break-word !important;
+        white-space: unset !important;
+        flex: 0 0 60% !important;
+        width: 60% !important;
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+        word-break: break-word;
+        -ms-hyphens: auto;
+        -moz-hyphens: auto;
+        -webkit-hyphens: auto;
+        hyphens: auto;
+    }
+    .mat-column-distrito {
+        word-wrap: break-word !important;
+        white-space: unset !important;
+        flex: 0 0 50% !important;
+        width: 50% !important;
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+        word-break: break-word;
+        -ms-hyphens: auto;
+        -moz-hyphens: auto;
+        -webkit-hyphens: auto;
+        hyphens: auto;
+    }
+}
+
+@media (min-width: 1200px) {
+    .spaceM {
+        margin-top: 10px;
+        margin-bottom: 35px;
+    }
+    .mr {
+        margin-right: 10px;
+    }
+    .btnAlign {
+        text-align: end;
+        margin-bottom: 30px;
+    }
+}
+
+
+/* Landscape tablets and medium desktops */
+
+@media (min-width: 992px) and (max-width: 1199px) {
+    .inpLg {
+        width: 300px;
+    }
+    .mr {
+        margin-right: 12px;
+    }
+    .btnAlign {
+        text-align: end;
+        margin-bottom: 30px;
+    }
+}

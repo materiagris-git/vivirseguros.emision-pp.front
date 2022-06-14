@@ -1,0 +1,1422 @@
+<div class="col-lg-12 col-md-12 col-sm-12 ">
+    <div class="panel panel-default">
+        <div class="panel-body camposForm">
+            <form>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                <label>N° Póliza</label>&nbsp;
+                                <label class="frmLblColor">{{consulta.NumeroPoliza}}</label>
+                            </div>
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                <label>N° Endoso</label>&nbsp;
+                                <label class="frmLblColor">{{consulta.NoEndoso}}</label>
+                            </div>
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                <label>Documento</label>&nbsp;
+                                <label class="frmLblColor">{{TipoNumIdent}}</label>
+                            </div>
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                <label>CUSPP</label>&nbsp;
+                                <label class="frmLblColor">{{consulta.CUSPP}}</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-lg-9 col-md-9 col-sm-9">
+                                <label>Titular</label>&nbsp;
+                                <label class="frmLblColor">{{NombreCompleto}}</label>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="col-lg-12 col-md-12 col-sm-12">
+    <div class="panel with-nav-tabs panel-default">
+        <div class="panel-heading">
+            <ul class="nav nav-tabs">
+                <li class="title active" id="iniTab">
+                    <a href="#datosPoliza" (click)="changeTab('datosPoliza')" data-toggle="tab">Póliza</a>
+                </li>
+                <li class="title" id="benTab">
+                    <a href="#datosBeneficiarios" (click)="changeTab('datosBeneficiario')" data-toggle="tab">Beneficiarios </a>
+                </li>
+                <li class="title" *ngIf="mostrarRes">
+                    <a href="#datosResumen" (click)="changeTab('datosResumen')" data-toggle="tab">Resumen </a>
+                </li>
+
+            </ul>
+        </div>
+        <div class="panel-body">
+            <div class="tab-content">
+                <div class="tab-pane fade " [ngClass]="{'in active': PanelPoliza}" id="datosPoliza">
+                    <!-- Datos Poliza -->
+                    <div class="col-lg-12 col-md-12 col-sm-12 m-3">
+
+                        <div class="row">
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">Tipo de Endoso</label>
+                                <select id="slcTpoEndoso1" class="form-control" [(ngModel)]="datosPoliza.IdTipoEndoso" name="tipoEndoso1" (change)="comboTipoEndoso(datosPoliza.IdTipoEndoso)" disabled>
+                                    <option *ngFor="let opc of lstTipoEndoso" [value]="opc.cod_elemento">{{opc.gls_elemento}}</option>
+                                </select>
+                                <!-- <input type="text" class="form-control" disabled name="tipoMoneda"> -->
+                            </div>
+                            <div class="form-group col-lg-4 col-md-4 col-sm-2">
+                                <label class="frmLblColor">Característica de Endoso</label>
+                                <select id="slcCausaEndoso" class="form-control" [(ngModel)]="datosPoliza.IdCausaEndoso" name="causaEndoso" [disabled]="editarEndoso" (change)="comboCausaEndoso(datosPoliza.IdCausaEndoso)">
+                                    <option value="">SELECCIONAR CAUSA DE ENDOSO</option>
+                                    <option *ngFor="let opc of lstCausaEndoso" [value]="opc.cod_elemento">{{opc.gls_elemento}}</option>
+                                </select>
+                                <!-- <input type="text" class="form-control" disabled name="tipoMoneda"> -->
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-xs-12" style="padding-top: 22px;">
+                                <button type="button " *ngIf="fecRentaBtn" class="btn btn-azul btn-azul-fix col-md-12 col-xs-12" (click)="Calcular()"><i class="fa fa-calculator" ></i> Calcular</button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">Fecha Efecto</label>
+                                <input type="date" class="form-control" [disabled]="FechaEfecto" [(ngModel)]="fechaEfecto" name="fechaEfecto">
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">Fecha Solicitud</label>
+                                <input type="date" class="form-control" [disabled]="FechaSolicitud" [(ngModel)]="FechaSolicitudEndoso" name="fechaSolicitud" (change)="AdelantoRentaVit()">
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">Observación</label>
+                                <input type="text" class="form-control" [(ngModel)]="datosPoliza.Observaciones" name="Observaciones" [disabled]="editarEndoso">
+                            </div>
+                            <div *ngIf="fecRenta" class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor" style="font-size: 10px;">Fecha Primera Renta Diferida Modificada</label>
+                                <input type="date" class="form-control" [(ngModel)]="FechaRentaVitalicia" name="FechaRentaVitalicia" (change)="AdelantoRentaVit()">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">Tipo de Pensión</label>
+                                <select id="slcTpoPension" class="form-control" [(ngModel)]="datosPoliza.IdPension" name="tipoPension" [disabled]="editarDatosPoliza" (change)="comboTipoPension(datosPoliza.IdPension)">
+                                    <option *ngFor="let opc of lstTipoPension" [value]="opc.cod_elemento">{{opc.gls_elemento}}</option>
+                                </select>
+                                <!-- <input type="text" class="form-control" disabled  name=""> -->
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">Tipo de Renta</label>
+                                <select id="slcTpoRenta" class="form-control" [(ngModel)]="datosPoliza.IdTipoRenta" name="tipoRenta" [disabled]="editarDatosPoliza" (change)="comboTipoRenta(datosPoliza.IdTipoRenta)">
+                                    <option *ngFor="let opc of lstTipoRenta" [value]="opc.cod_elemento">{{opc.gls_elemento}}</option>
+                                </select>
+                                <!-- <input type="text" class="form-control" disabled  name="tipoRenta"> -->
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">Modalidad</label>
+                                <!-- <input type="text" class="form-control" disabled name="modalidad"> -->
+                                <select id="slcModalidad" class="form-control" [(ngModel)]="datosPoliza.IdModalid" name="tipoEndoso" [disabled]="editarDatosPoliza" (change)="comboModalidad(datosPoliza.IdModalid)">
+                                    <option *ngFor="let opc of lstModalidad" [value]="opc.cod_elemento">{{opc.gls_elemento}}</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">Estado Vigencia</label>
+                                <!-- <input type="text" class="form-control" disabled  name="noBeneficiarios"> -->
+                                <select id="slcEstadoVigencia" class="form-control" [(ngModel)]="datosPoliza.IdEstadoVigencia" name="estadoVigencia" [disabled]="editarDatosPoliza" (change)="comboEstadoVigencia(datosPoliza.IdEstadoVigencia)">
+                                    <option *ngFor="let opc of lstEstadoVigencia" [value]="opc.cod_elemento">{{opc.gls_elemento}}</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">N° Beneficiarios</label>
+                                <input type="text" class="form-control" [(ngModel)]="datosPoliza.NumBeneficiarios" name="numBeneficiarios" (keypress)="numberOnly($event)" [disabled]="editarDatosPoliza">
+                            </div>
+
+
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">Periodo Vigencia Desde</label>
+                                <input type="date" class="form-control" [(ngModel)]="datosPoliza.IniVigencia" name="fechaInicioVigencia" [disabled]="editarDatosPoliza">
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">Periodo Vigencia Hasta</label>
+                                <input type="date" class="form-control" [(ngModel)]="datosPoliza.FinVigencia" name="fechaFinVigencia" [disabled]="editarDatosPoliza">
+                            </div>
+
+
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">Fecha Devengue</label>
+                                <input type="date" class="form-control" [(ngModel)]="datosPoliza.FechaDevengue" name="fechaDevengue" [disabled]="editarDatosPoliza">
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">Años Escal. 1er Tramo</label>
+                                <input type="text" class="form-control" [(ngModel)]="datosPoliza.Escal1Tramo" name="escal1Tramo" (keypress)="numberOnly($event)" [disabled]="editarDatosPoliza">
+                            </div>
+                            <div class="form-group  col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">% Rta. Esc. 2do Tramo</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" [(ngModel)]="datosPoliza.RentaEsc2Tramo" name="escal2Tramo" (keypress)="onlyDecimalNumberKey($event)" [disabled]="editarDatosPoliza">
+                                    <div class="input-group-btn">
+                                        <span class="input-group-addon iconSpan" style="padding: 9px 12px;">
+                      %
+                    </span>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="row">
+
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">Ind. Cobertura</label>
+                                <select id="slcTipoIdent" class="form-control" [(ngModel)]="datosPoliza.IndCovertura" name="indCobertura" [disabled]="editarDatosPoliza">
+                                <option value="S">Si</option>
+                                <option value="N">No</option>
+                            </select>
+                            </div>
+
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">Monto Prima</label>
+                                <div class="input-group">
+
+
+                                    <div class="input-group-btn">
+                                        <span class="input-group-addon iconSpan" style="padding: 9px 12px;">
+                      S/
+                    </span>
+                                    </div>
+                                    <input type="text" class="form-control" [(ngModel)]="datosPoliza.MontoPrima" (keypress)="onlyDecimalNumberKey($event)" name="montoPrima" [disabled]="editarDatosPoliza">
+
+                                </div>
+
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">Monto Pensión</label>
+                                <div class="input-group">
+                                    <div class="input-group-btn">
+                                        <span class="input-group-addon iconSpan" style="padding: 9px 12px;">
+                      {{TipoMoneda}}
+                    </span>
+                                    </div>
+                                    <input type="text" class="form-control" [(ngModel)]="datosPoliza.MontoPension" name="montoPension" (keypress)="onlyDecimalNumberKey($event)" [disabled]="editarDatosPoliza">
+                                </div>
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">Cobertura al Cónyuge</label>
+                                <div class="input-group">
+
+
+                                    <div class="input-group-btn">
+                                        <span class="input-group-addon iconSpan" style="padding: 9px 12px;">
+                      S/
+                    </span>
+                                    </div>
+                                    <input type="text" class="form-control" [(ngModel)]="datosPoliza.CoberConyuge" name="coberturaConyuge" (keypress)="onlyDecimalNumberKey($event)" [disabled]="editarDatosPoliza">
+                                </div>
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">Tasa Venta</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" [(ngModel)]="datosPoliza.TasaVenta" name="tasaVenta" (keypress)="onlyDecimalNumberKey($event)" [disabled]="editarDatosPoliza">
+                                    <div class="input-group-btn">
+                                        <span class="input-group-addon iconSpan" style="padding: 9px 12px;">
+                      %
+                    </span>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="row">
+
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">Tasa. Cto. Equivalente</label>
+                                <!-- <select id="slcTipoIdent" class="form-control" disabled [(ngModel)]="datosPoliza.TasaReaseguro" name="tasaReaseguro">
+              <option></option>
+            </select> -->
+                                <div class="input-group">
+                                    <input type="text" class="form-control" [(ngModel)]="datosPoliza.TasaEquivalente" name="tasaCtoEquiv" (keypress)="onlyDecimalNumberKey($event)" [disabled]="editarDatosPoliza">
+                                    <div class="input-group-btn">
+                                        <span class="input-group-addon iconSpan" style="padding: 9px 12px;">
+                  %
+                </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">Años Diferidos</label>
+                                <input type="text" class="form-control" [(ngModel)]="datosPoliza.Diferidos" name="diferidos" (keypress)="onlyAlphaNumeric($event)" [disabled]="editarDatosPoliza">
+
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">Años Garantizados</label>
+                                <input type="text" class="form-control" [(ngModel)]="datosPoliza.Garantizados" name="garantizados" (keypress)="onlyAlphaNumeric($event)" [disabled]="editarDatosPoliza">
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">Der Crecer</label>
+                                <select id="slcTipoIdent" class="form-control" [(ngModel)]="datosPoliza.DerCrecer" name="derCrecer" [disabled]="editarDatosPoliza">
+                  <option value="S">Si</option>
+                  <option value="N">No</option>
+                </select>
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">Gratificación</label>
+                                <select id="slcTipoIdent" class="form-control" [(ngModel)]="datosPoliza.Gratificacion" name="gratificacion" [disabled]="editarDatosPoliza">
+                  <option value="S">Si</option>
+                  <option value="N">No</option>
+                </select>
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+
+
+                    <!-- Fin Datos Poliza -->
+                </div>
+
+
+                <div class="tab-pane fade " [ngClass]="{'in active': PanelBeneficiarios}" id="datosBeneficiarios">
+                    <!-- Inicio datos Beneficiarios -->
+                    <div class="col-lg-12 col-md-12 col-sm-12 m-3">
+
+
+                        <div class="row" *ngIf="btnAgregaBen">
+                            <div class="row">
+                                <div class="col-md-12" style="text-align: left;">
+                                    <button class="btn btn-rad" (click)="abrirModal(null,'nuevo')" data-toggle="modal" data-target="#modalAgregarBeneficiario">Agregar Beneficiario <i class="fa fa-plus" style="color:white"></i></button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="table-container text-center">
+
+                                    <mat-table [dataSource]="dataSourceBeneficiarios" class="tabla-beneficiarios table-hover">
+                                        <mat-header-row *matHeaderRowDef="columnasBeneficiarios; sticky: true"></mat-header-row>
+                                        <mat-row *matRowDef="let row; columns: columnasBeneficiarios;"></mat-row>
+                                        <ng-container matColumnDef="item">
+                                            <mat-header-cell *matHeaderCellDef>
+                                                <div>Orden</div>
+                                            </mat-header-cell>
+                                            <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.Orden}}</mat-cell>
+                                        </ng-container>
+                                        <ng-container matColumnDef="tipoIdentificacion">
+                                            <mat-header-cell *matHeaderCellDef>
+                                                <div>Identificación</div>
+                                            </mat-header-cell>
+                                            <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.TipoIden}}-{{lesson.NoIden}}</mat-cell>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="apellidosNombres">
+                                            <mat-header-cell *matHeaderCellDef>
+                                                <div>Apellidos y Nombres</div>
+                                            </mat-header-cell>
+                                            <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.Nombre}} {{lesson.SegundoNom}} {{lesson.Paterno}} {{lesson.Materno}}</mat-cell>
+                                        </ng-container>
+                                        <ng-container matColumnDef="genero">
+                                            <mat-header-cell *matHeaderCellDef>
+                                                <div>Género</div>
+                                            </mat-header-cell>
+                                            <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.Genero}}</mat-cell>
+                                        </ng-container>
+                                        <ng-container matColumnDef="fechaNac">
+                                            <mat-header-cell *matHeaderCellDef>
+                                                <div>Fecha de Nacimiento</div>
+                                            </mat-header-cell>
+                                            <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.FechaNac}}</mat-cell>
+                                        </ng-container>
+                                        <ng-container matColumnDef="parentesco">
+                                            <mat-header-cell *matHeaderCellDef>
+                                                <div>Parentesco</div>
+                                            </mat-header-cell>
+                                            <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.Parentesco}}</mat-cell>
+                                        </ng-container>
+                                        <ng-container matColumnDef="mtoPension">
+                                            <mat-header-cell *matHeaderCellDef>
+                                                <div>Monto Pension</div>
+                                            </mat-header-cell>
+                                            <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.MontoPension}}</mat-cell>
+                                        </ng-container>
+                                        <ng-container matColumnDef="acciones">
+                                            <mat-header-cell *matHeaderCellDef>
+                                                <div>Acciones</div>
+                                            </mat-header-cell>
+                                            <mat-cell class="duration-cell" *matCellDef="let lesson; let i = index">
+                                                <i *ngIf="mostrarRes" style="color:#0090B2" class="fa fa-search" (click)="abrirModal(lesson,'busq')" data-toggle="modal" data-target="#modalAgregarBeneficiario"></i> &nbsp;
+                                                <i *ngIf="mostrarRes && mostrarResP && datosPoliza.IdCausaEndoso!= '13' && validaEditar(lesson);" style="color:#0090B2" class="fa fa-edit" (click)="abrirModal(lesson,'edit')" data-toggle="modal" data-target="#modalAgregarBeneficiario"></i>                                                &nbsp;
+                                                <i *ngIf="mostrarRes && lesson.IdParentesco!= '99' && glCausaEndoso == '05'" style="color:#0090B2" class="fa fa-trash" (click)="Modal(i,'ModalE')"></i>
+                                                <i *ngIf="mostrarRes && lesson.IdParentesco== '30' && glCausaEndoso == '17' && lesson.Edad >= '18'" style="color:#0090B2" class="fa fa-trash" (click)="Modal(i,'ModalE')"></i></mat-cell>
+                                        </ng-container>
+                                    </mat-table>
+                                </div>
+                                <mat-paginator [length]="0" [pageSize]="10" [pageSizeOptions]="[10, 20, 50]" [showFirstLastButtons]="true"></mat-paginator>
+                            </div>
+
+                            <div class="form-group col-lg-2 col-md-2 col-xs-12" style="padding-top: 22px;">
+                                <button type="button " *ngIf="btnCalcular" class="btn btn-azul btn-azul-fix col-md-12 col-xs-12" (click)="Calcular()"><i class="fa fa-calculator" ></i> Calcular</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Fin datos Beneficiarios -->
+                </div>
+                <div class="tab-pane fade " [ngClass]="{'in active': PanelResumen}" id="datosResumen">
+                    <!-- Inicio datos Resumen -->
+                    <div class="col-lg-12 col-md-12 col-sm-12 marg-prim">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="row">
+                                    <div class="form-group col-lg-3 col-md-3 col-xs-12 ">
+                                        <label class="frmLblColor">Monto Pensión</label>
+                                        <div class="input-group">
+                                            <div>
+                                                <input class="inline-label form-control" type="text" [(ngModel)]="datosPoliza.MontoPensionOri" id="mntoPension" disabled name="mntoPension" />
+                                                <label style="padding: 5px 0px;font-weight: 100;" for="mntoPension">+S/ Aj.</label>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="form-group col-lg-3 col-md-3 col-xs-12 ">
+                                        <label class="frmLblColor">Monto Pensión Calculada</label>
+                                        <div class="input-group">
+                                            <div>
+                                                <input class="inline-label form-control" type="text" [(ngModel)]="datosPoliza.MontoPensionCal" id="mntoPensionCalc" disabled />
+                                                <label style="padding: 5px 0px;font-weight: 100;" for="mntoPensionCalc">+S/ Aj.</label>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 marg-prim">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h5 class="titulo tituloLinea"><b>Datos Modificados Póliza</b></h5>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h5 class="titulo " style="color:#53b0ce"><b>Datos Anteriores</b></h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h5 class="titulo " style="color:#53b0ce"><b>Datos Nuevos</b></h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h5 class="titulo " style="color:#53b0ce"><b>Datos Anteriores</b></h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h5 class="titulo " style="color:#53b0ce"><b>Datos Nuevos</b></h5>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+
+                            <div class="col-lg-6 col-md-6 col-sm-6 resumen" *ngIf="tipoEndosoRes">
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <label class="frmLblColor">Tipo Endoso</label>
+                                    <select id="slcTpoEndoso" title="{{datosPolizaActuales.TipoEndoso}}" class="form-control" [(ngModel)]="datosPolizaActuales.IdTipoEndoso" name="tipoEndosoAct" disabled>
+                                        <option *ngFor="let opc of estadoSinCambios.LstTipoEndosoInact" [value]="opc.cod_elemento">{{opc.gls_elemento}}</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <label class="frmLblColor">Nuevo Tipo Endoso</label>
+                                    <select id="slcTpoEndoso" title="{{datosPoliza.TipoEndoso}}" class="form-control" [(ngModel)]="datosPoliza.IdTipoEndoso" name="tipoEndoso" disabled>
+                                        <option *ngFor="let opc of lstTipoEndoso" [value]="opc.cod_elemento">{{opc.gls_elemento}}</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 col-md-6 col-sm-6 resumen" *ngIf="causaEndosoRes">
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <label class="frmLblColor">Característica Endoso</label>
+                                    <select id="slcCausaEndoso" title="{{datosPolizaActuales.CausaEndoso}}" datosPolizaActuales.IdCausaEndoso class="form-control" [(ngModel)]="datosPolizaActuales.IdCausaEndoso" name="causaEndosoAct" disabled>
+                                        <option *ngFor="let opc of estadoSinCambios.LstCausaEndosoInact" [value]="opc.cod_elemento" >{{opc.gls_elemento}}</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <label class="frmLblColor">Nueva Característica Endoso</label>
+                                    <select id="slcCausaEndoso" title="{{datosPoliza.CausaEndoso}}" class="form-control" [(ngModel)]="datosPoliza.IdCausaEndoso" name="causaEndoso" disabled>
+                                        <option *ngFor="let opc of lstCausaEndoso" [value]="opc.cod_elemento">{{opc.gls_elemento}}</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 col-md-6 col-sm-6 resumen" *ngIf="observacionRes">
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <label class="frmLblColor">Observación</label>
+                                    <input type="text" class="form-control" disabled>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <label class="frmLblColor">Nueva Observación</label>
+                                    <input type="text" class="form-control" disabled>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 col-md-6 col-sm-6 resumen" *ngIf="tipoPensionRes">
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <label class="frmLblColor">Tipo Pensión</label>
+                                    <select id="slcTpoPension" class="form-control" [(ngModel)]="datosPolizaActuales.IdPension" name="tipoPensionAct" disabled>
+                                        <option *ngFor="let opc of lstTipoPension" [value]="opc.cod_elemento">{{opc.gls_elemento}}</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <label class="frmLblColor">Nuevo Tipo Pensión</label>
+                                    <select id="slcTpoPension" class="form-control" [(ngModel)]="datosPoliza.IdPension" name="tipoPension" disabled>
+                                        <option *ngFor="let opc of lstTipoPension" [value]="opc.cod_elemento">{{opc.gls_elemento}}</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 col-md-6 col-sm-6 resumen" *ngIf="tipoRentaRes">
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <label class="frmLblColor">Tipo Renta</label>
+                                    <select id="slcTpoRenta" class="form-control" [(ngModel)]="datosPolizaActuales.IdTipoRenta" name="tipoRentaAct" disabled>
+                                        <option *ngFor="let opc of lstTipoRenta" [value]="opc.cod_elemento">{{opc.gls_elemento}}</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <label class="frmLblColor">Nuevo Tipo Renta</label>
+                                    <select id="slcTpoRenta" class="form-control" [(ngModel)]="datosPoliza.IdTipoRenta" name="tipoRenta" disabled>
+                                        <option *ngFor="let opc of lstTipoRenta" [value]="opc.cod_elemento">{{opc.gls_elemento}}</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 col-md-6 col-sm-6 resumen" *ngIf="modalidadRes">
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <label class="frmLblColor">Modalidad</label>
+                                    <select id="slcModalidad" class="form-control" [(ngModel)]="datosPolizaActuales.IdModalid" name="tipoEndosoAct" disabled>
+                                        <option *ngFor="let opc of lstModalidad" [value]="opc.cod_elemento">{{opc.gls_elemento}}</option>
+                                      </select>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <label class="frmLblColor">Nueva Modalidad</label>
+                                    <select id="slcModalidad" class="form-control" [(ngModel)]="datosPoliza.IdModalid" name="tipoEndoso" disabled>
+                                        <option *ngFor="let opc of lstModalidad" [value]="opc.cod_elemento">{{opc.gls_elemento}}</option>
+                                      </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 col-md-6 col-sm-6 resumen" *ngIf="estadoVigenciaRes">
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <label class="frmLblColor">Estado Vigencia</label>
+                                    <select id="slcEstadoVigencia" class="form-control" [(ngModel)]="datosPolizaActuales.IdEstadoVigencia" name="estadoVigenciaAct" disabled>
+                                        <option *ngFor="let opc of lstEstadoVigencia" [value]="opc.cod_elemento">{{opc.gls_elemento}}</option>
+                                      </select>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <label class="frmLblColor">Nuevo Estado Vigencia</label>
+                                    <select id="slcEstadoVigencia" class="form-control" [(ngModel)]="datosPoliza.IdEstadoVigencia" name="estadoVigencia" disabled>
+                                        <option *ngFor="let opc of lstEstadoVigencia" [value]="opc.cod_elemento">{{opc.gls_elemento}}</option>
+                                      </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 col-md-6 col-sm-6 resumen" *ngIf="noBeneficiariosRes">
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <label class="frmLblColor">N° Beneficiarios</label>
+                                    <input type="text" class="form-control" [(ngModel)]="datosPolizaActuales.NumBeneficiarios" name="numBeneficiariosAct" (keypress)="numberOnly($event)" disabled>
+
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <label class="frmLblColor">Nuevo N° Beneficiarios</label>
+                                    <input type="text" class="form-control" [(ngModel)]="datosPoliza.NumBeneficiarios" name="numBeneficiarios" (keypress)="numberOnly($event)" disabled>
+
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 col-md-6 col-sm-6 resumen" *ngIf="periodoVigenciaRes">
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <label class="frmLblColor">Periodo Vigencia</label>
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="row">
+                                            <div class=" col-md-12" style="padding:0px;">
+                                                <div class=" col-md-5" style="padding:0px;">
+
+                                                    <input type="date" class="form-control" style="padding:0px;" [(ngModel)]="datosPolizaActuales.IniVigencia" name="fechaInicioVigenciaAct" disabled>
+                                                </div>
+                                                <div class="col-md-2">-</div>
+                                                <div class=" col-md-5" style="padding:0px;">
+
+                                                    <input type="date" style="padding:0px;" class="form-control" [(ngModel)]="datosPolizaActuales.FinVigencia" name="fechaFinVigenciaAct" disabled>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <label class="frmLblColor">Nuevo Periodo Vigencia</label>
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="row">
+                                            <div class=" col-md-12" style="padding:0px;">
+                                                <div class=" col-md-5" style="padding:0px;">
+
+                                                    <input type="date" class="form-control" style="padding:0px;" [(ngModel)]="datosPoliza.IniVigencia" name="fechaInicioVigenciaAct" disabled>
+                                                </div>
+                                                <div class="col-md-2">-</div>
+                                                <div class=" col-md-5" style="padding:0px;">
+
+                                                    <input type="date" style="padding:0px;" class="form-control" [(ngModel)]="datosPoliza.FinVigencia" name="fechaFinVigencia" disabled>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 col-md-6 col-sm-6 resumen" *ngIf="fechaDevengueRes">
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <label class="frmLblColor">Fecha Devengue</label>
+                                    <input type="date" class="form-control" [(ngModel)]="datosPolizaActuales.FechaDevengue" name="fechaDevengueAct" disabled>
+
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <label class="frmLblColor">Nueva Fecha Devengue</label>
+                                    <input type="date" class="form-control" [(ngModel)]="datosPoliza.FechaDevengue" name="fechaDevengue" disabled>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 col-md-6 col-sm-6 resumen" *ngIf="aniosEscalRes">
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <label class="frmLblColor">Años Escal. 1er. Tramo</label>
+                                    <input type="text" class="form-control" [(ngModel)]="datosPolizaActuales.Escal1Tramo" name="escal1TramoAct" (keypress)="numberOnly($event)" disabled>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <label class="frmLblColor">Nuevo Años Escal. 1er. Tramo</label>
+                                    <input type="text" class="form-control" [(ngModel)]="datosPoliza.Escal1Tramo" name="escal1Tramo" (keypress)="numberOnly($event)" disabled>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 col-md-6 col-sm-6 resumen" *ngIf="porcEscalRes">
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <label class="frmLblColor">% Renta Escal. 2do. Tramo</label>
+                                    <input type="text" class="form-control" [(ngModel)]="datosPolizaActuales.RentaEsc2Tramo" name="escal2TramoAct" (keypress)="onlyDecimalNumberKey($event)" disabled>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <label class="frmLblColor">Nuevo % Renta Escal. 2do. Tramo</label>
+                                    <input type="text" class="form-control" [(ngModel)]="datosPoliza.RentaEsc2Tramo" name="escal2Tramo" (keypress)="onlyDecimalNumberKey($event)" disabled>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 col-md-6 col-sm-6 resumen" *ngIf="indCobRes">
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <label class="frmLblColor">Ind. Cobertura</label>
+                                    <select id="slcTipoIdent" class="form-control" [(ngModel)]="datosPolizaActuales.IndCovertura" name="indCoberturaAct" disabled>
+                                        <option value="S">Si</option>
+                                        <option value="N">No</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <label class="frmLblColor">Nuevo Ind. Cobertura</label>
+                                    <select id="slcTipoIdent" class="form-control" [(ngModel)]="datosPoliza.IndCovertura" name="indCobertura" disabled>
+                                        <option value="S">Si</option>
+                                        <option value="N">No</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 col-md-6 col-sm-6 resumen" *ngIf="montoPrimaRes">
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <label class="frmLblColor">Monto Prima</label>
+                                    <input type="text" class="form-control" [(ngModel)]="datosPolizaActuales.MontoPrima" name="montoPrimaAct" (keypress)="onlyDecimalNumberKey($event)" disabled>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <label class="frmLblColor">Nuevo Monto Prima</label>
+                                    <input type="text" class="form-control" [(ngModel)]="datosPoliza.MontoPrima" name="montoPrima" (keypress)="onlyDecimalNumberKey($event)" disabled>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 col-md-6 col-sm-6 resumen" *ngIf="montoPensionRes">
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <label class="frmLblColor">Monto Pensión</label>
+                                    <input type="text" class="form-control" [(ngModel)]="datosPolizaActuales.MontoPension" name="montoPensionAct" (keypress)="onlyDecimalNumberKey($event)" disabled>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <label class="frmLblColor">Nuevo Monto Pensión</label>
+                                    <input type="text" class="form-control" [(ngModel)]="datosPoliza.MontoPension" name="montoPension" (keypress)="onlyDecimalNumberKey($event)" disabled>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 col-md-6 col-sm-6 resumen" *ngIf="coberturaConyRes">
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <label class="frmLblColor">Cobertura al Cónyuge</label>
+                                    <input type="text" class="form-control" [(ngModel)]="datosPolizaActuales.CoberConyuge" name="coberturaConyugeAct" (keypress)="onlyDecimalNumberKey($event)" disabled>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <label class="frmLblColor">Nueva Cobertura al Cónyuge</label>
+                                    <input type="text" class="form-control" [(ngModel)]="datosPoliza.CoberConyuge" name="coberturaConyuge" (keypress)="onlyDecimalNumberKey($event)" disabled>
+                                </div>
+                            </div>
+
+
+                            <div class="col-lg-6 col-md-6 col-sm-6 resumen" *ngIf="tasaVentaRes">
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <label class="frmLblColor">Tasa Venta</label>
+                                    <input type="text" class="form-control" [(ngModel)]="datosPolizaActuales.TasaVenta" name="tasaVentaAct" (keypress)="onlyDecimalNumberKey($event)" disabled>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <label class="frmLblColor">Nueva Tasa Venta</label>
+                                    <input type="text" class="form-control" [(ngModel)]="datosPoliza.TasaVenta" name="tasaVenta" (keypress)="onlyDecimalNumberKey($event)" disabled>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 col-md-6 col-sm-6 resumen" *ngIf="tasaEquivRes">
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <label class="frmLblColor">Tasa Cto. Equivalente</label>
+                                    <input type="text" class="form-control" [(ngModel)]="datosPolizaActuales.TasaEquivalente" name="tasaCtoEquivAct" (keypress)="onlyDecimalNumberKey($event)" disabled>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <label class="frmLblColor">Nueva Tasa Cto. Equivalente</label>
+                                    <input type="text" class="form-control" [(ngModel)]="datosPoliza.TasaEquivalente" name="tasaCtoEquiv" (keypress)="onlyDecimalNumberKey($event)" disabled>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 col-md-6 col-sm-6 resumen" *ngIf="aniosDiferidosRes">
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <label class="frmLblColor">Años Diferidos</label>
+                                    <input type="text" class="form-control" [(ngModel)]="datosPolizaActuales.Diferidos" name="diferidosAct" (keypress)="onlyAlphaNumeric($event)" disabled>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <label class="frmLblColor">Nuevo Años Diferidos</label>
+                                    <input type="text" class="form-control" [(ngModel)]="datosPoliza.Diferidos" name="diferidos" (keypress)="onlyAlphaNumeric($event)" disabled>
+                                </div>
+                            </div>
+
+
+                            <div class="col-lg-6 col-md-6 col-sm-6 resumen" *ngIf="aniosGarantizadosRes">
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <label class="frmLblColor">Años Garantizados</label>
+                                    <input type="text" class="form-control" [(ngModel)]="datosPolizaActuales.Garantizados" name="garantizadosAct" (keypress)="onlyAlphaNumeric($event)" disabled>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <label class="frmLblColor">Nuevo Años Garantizados</label>
+                                    <input type="text" class="form-control" [(ngModel)]="datosPoliza.Garantizados" name="garantizados" (keypress)="onlyAlphaNumeric($event)" disabled>
+                                </div>
+                            </div>
+
+
+                            <div class="col-lg-6 col-md-6 col-sm-6 resumen" *ngIf="derCrecerRes">
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <label class="frmLblColor">Der. Crecer</label>
+                                    <select id="slcTipoIdent" class="form-control" [(ngModel)]="datosPolizaActuales.DerCrecer" name="derCrecerAct" disabled>
+                                        <option value="S">Si</option>
+                                        <option value="N">No</option>
+                                      </select>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <label class="frmLblColor">Nuevo Der. Crecer</label>
+                                    <select id="slcTipoIdent" class="form-control" [(ngModel)]="datosPoliza.DerCrecer" name="derCrecer" disabled>
+                                        <option value="S">Si</option>
+                                        <option value="N">No</option>
+                                      </select>
+                                </div>
+                            </div>
+
+
+                            <div class="col-lg-6 col-md-6 col-sm-6 resumen" *ngIf="gratificacionRes">
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <label class="frmLblColor">Gratificación</label>
+                                    <select id="slcTipoIdent" class="form-control" [(ngModel)]="datosPolizaActuales.Gratificacion" name="gratificacionAct" disabled>
+                                        <option value="S">Si</option>
+                                        <option value="N">No</option>
+                                      </select>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <label class="frmLblColor">Nuevo Gratificación</label>
+                                    <select id="slcTipoIdent" class="form-control" [(ngModel)]="datosPoliza.Gratificacion" name="gratificacion" disabled>
+                                        <option value="S">Si</option>
+                                        <option value="N">No</option>
+                                      </select>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 marg-prim">
+
+                        <div class="row">
+
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h5 class="titulo tituloLinea"><b>Datos Modificados Beneficiario</b></h5>
+                                    </div>
+                                </div>
+                                <div class="table-responsive text-center">
+
+                                    <mat-table [dataSource]="dataSourceResumen" class="tabla-beneficiarios table-hover">
+                                        <mat-header-row *matHeaderRowDef="columnasResumen; sticky: true"></mat-header-row>
+                                        <mat-row *matRowDef="let row; columns: columnasResumen;"></mat-row>
+                                        <ng-container matColumnDef="item">
+                                            <mat-header-cell *matHeaderCellDef>
+                                                <div>Orden</div>
+
+                                            </mat-header-cell>
+                                            <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.Orden}}</mat-cell>
+                                        </ng-container>
+                                        <ng-container matColumnDef="identificacion">
+                                            <mat-header-cell *matHeaderCellDef>
+                                                <div>Identificación</div>
+
+                                            </mat-header-cell>
+                                            <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.IdTipoIden}}-{{lesson.NoIden}}</mat-cell>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="apellidosNombres">
+                                            <mat-header-cell *matHeaderCellDef>
+                                                <div>Apellidos y Nombres</div>
+
+                                            </mat-header-cell>
+                                            <mat-cell class="duration-cell" [ngClass]="{'bordeEditado': lesson.Estado=='Editado' && (lesson.editados.Nombre == true || lesson.editados.SegundoNom == true || lesson.editados.Paterno == true || lesson.editados.Materno == true)}" *matCellDef="let lesson">{{lesson.Nombre}} {{lesson.SegundoNom}} {{lesson.Paterno}} {{lesson.Materno}}</mat-cell>
+                                        </ng-container>
+                                        <ng-container matColumnDef="genero">
+                                            <mat-header-cell *matHeaderCellDef>
+                                                <div>Género</div>
+
+                                            </mat-header-cell>
+                                            <mat-cell class="duration-cell" [ngClass]="{'bordeEditado': lesson.Estado=='Editado' && lesson.editados.IdGenero == true}" *matCellDef="let lesson">{{lesson.Genero}}</mat-cell>
+                                        </ng-container>
+                                        <ng-container matColumnDef="fechaNac">
+                                            <mat-header-cell *matHeaderCellDef>
+                                                <div>Fecha de Nacimiento</div>
+
+                                            </mat-header-cell>
+                                            <mat-cell class="duration-cell" [ngClass]="{'bordeEditado': lesson.Estado=='Editado' && lesson.editados.FechaNac == true}" *matCellDef="let lesson">{{lesson.FechaNac}}</mat-cell>
+                                        </ng-container>
+                                        <ng-container matColumnDef="parentesco">
+                                            <mat-header-cell *matHeaderCellDef>
+                                                <div>Parentesco</div>
+
+                                            </mat-header-cell>
+                                            <mat-cell class="duration-cell" [ngClass]="{'bordeEditado': lesson.Estado=='Editado' && lesson.editados.IdParentesco == true}" *matCellDef="let lesson">{{lesson.Parentesco}}</mat-cell>
+                                        </ng-container>
+                                        <ng-container matColumnDef="gpoFamiliar">
+                                            <mat-header-cell *matHeaderCellDef>
+                                                <div>Gpo. Familiar</div>
+
+                                            </mat-header-cell>
+                                            <mat-cell class="duration-cell" [ngClass]="{'bordeEditado': lesson.Estado=='Editado' && lesson.editados.IdGpoFam == true}" *matCellDef="let lesson">{{lesson.GpoFamiliar}}</mat-cell>
+                                        </ng-container>
+                                        <ng-container matColumnDef="causaInvalidez">
+                                            <mat-header-cell *matHeaderCellDef>
+                                                <div>Causa Inv.</div>
+
+                                            </mat-header-cell>
+                                            <mat-cell class="duration-cell" [ngClass]="{'bordeEditado': lesson.Estado=='Editado' && lesson.editados.IdCausaInv == true}" *matCellDef="let lesson">{{lesson.CausaInv}}</mat-cell>
+                                        </ng-container>
+                                        <ng-container matColumnDef="sitInv">
+                                            <mat-header-cell *matHeaderCellDef>
+                                                <div>Sit Inv.</div>
+
+                                            </mat-header-cell>
+                                            <mat-cell class="duration-cell" [ngClass]="{'bordeEditado': lesson.Estado=='Editado' && lesson.editados.IdGenero == true}" *matCellDef="let lesson">{{lesson.SitInv}}</mat-cell>
+                                        </ng-container>
+                                        <ng-container matColumnDef="fechaInv">
+                                            <mat-header-cell *matHeaderCellDef>
+                                                <div>Fecha Inv.</div>
+
+                                            </mat-header-cell>
+                                            <mat-cell class="duration-cell" [ngClass]="{'bordeEditado': lesson.Estado=='Editado' && lesson.editados.FechaInv == true}" *matCellDef="let lesson">{{lesson.FechaInv}}</mat-cell>
+                                        </ng-container>
+                                        <ng-container matColumnDef="fechaNHM">
+                                            <mat-header-cell *matHeaderCellDef>
+                                                <div>Fecha Fallecimiento</div>
+
+                                            </mat-header-cell>
+                                            <mat-cell class="duration-cell" [ngClass]="{'bordeEditado': lesson.Estado=='Editado' && lesson.editados.FechaFallecimiento == true}" *matCellDef="let lesson">{{lesson.FechaFallecimiento}}</mat-cell>
+                                        </ng-container>
+                                        <ng-container matColumnDef="fechaMat">
+                                            <mat-header-cell *matHeaderCellDef>
+                                                <div>Fecha Mat.</div>
+
+                                            </mat-header-cell>
+                                            <mat-cell class="duration-cell" [ngClass]="{'bordeEditado': lesson.Estado=='Editado' && lesson.editados.FechaMatrimonio == true}" *matCellDef="let lesson">{{lesson.FechaMatrimonio}}</mat-cell>
+                                        </ng-container>
+
+                                        <!-- <ng-container matColumnDef="dPension">
+                                            <mat-header-cell *matHeaderCellDef>
+                                                <div>Der. Pénsión</div>
+
+                                            </mat-header-cell>
+                                            <mat-cell class="duration-cell" [ngClass]="{'bordeEditado': lesson.Estado=='Editado' && lesson.editados.FechaNHM == true}" *matCellDef="let lesson">{{lesson.GpoFamiliar}}</mat-cell>
+                                        </ng-container> -->
+                                        <ng-container matColumnDef="dCrecer">
+                                            <mat-header-cell *matHeaderCellDef>
+                                                <div>Der. Crecer</div>
+
+                                            </mat-header-cell>
+                                            <mat-cell class="duration-cell" [ngClass]="{'bordeEditado': lesson.Estado=='Editado' && lesson.editados.DCrecer == true}" *matCellDef="let lesson">{{lesson.DCrecer}}</mat-cell>
+                                        </ng-container>
+                                        <ng-container matColumnDef="porcPension">
+                                            <mat-header-cell *matHeaderCellDef>
+                                                <div>% Pénsión</div>
+
+                                            </mat-header-cell>
+                                            <mat-cell class="duration-cell" [ngClass]="{'bordeEditado': lesson.Estado=='Editado' && lesson.editados.PorcPension == true}" *matCellDef="let lesson">{{lesson.PorcPension}}</mat-cell>
+                                        </ng-container>
+                                        <ng-container matColumnDef="montoPension">
+                                            <mat-header-cell *matHeaderCellDef>
+                                                <div>Monto Pénsión</div>
+
+                                            </mat-header-cell>
+                                            <mat-cell class="duration-cell" [ngClass]="{'bordeEditado': lesson.Estado=='Editado' && lesson.editados.MontoPension == true}" *matCellDef="let lesson">{{lesson.MontoPension}}</mat-cell>
+                                        </ng-container>
+                                        <ng-container matColumnDef="estatus">
+                                            <mat-header-cell *matHeaderCellDef>
+                                                <div>Estatus</div>
+
+                                            </mat-header-cell>
+                                            <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.Estado}}</mat-cell>
+                                        </ng-container>
+
+
+
+                                    </mat-table>
+
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                    <!-- Fin datos Beneficiarios -->
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--<div class="col-lg-12 col-md-12 col-sm-12 marg-prim">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="row" style="text-align: center;">
+
+            <div *ngIf="!mostrarRes" class="col-md-2 col-md-offset-2"><button type="button" class="btn btn-primary mr" (click)="inicioEndoso()"> Iniciar Endoso</button></div>
+            <div *ngIf="mostrarRes" [ngClass]="{'col-md-offset-2': mostrarRes==true}" class="col-md-2"><button type="button" class="btn btn-primary mr"  data-toggle="modal" data-target="#modalPreendoso"> Generar Pre-Endoso</button></div>
+            <div *ngIf="mostrarRes" class="col-md-2 "><button type="button" class="btn btn-primary mr" (click)="generarEndoso()"><i class="fa fa-print"></i> Generar Endoso</button></div>
+            <div class="col-md-6" style="text-align:left">
+                <button *ngIf="mostrarRes" type="button" class="btn btn-primary" (click)="guardarCambios()"> Guardar</button> &nbsp;
+                <button type="button" class="btn btn-primary " (click)="verificarCambios()"> Cancelar</button> &nbsp;
+                <button *ngIf="mostrarRes" type="button" class="btn btn-primary" (click)="descartarCambios()"> Descartar</button>
+            </div>
+
+        </div>
+    </div>
+</div>-->
+
+<div *ngIf="!mostrarRes" class="col-lg-12 col-md-12 col-sm-12">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group spaceM btnAlign btnCenter btnRigth">
+                <!-- <button *ngIf="this.tipoBusqueda === 'C'" type="button" [disabled]="isDisabled1" (click)="crearPrepoliza()" class="btn btn-azul mr"><i class="fa fa-file"></i> Crear Pre-Póliza</button> -->
+                <button *ngIf="iniEndoso" type="button" class="btn btn-azul btn-azul-fix mr" (click)="inicioEndoso()"> Iniciar Endoso</button> &nbsp;
+                <button *ngIf="iniEndoso" type="button" class="btn btn-azul btn-azul-fix mr" (click)="verificarCambios()"> Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div *ngIf="mostrarRes" class="col-lg-12 col-md-12 col-sm-12 marg-prim">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="row" style="text-align: center;">
+            <button type="button" class="btn btn-azul btn-azul-fix mr" *ngIf="btnPre" data-toggle="modal" data-target="#modalPreendoso"> Generar Pre-Endoso</button> &nbsp;
+            <button type="button" class="btn btn-azul btn-azul-fix mr" *ngIf="btnPre" (click)="generarEndoso()"><i class="fa fa-print"></i> Generar Endoso</button> &nbsp;
+            <button type="button" class="btn btn-azul btn-azul-fix mr" *ngIf="btnPre" (click)="guardarCambios()"> Guardar</button> &nbsp;
+            <button type="button" class="btn btn-azul btn-azul-fix mr " (click)="verificarCambios()"> Cancelar</button> &nbsp;
+            <button type="button" class="btn btn-azul btn-azul-fix mr" (click)="Modal(0,'ModalD')"> Descartar</button>
+
+        </div>
+    </div>
+</div>
+
+<!-- Inician Modales -->
+
+<div class="modal fade" id="modalAgregarBeneficiario" role="dialog" data-backdrop="static" data-keyboard="false" style="margin-top: 15px;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" (click)="cerrarModal()">&times;</button>
+                <h4 class="modal-title text-center"><b>{{TituloModal}}</b></h4>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <form>
+                        <div class="row">
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                <label class="frmLblColor">Tipo Documento</label>
+                                <select class="form-control" [(ngModel)]="objetoBeneficiarios.IdTipoIden" name="TipoDoc" [disabled]="modalisDisabled">
+                              <option value="-1">Seleccionar</option>
+                              <option *ngFor="let item of this.cmbTipoIdent" [value]=" item.Codigo " >{{ item.Nombre }}</option>
+                            </select>
+                            </div>
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                <label class="frmLblColor">N° Ident.</label>
+                                <input type="text" class="form-control" [(ngModel)]="objetoBeneficiarios.NoIden" name="noOrden" oninput="this.value = this.value.toUpperCase()" [maxLength]="this.maxLengthNumDocBen" (keypress)="onlyAlphaNumeric($event)" [disabled]="modalisDisabled">
+                            </div>
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                <label class="frmLblColor">Apellido Paterno</label>
+                                <input type="text" class="form-control" [(ngModel)]="objetoBeneficiarios.Paterno" name="paterno" (keypress)="onlyAlphaNumeric($event)" [disabled]="modalisDisabled">
+                            </div>
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                <label class="frmLblColor">Apellido Materno</label>
+                                <input type="text" class="form-control" [(ngModel)]="objetoBeneficiarios.Materno" name="materno" (keypress)="onlyAlphaNumeric($event)" [disabled]="modalisDisabled">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3 ">
+                                <label class="frmLblColor">Primer Nombre</label>
+                                <input type="text" class="form-control" [(ngModel)]="objetoBeneficiarios.Nombre" name="nombre" (keypress)="onlyAlphaNumeric($event)" [disabled]="modalisDisabled">
+                            </div>
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                <label class="frmLblColor">Segundo Nombre</label>
+                                <input type="text" class="form-control" [(ngModel)]="objetoBeneficiarios.SegundoNom" name="segundo" (keypress)="onlyAlphaNumeric($event)" [disabled]="modalisDisabled">
+                            </div>
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                <label class="frmLblColor">Género</label>
+                                <!-- <input type="text" class="form-control" [(ngModel)]="objetoBeneficiarios.Genero" name = "genero"> -->
+                                <select class="form-control" [(ngModel)]="objetoBeneficiarios.IdGenero" name="genero" [disabled]="Ben_Pol">
+                          <option value="">Seleccionar</option>
+                          <option *ngFor="let opc of lstGenero" value="{{opc.cod_elemento}}">{{opc.gls_elemento}}</option>
+                        </select>
+                            </div>
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                <label class="frmLblColor">Fecha Nac.</label>
+                                <input type="date" class="form-control" [(ngModel)]="objetoBeneficiarios.FechaNac" name="fechaNac" [disabled]="FechaNacimiento">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3 ">
+                                <label class="frmLblColor">Parentesco</label>
+                                <!-- <input type="text" class="form-control" [(ngModel)]="objetoBeneficiarios.Parentesco" name="parentesco" [disabled]="modalisDisabled"> -->
+                                <select class="form-control" [(ngModel)]="objetoBeneficiarios.IdParentesco" name="parentesco" [disabled]="Ben_Pol" (change)="comboParentesco(objetoBeneficiarios.IdParentesco)"> 
+                          <option value="">Seleccionar</option>
+                          <option *ngFor="let opc of lstParentesco" value="{{opc.cod_elemento}}">{{opc.gls_elemento}}</option>
+                       </select>
+                            </div>
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                <label class="frmLblColor">Grupo Familiar</label>
+                                <!-- <input type="text" class="form-control" [(ngModel)]="objetoBeneficiarios.GpoFamiliar" name="gpoFamiliar" [disabled]="modalisDisabled"> -->
+                                <select class="form-control" [(ngModel)]="objetoBeneficiarios.IdGpoFam" name="gpoFamiliar" [disabled]="Ben_Pol">
+                          <option value="">Seleccionar</option>
+                          <option *ngFor="let opc of lstGpoFamiliar" value="{{opc.cod_elemento}}">{{opc.gls_elemento}}</option>
+                       </select>
+                            </div>
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                <label class="frmLblColor">D° Pensión</label>
+                                <!-- <input type="text" class="form-control" [(ngModel)]="objetoBeneficiarios.DerPension" name="dPension" [disabled]="modalisDisabled"> -->
+                                <select class="form-control" [(ngModel)]="objetoBeneficiarios.IdDerPension" name="dPension" [disabled]="DerPension">
+                        <option value="">Seleccionar</option>
+                        <option *ngFor="let opc of lstDerPension" value="{{opc.cod_elemento}}">{{opc.gls_elemento}}</option>
+                     </select>
+                            </div>
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                <label class="frmLblColor">D° Crecer</label>
+                                <!-- <input type="text" class="form-control" [disabled]="modalisDisabled"> -->
+                                <select class="form-control" [(ngModel)]="objetoBeneficiarios.DCrecer" name="dCrecer" [disabled]="modalisDisabledDCrecer">
+                      <option value="">Seleccionar</option>
+                      <option value="S">Si</option>
+                      <option value="N">No</option>
+                   </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3 ">
+                                <label class="frmLblColor">Fecha NHM</label>
+                                <input type="date" class="form-control" [(ngModel)]="objetoBeneficiarios.FechaNHM" name="fechaNHM" [disabled]="modalisDisabledfechanhm">
+
+                            </div>
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                <label class="frmLblColor">Fecha Mat.</label>
+                                <input type="date" class="form-control" [(ngModel)]="objetoBeneficiarios.FechaMatrimonio" name="fechaMat" [disabled]="modalisDisabledFecMat">
+                            </div>
+                            <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                                <label class="frmLblColor">Causa Invalidez</label>
+                                <input type="text" class="form-control" [(ngModel)]="objetoBeneficiarios.CausaInv" name="causaInv" (keypress)="onlyAlphaNumeric($event)" [disabled]="InvalidezCausa">
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3 ">
+                                <label class="frmLblColor">Sit de Inv.</label>
+                                <!-- <input type="text" class="form-control" [(ngModel)]="objetoBeneficiarios.SitInv" name="sitInv" [disabled]="modalisDisabled"> -->
+                                <select class="form-control" [(ngModel)]="objetoBeneficiarios.IdSitInv" name="sitInv" [disabled]="Invalidez" (change)="comboSitInvBen(objetoBeneficiarios.IdSitInv)">
+                      <option value="">Seleccionar</option>
+                      <option *ngFor="let opc of lstSitInv" value="{{opc.cod_elemento}}">{{opc.gls_elemento}}</option>
+                   </select>
+
+                            </div>
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                <label class="frmLblColor">Fecha Inv.</label>
+                                <input type="date" class="form-control" [(ngModel)]="objetoBeneficiarios.FechaInv" name="fechaInv" [disabled]="InvalidezFec">
+                            </div>
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                <label class="frmLblColor">Fecha Fall.</label>
+                                <input type="date" class="form-control" [(ngModel)]="objetoBeneficiarios.FechaFallecimiento" name="fechaFall" [disabled]="FechaFallec">
+                            </div>
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                <label class="frmLblColor">% Pensión</label>
+                                <input type="text" class="form-control" [(ngModel)]="objetoBeneficiarios.PorcPension" name="porcPension" (keypress)="onlyDecimalNumberKey($event)" [disabled]="Pension">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3 ">
+                                <label class="frmLblColor">Monto Pensión</label>
+                                <input type="text" class="form-control" [(ngModel)]="objetoBeneficiarios.MontoPension" name="montoPension" (keypress)="onlyDecimalNumberKey($event)" [disabled]="Pension">
+                            </div>
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3 ">
+                                <label class="frmLblColor">Pensión Gar</label>
+                                <input type="text" class="form-control" [(ngModel)]="objetoBeneficiarios.MtoPensionGar" name="MtoPensionGar" (keypress)="onlyDecimalNumberKey($event)" [disabled]="PensionGar">
+                            </div>
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3 ">
+                                <label class="frmLblColor">% Pensión Gar</label>
+                                <input type="text" class="form-control" [(ngModel)]="objetoBeneficiarios.PorcPensionGar" name="PorcPensionGar" (keypress)="onlyDecimalNumberKey($event)" [disabled]="PensionGar">
+                            </div>
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                <label class="frmLblColor">Teléfono</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" disabled [(ngModel)]="objetoBeneficiarios.Telefono1" name="telefono1">
+                                    <span class="input-group-btn">
+                                    <button class="btn btn-primary btnrad" type="button" data-toggle="modal"
+                                        data-target="#modalTelefonosGpoFamiliar"><i class="fa fa-info-circle"></i></button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                <label class="frmLblColor">Dirección Expediente</label><label class="frmLblColor" *ngIf=" inpDireccionExp.invalid "> </label>
+                                <input type="text" class="form-control" id="inpDireccionExp" [disabled]="modalisDisabled" [(ngModel)]="objetoBeneficiarios.Direccion" name="GlsDireccion" oninput="this.value = this.value.toUpperCase()" #inpDireccionExp="ngModel">
+                            </div>
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                <label class="frmLblColor">Ubigeo Expediente</label><label class="frmLblColor" *ngIf=" inpUbigeoExp.invalid "> </label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="inpUbigeoExp" [(ngModel)]="direccionStr" name="CodDireccion" (keypress)="numberOnly($event)" #inpUbigeoExp="ngModel" disabled>
+                                    <span class="input-group-btn">
+                                          <button class="btn btn-primary btnrad" type="button"[disabled]="modalisDisabled" data-toggle="modal"  data-target="#modalDirecciones" (click)="selectDirecciones('Exp')"><i class="fa fa-plus"></i></button>
+                                        </span>
+                                </div>
+                            </div>
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                <label class="frmLblColor">Dirección Correspondencia</label>
+                                <input type="text" class="form-control" id="inpDireccionCorresp" [disabled]="modalisDisabled" [(ngModel)]="objetoBeneficiarios.GlsDireccionCorrespBen" name="GlsDireccionCorresp" oninput="this.value = this.value.toUpperCase()">
+                            </div>
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                <label class="frmLblColor">Ubigeo Correspondencia</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="inpUbigeoCorresp" [(ngModel)]="dirCorrStr" name="CodUbigeoCorresp" (keypress)="numberOnly($event)" disabled>
+                                    <span class="input-group-btn">
+                                          <button class="btn btn-primary btnrad" [disabled]="modalisDisabled" type="button" data-toggle="modal"  data-target="#modalDirecciones" (click)="selectDirecciones('Corresp')"><i class="fa fa-plus"></i></button>
+                                        </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                <label class="frmLblColor">Correo Electrónico</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" disabled [(ngModel)]="objetoBeneficiarios.Email1" name="Email1">
+                                    <span class="input-group-btn">
+                                    <button class="btn btn-primary btnrad" type="button" data-toggle="modal"
+                                        data-target="#modalCorreosGpoFamiliar"><i class="fa fa-info-circle"></i></button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                    <div class="row" style="text-align: center; margin-bottom: 10px;">
+                        <button type="button" class="btn btn-azul mr" *ngIf="IdModal" (click)="agregarBeneficiario(objetoBeneficiarios)"> Guardar</button> &nbsp;
+                        <button type="button" class="btn btn-azul mr" data-dismiss="modal" (click)="cerrarModal()"> Cancelar</button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="display: none;"></div>
+        </div>
+    </div>
+</div>
+
+<!-- Moodal Cambios Sin Guardar -->
+<div class="modal fade " id="modalCambiosSinGuardar" #modalSG role="dialog" data-backdrop="static" data-keyboard="false" style="margin-top: 70px;">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title text-center"><b>Cambios sin guardar</b></h4>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <form>
+                        <div class="row">
+                            <div class="form-group col-lg-12" style="text-align: center;">
+                                <label class="frmLblColor">¿Desea salir?</label>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="row" style="text-align: center; margin-bottom: 10px;">
+                        <button type="button" class="btn btn-azul btn-azul-fix mr" data-dismiss="modal" (click)="volverConsulta()"> Aceptar</button> &nbsp;
+                        <button type="button" class="btn btn-azul btn-azul-fix mr" data-dismiss="modal"> Cancelar</button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="display: none;"></div>
+        </div>
+    </div>
+</div>
+<!-- Fin de Modal -->
+
+<!-- Moodal Cambios Sin Guardar -->
+<div class="modal fade " id="modalPreendoso" #modalPreendoso role="dialog" data-backdrop="static" data-keyboard="false" style="margin-top: 70px;">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title text-center"><b>Generar Pre-Endoso</b></h4>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <div class="row" style="margin-right: 0px;margin-left: 0px;">
+                        <div class="form-group col-md-12 ">
+                            <label class="frmLblColor" style="font-size: 14px;">Los cambios realizados calcularán nuevos montos, los mismos se mostrarán en un documento que generaremos en automático. <br>Estos cambios no alterarán la póliza.</label>
+                        </div>
+                    </div>
+
+                    <div class="row" style="text-align: center; margin-bottom: 10px;">
+
+                        <button type="button" class="btn btn-azul btn-azul-fix mr" data-dismiss="modal" (click)="generarPreEndoso()"> Aceptar</button> &nbsp;
+                        <button type="button" class="btn btn-azul btn-azul-fix mr" data-dismiss="modal"> Cancelar</button>
+
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="display: none;"></div>
+        </div>
+    </div>
+</div>
+<!-- Fin de Modal -->
+
+<!-- Moodal Confirmacion-->
+<div class="modal fade " id="modalConfirmacion" #modalConfirmacion role="dialog" data-backdrop="static" data-keyboard="false" style="margin-top: 70px;">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title text-center"><b>{{TituloModal}}</b></h4>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <div class="row" style="margin-right: 0px;margin-left: 0px;">
+                        <div class="form-group col-md-12" style="text-align: center;">
+                            <label class="frmLblColor" style="font-size: 14px;">{{CuerpoModal}}</label>
+                        </div>
+                    </div>
+
+                    <div class="row" style="text-align: center; margin-bottom: 10px;">
+                        <button type="button" *ngIf="ModalDescartar" class="btn btn-azul btn-azul-fix mr" (click)="descartarCambios()" data-dismiss="modal"> Aceptar</button>
+                        <button type="button" *ngIf="ModalEliminar" class="btn btn-azul btn-azul-fix mr" (click)="Modal(0,'Eliminar')" data-dismiss="modal"> Aceptar</button> &nbsp;
+                        <button type="button" class="btn btn-azul btn-azul-fix mr" data-dismiss="modal"> Cancelar</button>
+
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="display: none;"></div>
+        </div>
+    </div>
+</div>
+<!-- Fin de Modal -->
+
+<div class="modal fade" id="modalTelefonosGpoFamiliar" role="dialog" style="margin-top: 15px;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title text-center"><b>Teléfonos</b></h4>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <form>
+                        <div class="col-md-12" style="margin-right: 0px;margin-left: 0px;">
+                            <div class="form-group col-md-7 col-md-offset-2">
+                                <label class="frmLblColor">Teléfono 1</label>
+                                <input [(ngModel)]="objetoBeneficiarios.Telefono1" [disabled]="modalisDisabled" name="Telefono1" type="text" class="form-control">
+                            </div>
+                            <div class="form-group col-md-7 col-md-offset-2">
+                                <label class="frmLblColor">Teléfono 2</label>
+                                <input [(ngModel)]="objetoBeneficiarios.Telefono2" [disabled]="modalisDisabled" name="Telefono2" type="text" class="form-control">
+                            </div>
+                            <div class="form-group col-md-7 col-md-offset-2">
+                                <label class="frmLblColor">Teléfono 3</label>
+                                <input [(ngModel)]="objetoBeneficiarios.Telefono3" [disabled]="modalisDisabled" name="Telefono3" type="text" class="form-control">
+                            </div>
+
+                        </div>
+                    </form>
+                    <div class="row" style="text-align: center; margin-bottom: 10px;">
+                        <!-- <button type="button" class="btn btn-azul mr" data-dismiss="modal"> Aceptar</button> &nbsp;
+                  <button type="button" class="btn btn-azul mr" data-dismiss="modal"> Cancelar</button> -->
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="display: none;"></div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalCorreosGpoFamiliar" role="dialog" style="margin-top: 15px;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title text-center"><b>Correos Electrónicos</b></h4>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <form>
+                        <div class="col-md-12" style="margin-right: 0px;margin-left: 0px;">
+                            <div class="form-group col-md-7 col-md-offset-2">
+                                <label class="frmLblColor">Correo Electrónico 1</label>
+                                <input [(ngModel)]="objetoBeneficiarios.Email1" [disabled]="modalisDisabled" name="Correo1" type="text" class="form-control">
+                            </div>
+                            <div class="form-group col-md-7 col-md-offset-2">
+                                <label class="frmLblColor">Correo Electrónico 2</label>
+                                <input [(ngModel)]="objetoBeneficiarios.Email2" [disabled]="modalisDisabled" name="Correo2" type="text" class="form-control">
+                            </div>
+                            <div class="form-group col-md-7 col-md-offset-2">
+                                <label class="frmLblColor">Correo Electrónico 3</label>
+                                <input [(ngModel)]="objetoBeneficiarios.Email3" [disabled]="modalisDisabled" name="Correo3" type="text" class="form-control">
+                            </div>
+
+                        </div>
+                    </form>
+                    <div class="row" style="text-align: center; margin-bottom: 10px;">
+                        <!-- <button type="button" class="btn btn-azul mr" data-dismiss="modal"> Aceptar</button> &nbsp;
+                  <button type="button" class="btn btn-azul mr" data-dismiss="modal"> Cancelar</button> -->
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="display: none;"></div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalDirecciones" role="dialog" style="margin-top: 70px;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title text-center"><b>Dirección</b></h4>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <form>
+                        <div class="row">
+                            <!-- Dirección Expediente -->
+                            <div *ngIf="opcionDir === 'Exp'" class="form-group col-lg-3 col-md-3 col-sm-3 col-md-offset-1" id="custom-select">
+                                <label class="frmLblColor">Departamento</label>
+                                <select id="slcDepartamento" class="form-control" [(ngModel)]="Departamento" name="Departamento" (change)="selectDepto('')">
+                                    <option value="" selected>Seleccionar</option>
+                                    <option *ngFor="let item of this.cmbDepartamento" value="{{ item.CodRegion }}" >{{ item.GlsRegion }}</option>
+                                </select>
+                            </div>
+                            <div *ngIf="opcionDir === 'Exp'" class="form-group col-lg-3 col-md-3 col-sm-3" id="custom-select">
+                                <label class="frmLblColor">Provincia</label>
+                                <select id="slcProvincia" class="form-control" [(ngModel)]="Provincia" name="Provincia" (change)="selectProvincia('')">
+                                    <option value="" selected>Seleccionar</option>
+                                    <option *ngFor="let item of this.cmbProvincia" value="{{ item.CodProvincia }}">{{ item.GlsProvincia }}</option>
+                                </select>
+                            </div>
+                            <div *ngIf="opcionDir === 'Exp'" class="form-group col-lg-3 col-md-3 col-sm-3" id="custom-select">
+                                <label class="frmLblColor">Distrito</label>
+                                <br>
+                                <mat-select [disableOptionCentering]="true" [(ngModel)]="Distrito" name="Distrito" (valueChange)="getInfo2($event)" (valueChange)="selectDistrito('')">
+                                    <mat-select-filter [placeholder]="'Filtro'" [displayMember]="'GlsDistrito'" [array]="cmbDistritoAll" (filteredReturn)="comboDistritoResp =$event"></mat-select-filter>
+                                    <mat-option [value]="0">Seleccionar</mat-option>
+                                    <mat-option *ngFor="let item of comboDistritoResp" [value]="item.CodDireccion">
+                                        {{item.GlsDistrito}}
+                                    </mat-option>
+                                </mat-select>
+                            </div>
+
+                            <!-- Dirección Correspondencia -->
+                            <div *ngIf="opcionDir === 'Corresp'" class="form-group col-lg-3 col-md-3 col-sm-3 col-md-offset-1" id="custom-select">
+                                <label class="frmLblColor">Departamento</label>
+                                <select id="slcDepartamento2" class="form-control" [(ngModel)]="Departamento2" name="Departamento2" (change)="selectDepto('')">
+                                    <option value="" selected>Seleccionar</option>
+                                    <option *ngFor="let item of this.cmbDepartamento2" value="{{ item.CodRegion }}">{{ item.GlsRegion }}</option>
+                                </select>
+                            </div>
+                            <div *ngIf="opcionDir === 'Corresp'" class="form-group col-lg-3 col-md-3 col-sm-3" id="custom-select">
+                                <label class="frmLblColor">Provincia</label>
+                                <select id="slcProvincia2" class="form-control" [(ngModel)]="Provincia2" name="Provincia2" (change)="selectProvincia('')">
+                                    <option value="" selected>Seleccionar</option>
+                                    <option *ngFor="let item of this.cmbProvincia2" value="{{ item.CodProvincia }}">{{ item.GlsProvincia }}</option>
+                                </select>
+                            </div>
+                            <div *ngIf="opcionDir === 'Corresp'" class="form-group col-lg-3 col-md-3 col-sm-3" id="custom-select">
+                                <label class="frmLblColor">Distrito</label>
+                                <br>
+                                <mat-select [disableOptionCentering]="true" id="slcDistrito2" [(ngModel)]="Distrito2" name="Distrito2" (valueChange)="getInfo2($event)" (valueChange)="selectDistrito('')">
+                                    <mat-select-filter [placeholder]="'Filtro'" [displayMember]="'GlsDistrito'" [array]="cmbDistritoAll2" (filteredReturn)="comboDistrito2Resp =$event"></mat-select-filter>
+                                    <mat-option [value]="0">Seleccionar</mat-option>
+                                    <mat-option *ngFor="let item of comboDistrito2Resp" [value]="item.CodDireccion">
+                                        {{item.GlsDistrito}}
+                                    </mat-option>
+                                </mat-select>
+                            </div>
+                        </div>
+                    </form>
+                    <div *ngIf="opcionDir === 'Corresp'" class="row" style="text-align: center; margin-bottom: 10px;">
+                        <button type="button" class="btn btn-azul btn-azul-fix mr" data-dismiss="modal"> Aceptar</button>
+                        <!-- <button type="button" class="btn btn-azul btn-azul-fix mr" data-dismiss="modal" (click)="cambioDirCorr()"> Aceptar</button> -->
+                    </div>
+                    <div *ngIf="opcionDir === 'Exp'" class="row" style="text-align: center; margin-bottom: 10px;">
+                        <button type="button" class="btn btn-azul btn-azul-fix mr" data-dismiss="modal"> Aceptar</button>
+                        <!-- <button type="button" class="btn btn-azul btn-azul-fix mr" data-dismiss="modal" (click)="cambioDir()"> Aceptar</button> -->
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="display: none;"></div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Terminan Modales -->

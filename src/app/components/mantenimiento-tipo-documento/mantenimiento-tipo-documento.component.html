@@ -1,0 +1,185 @@
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h5 class="titulo" style="margin: 0px;"><b>Buscar Tipo de Documento</b></h5>
+        </div>
+        <div class="panel-body formSuperior">
+            <form>
+                <div class="row">
+                    <!--<div class="form-group col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                        <label class="col-lg-12 col-md-12 col-sm-12 col-xs-12 LblPrincipal">Código Tipo Documento</label>
+                        <input type="text" class="form-control form-control-sm" id="txtCodigoTipoDoc" [(ngModel)]="this.txtCodTipoDoc" name="txtCodTipoDoc" (keypress)="numberOnly($event)">
+                    </div>-->
+
+                    <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <label class="col-lg-12 col-md-12 col-sm-12 col-xs-12 LblPrincipal">Tipo Documento</label>
+                        <select class="form-control marginCombos" [(ngModel)]="this.codTipoDocumento" name="codTipoDocumento">
+                            <option value="999" selected>Seleccione Tipo de Documento</option>
+                            <option *ngFor="let item of this.cmbTipoDoc" value="{{ item.Codigo }}">{{ item.TipoDocNombre }}</option>
+                        </select>
+                    </div>
+                    <div class="form-group btnAlign col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                        <button class="btn btn-azul btn-azul-fix mr" (click)="buscarDocumento()"><i class="fa fa-search" ></i> Buscar</button>
+                    </div>
+                    <div class="form-group btnAlign col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                        <button class="btn btn-azul btn-azul-fix mr" (click)="limpiar()"><i class="fa fa-file" ></i> Limpiar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 btnAlignNuevoElemento">
+    <button class="btn btn-azul btn-azul-fix mr btnNuevoElemento" (click)="abrirModalNuevoDocumento()">Agregar elemento nuevo <i class="fa fa-plus" ></i></button>
+</div>
+
+<!--div de la tabla -->
+<div class="col-lg-12 col-md-12 col-sm-12 marg-prim">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h5 class="titulo" style="margin: 0px;"><b>Resultados</b></h5>
+        </div>
+        <div class="panel-body camposForm">
+            <div class="table-responsive">
+                <mat-table [dataSource]="dataSource" class="table table-hover">
+                    <mat-header-row *matHeaderRowDef="columnas; sticky: true"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: columnas;"></mat-row>
+                    <ng-container matColumnDef="codigo">
+                        <mat-header-cell *matHeaderCellDef>
+                            <div>Código</div>
+
+                        </mat-header-cell>
+                        <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.Codigo}}</mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="tipoDocumento">
+                        <mat-header-cell *matHeaderCellDef>
+                            <div>Tipo Documento</div>
+
+                        </mat-header-cell>
+                        <mat-cell class="duration-cell" *matCellDef="let lesson">
+                            <input type="text" *ngIf="lesson.Editar" class="inputsTablaNombres" [(ngModel)]="rowDocumento.TipoDocNombre" name="TipoDocNombre">
+                            <span *ngIf="!lesson.Editar">{{lesson.TipoDocNombre}}</span>
+                        </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="tipoDocAbreviado">
+                        <mat-header-cell *matHeaderCellDef>
+                            <div>Tipo Documento Abreviado</div>
+
+                        </mat-header-cell>
+                        <mat-cell class="duration-cell" *matCellDef="let lesson">
+                            <input type="text" *ngIf="lesson.Editar" class="inputsTablaNombres" [(ngModel)]="rowDocumento.TipoDocAbreviatura" name="TipoDocAbreviatura">
+                            <span *ngIf="!lesson.Editar">{{lesson.TipoDocAbreviatura}}</span>
+                        </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="cantidadCaracteres">
+                        <mat-header-cell *matHeaderCellDef>
+                            <div>Cantidad Carateres</div>
+
+                        </mat-header-cell>
+                        <mat-cell class="duration-cell" *matCellDef="let lesson">
+                            <input type="text" *ngIf="lesson.Editar" class="inputsTablaCyE" [(ngModel)]="rowDocumento.NumeroCaracteres" name="NumeroCaracteres" (keypress)="numberOnly($event)">
+                            <span *ngIf="!lesson.Editar">{{lesson.NumeroCaracteres}}</span>
+                        </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="estado">
+                        <mat-header-cell *matHeaderCellDef>
+                            <div>Estado</div>
+
+                        </mat-header-cell>
+                        <mat-cell class="duration-cell" *matCellDef="let lesson">
+                            <select *ngIf="lesson.Editar" [(ngModel)]="rowDocumento.Estado" name="Estado" class="inputsTablaCyE">
+                                <option  value="S">Activo</option>
+                                <option  value="N">Inactivo</option>
+                            </select>
+                            <!--<span *ngIf="!lesson.Editar">{{lesson.Estado}}</span>-->
+                            <span *ngIf="!lesson.Editar && lesson.Estado === 'S'">Activo</span>
+                            <span *ngIf="!lesson.Editar && lesson.Estado === 'N'">Inactivo</span>
+                        </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="acciones">
+                        <mat-header-cell *matHeaderCellDef>
+                            <div>Acciones</div>
+
+                        </mat-header-cell>
+                        <mat-cell class="duration-cell" *matCellDef="let lesson">
+                            <div class="row">
+                                <div *ngIf="!lesson.Editar">
+                                    <i style="color:#0090B2" title="Editar" class="fa fa-edit" (click)="editarInfo(lesson)"></i>
+                                </div>
+                                <button *ngIf="lesson.Editar" class="btn btn-azul btn-azul-fix mr btnTablaEdit" (click)="GuardarInfo(lesson)" title="Guardar"><i class="fa fa-save"></i></button>
+                                <button *ngIf="lesson.Editar" class="btn btn-azul btn-azul-fix mr btnTablaEdit" (click)="cancelarEdicion(lesson)" title="Cancelar"><i class="fa fa-window-close"></i></button>
+                            </div>
+                        </mat-cell>
+                    </ng-container>
+                </mat-table>
+                <mat-paginator [length]="0" [pageSize]="20" [pageSizeOptions]="[5, 10, 20, 50]" [showFirstLastButtons]="true"></mat-paginator>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!--Termina div de la tabla -->
+
+<!-- Modal para Registros Nuevos -->
+<div class="modal fade" id="modalNuevoTipoDoc" role="dialog" style="margin-top: 70px;" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" (click)="cancelarNuevoDoc()">&times;</button>
+                <h4 class="modal-title text-center"><b>Agregar Nuevo Elemento </b></h4>
+            </div>
+            <div class="modal-body">
+                <div class="row" style="padding: 30px;">
+                    <div class="row rowCamposModal">
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                            <label class="col-lg-12 col-md-12 col-sm-12 col-xs-12 LblModal">Código Tipo Documento</label>
+                            <input type="text" class="form-control" id="txtCodigoNuevoDoc" [(ngModel)]="this.datosNuevoDocumento.Codigo" disabled>
+                        </div>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                            <label class="col-lg-12 col-md-12 col-sm-12 col-xs-12 LblModal">Tipo Documento</label>
+                            <input type="text" class="form-control" id="txtNombreNuevoDoc" [(ngModel)]="this.datosNuevoDocumento.TipoDocNombre" oninput="this.value = this.value.toUpperCase()">
+                        </div>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                            <label class="col-lg-12 col-md-12 col-sm-12 col-xs-12 LblModal">Tipo Documento Abreviado</label>
+                            <input type="text" class="form-control" id="txtAbreviacionNuevoDoc" [(ngModel)]="this.datosNuevoDocumento.TipoDocAbreviatura" oninput="this.value = this.value.toUpperCase()">
+                        </div>
+                    </div>
+
+                    <div class="row rowCamposModal">
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                            <label class="col-lg-12 col-md-12 col-sm-12 col-xs-12 LblModal">Cantidad de Caracteres</label>
+                            <input type="text" class="form-control" id="txtCaracteresNuevoDoc" [(ngModel)]="this.datosNuevoDocumento.NumeroCaracteres" (keypress)="numberOnly($event)">
+                        </div>
+
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                            <label class="col-lg-12 col-md-12 col-sm-12 col-xs-12 LblModal">Estado</label>
+                            <select class="form-control marginCombos" name="cmbxEstadoNuevoDoc" [(ngModel)]="this.datosNuevoDocumento.Estado">
+                                <option value="" selected>Seleccione un Estado</option>
+                                <option value="S" selected>Activo</option>
+                                <option value="N" selected>Inactivo</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12 col-md-12 col-sm-12" style="padding-top: 15px; margin-top: 30px;">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="form-group col-lg-6 col-md-6 col-sm-6" style="text-align: end;">
+                                    <button class="btn btn-azul btn-azul-fix mr" (click)="guardarNuevoDoc()"><i class="fa fa-plus-square"></i> Guardar</button>
+                                </div>
+                                <div class="form-group col-lg-6 col-md-6 col-sm-6" style="text-align: start;">
+                                    <button class="btn btn-azul btn-azul-fix mr" (click)="cancelarNuevoDoc()"><i class="fa fa-window-close"></i> Cancelar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="display: none;"></div>
+        </div>
+    </div>
+</div>
+<!-- Termina Modal para Registros Nuevos -->

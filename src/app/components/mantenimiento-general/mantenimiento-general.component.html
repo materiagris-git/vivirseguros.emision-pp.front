@@ -1,0 +1,79 @@
+<div class="col-lg-12 col-md-12 col-sm-12 ">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h5 class="titulo" style="margin: 0px;"><b>Mantenimiento IGV - Impuesto a la renta</b></h5>
+        </div>
+        <div class="panel-body camposForm">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="form-group col-lg-4 col-md-6 col-sm-6 col-xs-6">
+                            <div>
+                                <label class="LblPrincipal">IGV</label>
+                            </div>
+                            <div class="form-group col-lg-1-5 col-md-2 col-sm-2 col-xs-2">
+                                <input type="radio" name="radioMantenimiento" class="form-control" (change)="ActivarIGV()" />
+                            </div>
+                            <div class="form-group col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                                <input name="slcCategoria" class="form-control" [disabled]="mantenimientoIGVDisabled" [(ngModel)]="dataMantenimiento.IGV" />
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-4 col-md-6 col-sm-6 col-xs-6">
+                            <div>
+                                <label class="LblPrincipal">Impuesto a la renta</label>
+                            </div>
+                            <div class="form-group col-lg-1-5 col-md-2 col-sm-2 col-xs-2">
+                                <input type="radio" name="radioMantenimiento" class="form-control" (change)="ActivarImpuestoRenta()" />
+                            </div>
+                            <div class="form-group col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                                <input name="slcCategoria" class="form-control" [disabled]="impuestoRentaDisabled" [(ngModel)]="dataMantenimiento.ImpuestoRenta" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-lg-12 col-md-12 col-sm-12 ">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h5 class="titulo" style="margin: 0px;"><b>Mantenimiento IGV - Impuesto a la renta</b></h5>
+        </div>
+        <div class="panel-body camposForm">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="form-group col-lg-4 col-md-6 col-sm-6 col-xs-6">
+                            <div>
+                                <label class="LblPrincipal">Capital social</label>
+                            </div>
+                            <div class="form-group col-lg-1-5 col-md-2 col-sm-2 col-xs-2">
+                                <input type="radio" name="radioMantenimiento" class="form-control" (change)="ActivarCapitalSocial()" />
+                            </div>
+                            <div class="form-group col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                                <input name="slcCategoria" id="txtCapitalSocial" class="form-control" [disabled]="capitalSocialDisabled" [(ngModel)]="dataMantenimiento.CapitalSocial" />
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-4 col-md-6 col-sm-6 col-xs-6">
+                            <div>
+                                <label class="LblPrincipal">Patrimonio</label>
+                            </div>
+                            <div class="form-group col-lg-1-5 col-md-2 col-sm-2 col-xs-2">
+                                <input type="radio" name="radioMantenimiento" class="form-control" (change)="ActivarPatrimonio()" />
+                            </div>
+                            <div class="form-group col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                                <input name="slcCategoria" class="form-control" [disabled]="patrimonioDisabled" [(ngModel)]="dataMantenimiento.Patrimonio" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12" align="right">
+    <a class="btn btn-azul btn-azul-fix" id="btnActualizar" (click)="ActualizarParametros()">Actualizar</a>
+    <a class="btn btn-azul btn-azul-fix" id="btnCancelar" style="margin-left: 20px;" (click)="RecargarPagina()"> Cancelar</a>
+</div>

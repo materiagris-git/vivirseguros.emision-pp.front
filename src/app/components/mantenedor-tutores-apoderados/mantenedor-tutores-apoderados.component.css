@@ -1,0 +1,185 @@
+table tr th,
+td {
+    text-align: center;
+}
+
+.camposForm {
+    background-color: lightgray;
+}
+
+.btnCircle {
+    border-radius: 20px;
+    background-color: #0090B2;
+    font-size: 11px;
+}
+
+.btn-azul-fix {
+    font-size: 11px;
+}
+
+.btnrad {
+    border-radius: 3px;
+    background-color: #0090B2;
+}
+
+.column5 {
+    width: 20%;
+}
+
+.column40 {
+    width: 40%;
+}
+
+.btnAlign {
+    text-align: right;
+    margin-bottom: 30px;
+}
+
+@media (min-width: 1200px) {
+    .spaceM {
+        margin-top: 10px;
+        margin-bottom: 35px;
+    }
+    .mr {
+        margin-right: 10px;
+    }
+    .btnAlign {
+        text-align: right;
+        margin-bottom: 30px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+    .column5 {
+        width: 100%;
+    }
+    .column40 {
+        width: 100%;
+    }
+    .btnAlign {
+        text-align: right;
+        margin-bottom: 30px;
+    }
+}
+
+::ng-deep td.t-m {
+    text-align: center;
+}
+
+.mat-table {
+    height: 410px;
+    overflow: auto;
+    background-color: #ffffff;
+}
+
+.mat-row {
+    border-bottom: 1px solid lightgray;
+}
+
+.mat-cell,
+.mat-header-cell {
+    color: black;
+    display: block;
+    background-color: #ffffff;
+    text-align: center;
+    font-size: 11px;
+    padding: 15px 0px;
+}
+
+.mat-header-cell {
+    color: black;
+    background-color: #ffffff;
+    display: block;
+    font-size: 12px;
+}
+
+
+/* Landscape phones and portrait tablets */
+
+@media (max-width: 767px) {
+    .column5 {
+        width: 100%;
+    }
+    .column40 {
+        width: 100%;
+    }
+    .btnAlign {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+}
+
+
+/* Portrait phones and smaller */
+
+@media (max-width: 480px) {
+    .column5 {
+        width: 100%;
+    }
+    .column40 {
+        width: 100%;
+    }
+    .btnAlign {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+    .mr {
+        width: 100%;
+    }
+}
+
+.modal-tutor {
+    margin-top: 0%;
+}
+
+.btnradio {
+    border-radius: 20px;
+    background-color: #118aac;
+    font-size: 11px;
+    color: white;
+}
+
+.ltr {
+    font-size: 15px;
+}
+
+.modalAddTutor {
+    width: 450px;
+    margin: center;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -150px;
+    margin-top: -150px;
+}
+
+.cdk-global-overlay-wrapper,
+.cdk-overlay-container,
+.cdk-overlay-pane {
+    z-index: 99999 !important;
+}
+
+.mat-select-trigger {
+    padding-top: 4px;
+}
+
+::ng-deep .cdk-overlay-container {
+    position: fixed!important;
+    z-index: 999999999999999999!important;
+}
+
+mat-select {
+    font-size: 11px;
+    width: 100%;
+    border: 1px solid #CCCCCC;
+    height: 35px;
+    padding-top: 6px;
+    padding-right: 12px;
+    padding-bottom: 6px;
+    padding-left: 12px;
+    border-radius: 3px;
+}
+
+mat-option {
+    background-color: white;
+}

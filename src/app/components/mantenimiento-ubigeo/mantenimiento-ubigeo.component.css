@@ -1,0 +1,61 @@
+.LblPrincipal {
+    font-size: 11px;
+    padding-left: 0px!important;
+}
+
+.LblModal {
+    font-size: 11px;
+    color: black;
+    padding: 0px!important;
+}
+
+.marginCombos {
+    margin-top: 5px!important;
+}
+
+.btn-azul-fix {
+    font-size: 11px;
+    margin: 0px 15px 0px 15px;
+}
+
+.btnAlign {
+    text-align: end;
+    margin-bottom: 30px;
+}
+
+.cmbMargin {
+    margin-left: 10px;
+}
+
+.rowCamposModal {
+    margin: 0px;
+    padding: 0px 15px 0px 15px;
+}
+
+.rowRadioButton {
+    padding: 0px 5px 0px 5px;
+}
+
+mat-select {
+    font-size: 11px;
+    width: 100%;
+    border: 1px solid #CCCCCC;
+    height: 35px;
+    padding-top: 6px;
+    padding-right: 12px;
+    padding-bottom: 6px;
+    padding-left: 12px;
+    border-radius: 3px;
+}
+
+mat-option {
+    background-color: white;
+}
+
+::ng-deep .mat-select-arrow {
+    color: black;
+}
+
+.mat-select-trigger {
+    padding-top: 4px;
+}

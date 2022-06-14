@@ -1,0 +1,24 @@
+.panel-default .panel-heading {
+    font-weight: normal;
+    font-size: 12px;
+    color: #0091B2;
+    background-color: white;
+    padding: 5px 15px;
+    border-color: #eae3e3;
+}
+
+@media (min-width: 1200px) {
+    .col-lg-1-5 {
+        width: 11%;
+        position: relative;
+        min-height: 1px;
+        padding-right: 15px;
+        padding-left: 15px;
+        float: left;
+    }
+}
+
+.LblPrincipal {
+    font-size: 11px;
+    padding-left: 0px!important;
+}

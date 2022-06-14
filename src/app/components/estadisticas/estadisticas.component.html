@@ -1,0 +1,171 @@
+<!-- Div Encabezado-->
+<div class="col-lg-12 col-md-12 col-sm-12 ">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h5 class="titulo" style="margin: 0px;"><b>Definición de primeros pagos</b></h5>
+        </div>
+        <div class="panel-body camposEncabezado">
+            <!-- Campos Encabezado -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="form-group col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                            <label class="frmLblColor">Número de póliza</label>
+                            <input type="text" class="form-control form-control-sm" name="txtNumPoliza" id="txtNumPoliza" [(ngModel)]="datosBusqueda.NumPoliza" maxlength="10" (keypress)="numberOnly($event)">
+                        </div>
+                        <div class="form-group col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                            <label class="frmLblColor">Número de endoso</label>
+                            <input type="text" class="form-control form-control-sm" name="txtNumEndoso" id="txtNumEndoso" [(ngModel)]="datosBusqueda.NumEndoso" maxlength="4" (keypress)="numberOnly($event)">
+                        </div>
+                        <div class="form-group col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                            <label class="frmLblColor">Fecha inicio</label>
+                            <input type="date" class="form-control form-control-sm" name="txtFechaIni" [(ngModel)]="datosBusqueda.FecInicio" id="txtFechaIni">
+                        </div>
+                        <div class="form-group col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                            <label class="frmLblColor">Fecha fin</label>
+                            <input type="date" class="form-control form-control-sm" name="txtFechaFin" [(ngModel)]="datosBusqueda.FecFin" id="txtFechaFin">
+                        </div>
+                        <div class="form-group col-lg-2 col-md-3 col-sm-2 col-xs-12" style="padding-top: 25px;">
+                            <button type="button" class="btn btn-azul btn-azul-fix" (click)="btnBuscar()"><i class="glyphicon glyphicon-search"></i> Buscar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Terminan Campos Encabezado -->
+        </div>
+    </div>
+</div>
+<!-- Termina Div Encabezado -->
+
+<!-- Div Tabla-->
+<div class="col-lg-12 col-md-12 col-sm-12 ">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h5 class="titulo" style="margin: 0px;"><b>Resultados</b></h5>
+        </div>
+        <div class="panel-body tabla">
+            <!-- Tabla -->
+            <div class="table-responsive">
+                <mat-table [dataSource]="dataSourceTblResultados" class="table table-hover">
+                    <mat-header-row *matHeaderRowDef="columnasTblResultados; sticky: true"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: columnasTblResultados;"></mat-row>
+                    <ng-container matColumnDef="numPoliza">
+                        <mat-header-cell *matHeaderCellDef>
+                            <div>N° póliza</div>
+
+                        </mat-header-cell>
+                        <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.NumPoliza}}</mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="numEndoso">
+                        <mat-header-cell *matHeaderCellDef>
+                            <div>N° endoso</div>
+
+                        </mat-header-cell>
+                        <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.NumEndoso}}</mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="nomProceso">
+                        <mat-header-cell *matHeaderCellDef>
+                            <div>Nombre proceso</div>
+
+                        </mat-header-cell>
+                        <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.NomProceso}}</mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="descripEstado">
+                        <mat-header-cell *matHeaderCellDef>
+                            <div>Descripción estado</div>
+
+                        </mat-header-cell>
+                        <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.DescripEstado}}</mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="fecRegistro">
+                        <mat-header-cell *matHeaderCellDef>
+                            <div>Fecha registro</div>
+
+                        </mat-header-cell>
+                        <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.FecRegistro}}</mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="fecCierre">
+                        <mat-header-cell *matHeaderCellDef>
+                            <div>Fecha cierre</div>
+
+                        </mat-header-cell>
+                        <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.FecCierre}}</mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="numDocumento">
+                        <mat-header-cell *matHeaderCellDef>
+                            <div>Número documento</div>
+
+                        </mat-header-cell>
+                        <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.DocIdentidad}}</mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="nomEmpresa">
+                        <mat-header-cell *matHeaderCellDef>
+                            <div>Nombre empresa</div>
+
+                        </mat-header-cell>
+                        <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.NomEmpresa}}</mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="fecEnvioNotif">
+                        <mat-header-cell *matHeaderCellDef>
+                            <div>Fecha envío notificación</div>
+
+                        </mat-header-cell>
+                        <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.FecEnvioNotif}}</mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="fecFirmaDigital">
+                        <mat-header-cell *matHeaderCellDef>
+                            <div>Fecha firma digital</div>
+
+                        </mat-header-cell>
+                        <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.FecFirmaDigital}}</mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="fecRecepNotif">
+                        <mat-header-cell *matHeaderCellDef>
+                            <div>Fecha recepción notificación</div>
+
+                        </mat-header-cell>
+                        <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.FecRecepNotif}}</mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="fecVisualizaContrato">
+                        <mat-header-cell *matHeaderCellDef>
+                            <div>Fecha visualización contrato</div>
+
+                        </mat-header-cell>
+                        <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.FecVisualizaContrato}}</mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="nomUsuario">
+                        <mat-header-cell *matHeaderCellDef>
+                            <div>Nombre usuario</div>
+
+                        </mat-header-cell>
+                        <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.NomUsuario}}</mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="tipoUsuario">
+                        <mat-header-cell *matHeaderCellDef>
+                            <div>Tipo usuario</div>
+
+                        </mat-header-cell>
+                        <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.TipoUsuario}}</mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="correo">
+                        <mat-header-cell *matHeaderCellDef>
+                            <div>Correo</div>
+
+                        </mat-header-cell>
+                        <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.Correo}}</mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="comentario">
+                        <mat-header-cell *matHeaderCellDef>
+                            <div>Comentario</div>
+
+                        </mat-header-cell>
+                        <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.Comentario}}</mat-cell>
+                    </ng-container>
+                </mat-table>
+                <mat-paginator [length]="0" [pageSize]="20" [pageSizeOptions]="[5, 10, 20, 50]" [showFirstLastButtons]="true"></mat-paginator>
+            </div>
+            <!-- Terminan Tabla -->
+        </div>
+    </div>
+</div>
+<!-- Termina Div Tabla -->

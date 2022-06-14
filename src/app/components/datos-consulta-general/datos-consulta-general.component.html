@@ -1,0 +1,1597 @@
+<div class="col-lg-12 col-md-12 col-sm-12 ">
+    <div class="panel panel-default">
+        <div class="panel-body camposForm">
+            <form>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                <label>N° Póliza:</label>&nbsp;
+                                <label class="frmLblColor">{{filtros.NumeroPoliza}}</label>
+                            </div>
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                <label>N° Endoso:</label>&nbsp;
+                                <label class="frmLblColor">{{filtros.NoEndoso}}</label>
+                            </div>
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                <label>CUSPP:</label>&nbsp;
+                                <label class="frmLblColor">{{filtros.CUSPP}}</label>
+                            </div>
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                <label>Fecha de Solicitud:</label>&nbsp;
+                                <label class="frmLblColor">{{filtros.Fecha}}</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-lg-9 col-md-9 col-sm-9">
+                                <label>Titular:</label>&nbsp;
+                                <label class="frmLblColor">{{nombreCompleto}}</label>
+                            </div>
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                <label>Documento:</label>&nbsp;
+                                <label class="frmLblColor">{{TipoNumIdent}}</label>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div class="col-lg-12 col-md-12 col-sm-12 marg-prim" *ngIf="poliza || familiar || pagoPensiones || fechaPago">
+    <div class="row">
+        <div class="col-md-12">
+            <h5 class="titulo tituloLinea"><b>Grupo Familiar de la Póliza</b></h5>
+        </div>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12 marg-prim grid">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="table-responsive text-center">
+                    <div class="table-responsive">
+                        <mat-table [dataSource]="dataSourceGpoFam" class="table table-hover">
+                            <mat-header-row *matHeaderRowDef="columnasGpoFamiliar; sticky: true"></mat-header-row>
+                            <mat-row *matRowDef="let row; columns: columnasGpoFamiliar;"></mat-row>
+                            <ng-container matColumnDef="item">
+                                <mat-header-cell *matHeaderCellDef>
+                                    <div>Item</div>
+
+                                </mat-header-cell>
+                                <mat-cell class="duration-cell" *matCellDef="let lesson; let i=index">{{i+1}}</mat-cell>
+                            </ng-container>
+                            <ng-container matColumnDef="parentesco">
+                                <mat-header-cell *matHeaderCellDef>
+                                    <div>Parentesco</div>
+
+                                </mat-header-cell>
+                                <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.Parentesco}}</mat-cell>
+                            </ng-container>
+                            <ng-container matColumnDef="tipoIdent">
+                                <mat-header-cell *matHeaderCellDef>
+                                    <div>Tipo Ident.</div>
+
+                                </mat-header-cell>
+                                <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.Identificador}}</mat-cell>
+                            </ng-container>
+                            <ng-container matColumnDef="noIdent">
+                                <mat-header-cell *matHeaderCellDef>
+                                    <div>N° Ident.</div>
+
+                                </mat-header-cell>
+                                <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.NoIdentificador}}</mat-cell>
+                            </ng-container>
+                            <ng-container matColumnDef="nombre">
+                                <mat-header-cell *matHeaderCellDef>
+                                    <div>Nombre</div>
+
+                                </mat-header-cell>
+                                <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.Nombre}}</mat-cell>
+                            </ng-container>
+                            <ng-container matColumnDef="estado">
+                                <mat-header-cell *matHeaderCellDef>
+                                    <div>Estado</div>
+
+                                </mat-header-cell>
+                                <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.Estado}}</mat-cell>
+                            </ng-container>
+                            <ng-container matColumnDef="acciones">
+                                <mat-header-cell *matHeaderCellDef>
+                                    <div>Acciones</div>
+
+                                </mat-header-cell>
+                                <mat-cell class="duration-cell" *matCellDef="let lesson"><i style="color:#0090B2" title="Visualizar" class="fa fa-search exclam" (click)="buscarFamiliar(lesson)"></i></mat-cell>
+                            </ng-container>
+                        </mat-table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-lg-12 col-md-12 col-sm-12" *ngIf="calculo ">
+
+    <div class="col-lg-12 col-md-12 col-sm-12  panel panel-default">
+        <div class="row panel-body">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="row">
+                    <div class="form-group col-lg-3 col-md-3 col-xs-12 ">
+                        <label class="frmLblColor">Tipo de Pensión</label>
+                        <input type="text" class="form-control" disabled [(ngModel)]="datosPoliza.TipoPension" name="tipoPension">
+
+                        <!-- <select id="slcTipoIdent" class="form-control" disabled>
+              <option></option>
+            </select> -->
+
+                    </div>
+                    <div class="form-group col-lg-3 col-md-3 col-xs-12 ">
+                        <label class="frmLblColor">Tipo de Moneda</label>
+                        <input type="text" class="form-control" disabled [(ngModel)]="datosPoliza.TipoMoneda" name="tipoMoneda">
+
+                        <!-- <select id="slcTipoIdent" class="form-control" disabled>
+              <option></option>
+            </select> -->
+                    </div>
+                    <div class="form-group col-lg-3 col-md-3 col-xs-12 ">
+                        <label class="frmLblColor">Tipo de Renta</label>
+                        <input type="text" class="form-control" disabled [(ngModel)]="datosPoliza.TipoRenta" name="tipoRenta">
+
+                        <!-- <select id="slcTipoIdent" class="form-control" disabled>
+              <option></option>
+            </select> -->
+                    </div>
+                    <div class="form-group col-lg-3 col-md-3 col-xs-12 ">
+                        <label class="frmLblColor">Modalidad</label>
+                        <input type="text" class="form-control" disabled [(ngModel)]="datosPoliza.Modalidad" name="modalidad">
+                    </div>
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-lg-12 col-md-12 col-sm-12">
+    <div class="panel with-nav-tabs panel-default">
+        <div class="panel-heading">
+            <ul class="nav nav-tabs">
+                <li class="title active">
+                    <a href="#datosPoliza" (click)="changeTab('datosPoliza')" data-toggle="tab">Póliza</a>
+                </li>
+                <!--<li class="title">
+                    <a href="#datosCalculo" (click)="changeTab('datosCalculo')" data-toggle="tab">Datos de Cálculo </a>
+                </li> -->
+                <li class="title">
+                    <a href="#datosFamiliar" (click)="changeTab('grupoFamiliar')" data-toggle="tab">Grupo Familiar</a>
+                </li>
+                <li class="title">
+                    <a href="#datosPensiones" (click)="changeTab('pagoPensiones')" data-toggle="tab">Forma de Pago</a>
+                </li>
+                <!--<li class="title">
+                    <a href="#datosLiquidaciones" (click)="changeTab('liquidaciones')" data-toggle="tab">Liquidaciones (H/D)</a>
+                </li>-->
+
+                <li class="title">
+                    <a href="#datosDocumentos" (click)="changeTab('documentos')" data-toggle="tab">Documentos</a>
+                </li>
+                <li class="title">
+                    <a href="#datosDocumentosBoletas" (click)="changeTab('documentosBoletas')" data-toggle="tab">Boletas por Mes</a>
+                </li>
+                <li class="title">
+                    <a href="#datosFechaPago" (click)="changeTab('FechaPago')" data-toggle="tab">Fechas de Pago</a>
+                </li>
+            </ul>
+        </div>
+        <div class="panel-body">
+            <div class="tab-content">
+                <div class="tab-pane fade in active" id="datosPoliza">
+                    <!-- Datos Poliza -->
+                    <div class="col-lg-12 col-md-12 col-sm-12 m-3">
+
+                        <div class="row">
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">Tipo de Pensión</label>
+                                <!-- <select id="slcTipoIdent" class="form-control" disabled>
+                  <option></option>
+                </select> -->
+                                <input type="text" class="form-control" disabled [(ngModel)]="datosPoliza.TipoPension" name="tipoPension">
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">Tipo de Moneda</label>
+                                <!-- <select id="slcTipoIdent" class="form-control" disabled>
+                  <option></option>
+                </select> -->
+                                <input type="text" class="form-control" disabled [(ngModel)]="datosPoliza.TipoMoneda" name="tipoMoneda">
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">Tipo de Renta</label>
+                                <!-- <select id="slcTipoIdent" class="form-control" disabled>
+                  <option></option>
+                </select> -->
+                                <input type="text" class="form-control" disabled [(ngModel)]="datosPoliza.TipoRenta" name="tipoRenta">
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">Modalidad</label>
+                                <input type="text" class="form-control" disabled [(ngModel)]="datosPoliza.Modalidad" name="modalidad">
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">N° de Beneficiarios de Póliza</label>
+                                <input type="text" class="form-control" disabled [(ngModel)]="datosPoliza.NoBeneficiarios" name="noBeneficiarios">
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">Fecha de Devengue</label>
+                                <input type="text" class="form-control" disabled [(ngModel)]="datosPoliza.FechaDevengue" name="fechaDevengue">
+
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">Fec. de Ingreso al SPP</label>
+                                <input type="text" class="form-control" disabled [(ngModel)]="datosPoliza.FechaSPP" name="fechaSPP">
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">Años Escal. 1er Tramo</label>
+                                <input type="text" class="form-control" disabled [(ngModel)]="datosPoliza.Escalonada" name="escalonada">
+                            </div>
+                            <div class="form-group  col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">% Rta. Esc. 2do Tramo</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" disabled [ngModel]="datosPoliza.PorcRentaEsc | number:'1.2-2'" name="porcRentaEsc">
+                                    <div class="input-group-btn">
+                                        <span class="input-group-addon iconSpan" style="padding: 9px 12px;">
+                      %
+                    </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">Estado</label>
+                                <input type="text" class="form-control" disabled [(ngModel)]="datosPoliza.Estado" name="estado">
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">Periodo de Vigencia</label>
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="row">
+                                        <div class="form-group col-md-12" style="padding:0px;">
+                                            <div class="form-group col-md-5" style="padding:0px;">
+
+                                                <input type="text" class="form-control" style="padding:0px; text-align: center;" disabled [(ngModel)]="datosPoliza.FechaIniVigencia" name="fechaInicioVigencia">
+                                            </div>
+                                            <div class="col-md-2 paddRL">-</div>
+                                            <div class="form-group col-md-5" style="padding:0px;">
+
+                                                <input type="text" style="padding:0px; text-align: center;" class="form-control" disabled [(ngModel)]="datosPoliza.FechaFinVigencia" name="fechaFinVigencia">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">AFP</label>
+                                <input type="text" class="form-control" disabled [(ngModel)]="datosPoliza.AFP" name="afp">
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">Monto Prima</label>
+                                <div class="input-group">
+                                    <div class="input-group-btn">
+                                        <span class="input-group-addon iconSpan" style="padding: 9px 12px;">
+                                        S/
+                                      </span>
+                                    </div>
+                                    <input type="text" class="form-control" disabled [ngModel]="datosPoliza.MontoPrima | number:'1.2-2'" name="montoPrima">
+                                </div>
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">Monto Pensión</label>
+                                <div class="input-group">
+                                    <div class="input-group-btn">
+                                        <span class="input-group-addon iconSpan" style="padding: 9px 12px;">
+                                        {{CodMonedaPen}}
+                                      </span>
+                                    </div>
+                                    <input type="text" class="form-control" disabled [ngModel]="datosPoliza.MontoPension | number:'1.2-2'" name="montoPension">
+                                </div>
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">Tasa. Cto. Reaseguro</label>
+                                <!-- <select id="slcTipoIdent" class="form-control" disabled [(ngModel)]="datosPoliza.TasaReaseguro" name="tasaReaseguro">
+                  <option></option>
+                </select> -->
+                                <input type="text" class="form-control" disabled [ngModel]="datosPoliza.TasaReaseguro | number:'1.2-2'" name="tasaReaseguro">
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">Años Diferidos</label>
+                                <input type="text" class="form-control" disabled [(ngModel)]="datosPoliza.Diferidos" name="diferidos">
+
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">Años Garantizados</label>
+                                <input type="text" class="form-control" disabled [(ngModel)]="datosPoliza.Garantizados" name="garantizados">
+                            </div>
+                            <!--<div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">Tasa Cto. Equivalente</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" disabled [ngModel]="datosPoliza.TasaEquivalente | number:'1.2-2'" name="tasaEquivalente">
+                                    <div class="input-group-btn">
+                                        <span class="input-group-addon iconSpan" style="padding: 9px 12px;">
+                      %
+                    </span>
+                                    </div>
+                                </div>
+                            </div>-->
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">Tasa de Venta</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" disabled [ngModel]="datosPoliza.TasaVenta | number:'1.2-2'" name="tasaVenta">
+                                    <div class="input-group-btn">
+                                        <span class="input-group-addon iconSpan" style="padding: 9px 12px;">
+                      %
+                    </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--<div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">Tasa Int. Per. Garantizado</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" disabled [ngModel]="datosPoliza.TasaGarantizado | number:'1.2-2'" name="tasaGarantizado">
+                                    <div class="input-group-btn">
+                                        <span class="input-group-addon iconSpan" style="padding: 9px 12px;">
+                      %
+                    </span>
+                                    </div>
+                                </div>
+                            </div>-->
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">Vigencia Periodo Garantizado</label>
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="row">
+                                        <div class="form-group col-md-12" style="padding:0px;">
+                                            <div class="form-group col-md-5" style="padding:0px;">
+
+                                                <input type="text" class="form-control" style="padding:0px; text-align: center;" disabled [(ngModel)]="datosPoliza.FechaIniVigenciaGar" name="fechaInicioVigencia">
+                                            </div>
+                                            <div class="col-md-2 paddRL">-</div>
+                                            <div class="form-group col-md-5" style="padding:0px;">
+
+                                                <input type="text" style="padding:0px; text-align: center;" class="form-control" disabled [(ngModel)]="datosPoliza.FechaFinVigenciaGar" name="fechaFinVigencia">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">Teléfono</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" disabled [(ngModel)]="datosPoliza.Telefono1" name="telefono1">
+                                    <span class="input-group-btn">
+                    <button class="btn btn-primary btnrad" type="button" data-toggle="modal"  data-target="#modalTelefonosPoliza"><i class="fa fa-info-circle"></i></button>
+                  </span>
+
+                                </div>
+
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">Correo Electrónico</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" disabled [(ngModel)]="datosPoliza.Correo1" name="correo1">
+                                    <span class="input-group-btn">
+                    <button class="btn btn-primary btnrad" type="button" data-toggle="modal"
+                      data-target="#modalCorreosPoliza"><i class="fa fa-info-circle"></i></button>
+                  </span>
+
+                                </div>
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">Fecha Inicio Primer Pago</label>
+                                <input type="text" class="form-control" disabled [(ngModel)]="datosCalculo.FechaInicioPago" name="fechaInicioPago">
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">Gratificación</label>
+                                <input type="text" class="form-control" disabled [(ngModel)]="datosCalculo.Gratificacion" name="gratificacion">
+
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">% Renta Escalonada</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" disabled [ngModel]="datosCalculo.RentaEscalonada  | number:'1.2-2'" name="rentaEscalonada">
+                                    <div class="input-group-btn">
+                                        <span class="input-group-addon iconSpan" style="padding: 9px 12px;">
+                                        %
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">% Renta Temporal</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" disabled [ngModel]="datosCalculo.RentaTemporal | number:'1.2-2'" name="rentaTemporal">
+                                    <div class="input-group-btn">
+                                        <span class="input-group-addon iconSpan" style="padding: 9px 12px;">%</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">Fecha Traspaso Prima</label>
+                                <input type="text" class="form-control" disabled [(ngModel)]="datosCalculo.FechaTraspaso" name="fechaTraspaso">
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+                    <!-- Fin Datos Poliza -->
+                </div>
+                <!--<div class="tab-pane fade" id="datosCalculo">-->
+                <!-- datos de calculo -->
+                <!--<div class="col-lg-12 col-md-12 col-sm-12 m-3">
+
+                        <div class="row">
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">Tipo de Doc. Intermediario</label>
+                                <input type="text" class="form-control" disabled [(ngModel)]="datosCalculo.TipoDoc" name="tipoDoc">
+
+
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">N° Doc. Intermediario</label>
+                                <input type="text" class="form-control" disabled [(ngModel)]="datosCalculo.NoDoc" name="noDoc">
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">CUSPP</label>
+                                <input type="text" class="form-control" disabled [(ngModel)]="datosCalculo.CUSPP" name="cuspp">
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">Tipo de Renta</label>
+                                <input type="text" class="form-control" disabled [(ngModel)]="datosCalculo.TipoRenta" name="tipoRenta">
+
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">Modalidad</label>
+                                <input type="text" class="form-control" disabled [(ngModel)]="datosCalculo.Modalidad" name="modalidad">
+
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">Tipo de Moneda</label>
+                                <input type="text" class="form-control" disabled [(ngModel)]="datosCalculo.TipoMoneda" name="tipoMoneda">
+
+
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">Cobertura Conyuge</label>
+                                <input type="text" class="form-control" disabled [(ngModel)]="datosCalculo.CoberturaConyuge" name="coberturaConyuge">
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">Reajuste Trimestral</label>
+                                <input type="text" class="form-control" disabled [(ngModel)]="datosCalculo.ReajusteTrim" name="reajusteTrim">
+                            </div>
+                            <div class="form-group  col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">Rentabilidad AFP</label>
+                                <input type="text" class="form-control" disabled [ngModel]="datosCalculo.RentaAFP  | number:'1.2-2'" name="rentaAFP">
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">Años Gar.</label>
+                                <input type="text" class="form-control" disabled [(ngModel)]="datosCalculo.Garantizados" name="garantizados">
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">Años Escalonada</label>
+                                <input type="text" class="form-control" disabled [(ngModel)]="datosCalculo.Escalonados" name="escalonados">
+
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">Años Dif.</label>
+                                <input type="text" class="form-control" disabled [(ngModel)]="datosCalculo.Diferidos" name="diferidos">
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">Fec. Incorp. Póliza</label>
+                                <input type="text" class="form-control" disabled [(ngModel)]="datosCalculo.FechaIncorPoliza" name="fechaIncorPoliza">
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">Fecha Inicio Primer Pago</label>
+                                <input type="text" class="form-control" disabled [(ngModel)]="datosCalculo.FechaInicioPago" name="fechaInicioPago">
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">Ind. Cobertura</label>
+                                <input type="text" class="form-control" disabled [(ngModel)]="datosCalculo.Cobertura" name="cobertura">
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">Gratificación</label>
+                                <input type="text" class="form-control" disabled [(ngModel)]="datosCalculo.Gratificacion" name="gratificacion">
+
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">Comisión</label>
+                                <input type="text" class="form-control" disabled [ngModel]="datosCalculo.Comision | number:'1.2-2'" name="comision">
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">% Renta Escalonada</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" disabled [ngModel]="datosCalculo.RentaEscalonada  | number:'1.2-2'" name="rentaEscalonada">
+                                    <div class="input-group-btn">
+                                        <span class="input-group-addon iconSpan" style="padding: 9px 12px;">
+                      %
+                    </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">Mto. Pensión</label>
+                                <div class="input-group">
+
+
+                                    <div class="input-group-btn">
+                                        <span class="input-group-addon iconSpan" style="padding: 9px 12px;">
+                      {{CodMonedaPen}}
+                    </span>
+                                    </div>
+                                    <input type="text" class="form-control" disabled [ngModel]="datosCalculo.MontoPension  | number:'1.2-2'" name="montoPension">
+                                </div>
+
+
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">Mto. Pensión Gar.</label>
+                                <div class="input-group">
+
+                                    <div class="input-group-btn">
+                                        <span class="input-group-addon iconSpan" style="padding: 9px 12px;">
+                      {{CodMonedaPen}}
+                    </span>
+                                    </div>
+                                    <input type="text" class="form-control" disabled [ngModel]="datosCalculo.MontoPensionGar | number:'1.2-2'" name="montoPensionGar">
+                                </div>
+
+
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">% Renta Temporal</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" disabled [ngModel]="datosCalculo.RentaTemporal | number:'1.2-2'" name="rentaTemporal">
+                                    <div class="input-group-btn">
+                                        <span class="input-group-addon iconSpan" style="padding: 9px 12px;">%</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">Fecha Traspaso Prima</label>
+                                <input type="text" class="form-control" disabled [(ngModel)]="datosCalculo.FechaTraspaso" name="fechaTraspaso">
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">Fecha Devengue</label>
+                                <input type="text" class="form-control" disabled [(ngModel)]="datosCalculo.FechaDevengue" name="fechaDevengue">
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">Tasa Cto. Equiv</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" disabled [ngModel]="datosCalculo.TasaEquiv | number:'1.2-2'" name="tasaEquiv">
+                                    <div class="input-group-btn">
+                                        <span class="input-group-addon iconSpan" style="padding: 9px 12px;">%</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">Tasa Venta</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" disabled [ngModel]="datosCalculo.TasaVenta | number:'1.2-2'" name="tasaVenta">
+                                    <div class="input-group-btn">
+                                        <span class="input-group-addon iconSpan" style="padding: 9px 12px;">
+                      %
+                    </span>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">Tasa TIR</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" disabled [ngModel]="datosCalculo.TasaTIR | number:'1.2-2'" name="tasaTIR">
+                                    <div class="input-group-btn">
+                                        <span class="input-group-addon iconSpan" style="padding: 9px 12px;">
+                      %
+                    </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-lg-12 col-md-12 col-sm-12  panel panel-default" style="padding: 0px;">
+                        <div class="row panel-body">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="row">
+                                    <div class="form-group col-lg-3 col-md-3 col-sm-12">
+                                        <label class="frmLblColor">CI. S/.</label>
+                                        <div class="input-group">
+                                            <div>
+                                                <input class="inline-label form-control" type="text" id="br1" disabled [ngModel]="datosCalculo.CI | number:'1.2-2'" name="ci" />
+                                                <label class="fsText" for="br1">+´BR.</label>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="form-group col-lg-3 col-md-3 col-sm-12">
+                                        <label class="frmLblColor">S/.</label>
+                                        <div class="input-group">
+                                            <div>
+                                                <input class="inline-label form-control" type="text" id="aa1" disabled [ngModel]="datosCalculo.BR | number:'1.2-2'" name="br" />
+                                                <label class="fsText" for="aa1">+´AA.</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-lg-3 col-md-3 col-sm-12">
+                                        <label class="frmLblColor">S/.</label>
+                                        <div class="input-group">
+                                            <div>
+                                                <input class="inline-label form-control" type="text" id="prima1" disabled [ngModel]="datosCalculo.AA | number:'1.2-2'" name="aa" />
+                                                <label class="fsText" for="prima1">=´Prima U.</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-lg-3 col-md-3 col-sm-12">
+                                        <label class="frmLblColor">S/.</label>
+                                        <div class="input-group">
+                                            <div>
+                                                <input class="inline-label form-control" type="text" id="id1" disabled [ngModel]="datosCalculo.PU | number:'1.2-2'" name="pu" />
+                                                <label class="fsText" for="id1"></label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>-->
+                <!-- fin datos de calculo -->
+                <!--</div>-->
+                <div class="tab-pane fade" id="datosFamiliar">
+                    <!-- Inicio datos familiar -->
+                    <div class="col-lg-12 col-md-12 col-sm-12 m-3">
+
+                        <div class="row">
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">Tipo de Documento</label>
+                                <input type="text" class="form-control" disabled [(ngModel)]="datosGpoFamiliar.TipoDocumento" name="tipoDocumento">
+                                <!-- <select id="slcTipoIdent" class="form-control" disabled>
+                  <option></option>
+                </select> -->
+
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">N° Documento</label>
+                                <input type="text" class="form-control" disabled [(ngModel)]="datosGpoFamiliar.NoDocumento" name="noDocumento">
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">Apellido Paterno</label>
+                                <input type="text" class="form-control" disabled [(ngModel)]="datosGpoFamiliar.Paterno" name="paterno">
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">Apellido Materno</label>
+                                <input type="text" class="form-control" disabled [(ngModel)]="datosGpoFamiliar.Materno" name="materno">
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">1er. Nombre</label>
+                                <input type="text" class="form-control" disabled [(ngModel)]="datosGpoFamiliar.Nombre" name="nombre">
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">2do. Nombre</label>
+                                <input type="text" class="form-control" disabled [(ngModel)]="datosGpoFamiliar.SegundoNombre" name="segundoNombre">
+
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">Fecha Nac.</label>
+                                <input type="text" class="form-control" disabled [(ngModel)]="datosGpoFamiliar.FechaNacimiento" name="fechaNacimiento">
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">Fecha Fall.</label>
+                                <input type="text" class="form-control" disabled [(ngModel)]="datosGpoFamiliar.FechaFall" name="fechaFall">
+                            </div>
+                            <div class="form-group  col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">Sit de Inv.</label>
+                                <input type="text" class="form-control" disabled [(ngModel)]="datosGpoFamiliar.SitInv" name="sitInv">
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">Pensión</label>
+                                <input type="text" class="form-control" disabled [ngModel]="datosGpoFamiliar.Pension | number:'1.2-2'" name="pension">
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">Est. Vigente</label>
+                                <input type="text" class="form-control" disabled [(ngModel)]="datosGpoFamiliar.EstVigente" name="estVigente">
+
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">Parentesco</label>
+                                <input type="text" class="form-control" disabled [(ngModel)]="datosGpoFamiliar.Parentesco" name="parentesco">
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">Estudiante</label>
+                                <input type="text" class="form-control" disabled [(ngModel)]="datosGpoFamiliar.Estudiante" name="estudiante">
+                                <!-- <select id="slcTipoIdent" class="form-control" disabled >
+                  <option></option>
+                </select> -->
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">Fecha Ingreso</label>
+                                <input type="text" class="form-control" disabled [(ngModel)]="datosGpoFamiliar.FechaIngreso" name="fechaIngreso">
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">Teléfono</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" disabled [(ngModel)]="datosGpoFamiliar.Telefono1" name="telefono1">
+                                    <span class="input-group-btn">
+                                    <button class="btn btn-primary btnrad" type="button" data-toggle="modal"
+                                        data-target="#modalTelefonosGpoFamiliar"><i class="fa fa-info-circle"></i></button>
+                                    </span>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column40">
+                                <label class="frmLblColor">Dirección</label>
+                                <input type="text" class="form-control" disabled [(ngModel)]="datosGpoFamiliar.Direccion" name="direccion">
+
+                            </div>
+
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">Ubigeo</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" disabled [(ngModel)]="datosGpoFamiliar.Departamento + '-' + datosGpoFamiliar.Provincia + '-' + datosGpoFamiliar.Distrito" name="departamento">
+                                    <span class="input-group-btn">
+                                  <button class="btn btn-primary btnrad" type="button" data-toggle="modal"
+                                      data-target="#modalDirecciones" (click)="selectDirecciones('')"><i class="fa fa-info-circle"></i></button>
+                                  </span>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">Correo Electrónico</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" disabled [(ngModel)]="datosGpoFamiliar.Email1" name="email1">
+                                    <span class="input-group-btn">
+                                    <button class="btn btn-primary btnrad" type="button" data-toggle="modal"
+                                      data-target="#modalCorreosGpoFamiliar"><i class="fa fa-info-circle"></i></button>
+                                  </span>
+                                </div>
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column40">
+                                <label class="frmLblColor">Dirección Correspondencia</label>
+                                <input type="text" class="form-control" disabled [(ngModel)]="datosGpoFamiliar.Direccion_Corr" name="direccion">
+
+                            </div>
+
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">Ubigeo Correspondencia</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" disabled [(ngModel)]="datosGpoFamiliar.Departamento_Corr + '-' + datosGpoFamiliar.Provincia_Corr + '-' + datosGpoFamiliar.Distrito_Corr" name="departamento">
+                                    <span class="input-group-btn">
+                                  <button class="btn btn-primary btnrad" type="button" data-toggle="modal"
+                                      data-target="#modalDirecciones" (click)="selectDirecciones('Corresp')"><i class="fa fa-info-circle"></i></button>
+                                  </span>
+                                </div>
+                            </div>
+                            <!-- <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">Provincia</label>
+                                <input type="text" class="form-control" disabled [(ngModel)]="datosGpoFamiliar.Provincia" name="provincia"> -->
+                            <!-- <select id="slcTipoIdent" class="form-control" disabled [(ngModel)]="datosGpoFamiliar.Provincia" name="provincia">
+                                  <option></option>
+                                </select> -->
+                            <!-- </div>
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <label class="frmLblColor">Distrito</label>
+                                <input type="text" class="form-control" disabled [(ngModel)]="datosGpoFamiliar.Distrito" name="distrito"> -->
+                            <!-- <select id="slcTipoIdent" class="form-control" disabled [(ngModel)]="datosGpoFamiliar.Distrito" name="distrito">
+                                  <option></option>
+                                </select> -->
+                            <!-- </div> -->
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                <label class="frmLblColor">Protección de Datos:</label>
+
+
+                                <div class="custom-control custom-radio">
+                                    <input style="margin-right: 6px;" type="radio" id="radioProteccionBenS" name="radioProteccionBen" class="custom-control-input" value="S" [(ngModel)]="datosGpoFamiliar.ProteccionBen" disabled>
+
+                                    <label class="frmLblColor" for="radioProteccionBenS">SÍ</label>
+                                </div>
+                                <div class="custom-control custom-radio">
+                                    <input style="margin-right: 6px;" type="radio" id="radioProteccionBenN" name="radioProteccionBen" class="custom-control-input" value="N" [(ngModel)]="datosGpoFamiliar.ProteccionBen" disabled>
+                                    <label class="frmLblColor" for="radioProteccionBenN">NO</label>
+                                </div>
+                            </div>
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                <label class="frmLblColor">Boleta de Pago:</label>
+
+
+                                <div class="custom-control custom-radio">
+                                    <input style="margin-right: 6px;" type="radio" id="radioBoletaBenS" name="radioBoletaBen" class="custom-control-input" value="S" [(ngModel)]="datosGpoFamiliar.BoletaBen" disabled>
+
+                                    <label class="frmLblColor" for="radioBoletaBenS">SÍ</label>
+                                </div>
+                                <div class="custom-control custom-radio">
+                                    <input style="margin-right: 6px;" type="radio" id="radioBoletaBenN" name="radioBoletaBen" class="custom-control-input" value="N" [(ngModel)]="datosGpoFamiliar.BoletaBen" disabled>
+                                    <label class="frmLblColor" for="radioBoletaBenN">NO</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Fin datos familiar -->
+                </div>
+                <div class="tab-pane fade" id="datosPensiones">
+                    <!-- Inicio datos Pensiones -->
+
+                    <div class="col-lg-12 col-md-12 col-sm-12 m-3 ">
+
+                        <form>
+
+                            <div class="row">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h5 class="titulo tituloLinea"><b>Recepción de Pensión</b></h5>
+                                    </div>
+                                </div>
+                                <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                    <label class="frmLblColor">Tipo Documento</label>
+                                    <input type="text" class="form-control" disabled [(ngModel)]="datosPensiones.TipoDoc" name="tipoDoc">
+                                    <!-- <select  class="form-control" disabled>
+                          <option ></option>
+                        </select> -->
+                                </div>
+                                <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                    <label class="frmLblColor">N° Documento</label>
+                                    <input type="text" class="form-control" disabled [(ngModel)]="datosPensiones.NoDocumento" name="noDoc">
+                                </div>
+                                <div class="form-group col-lg-2 col-md-2 col-sm-2 column40">
+                                    <label class="frmLblColor">Apellidos y Nombres</label>
+                                    <input type="text" class="form-control" disabled [(ngModel)]="datosPensiones.Nombre" name="nombre">
+                                </div>
+                                <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                    <label class="frmLblColor">Periodo de Vigencia</label>
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="row">
+                                            <div class="form-group col-md-12" style="padding:0px;">
+                                                <div class="form-group col-md-5" style="padding:0px;">
+
+                                                    <input type="text" class="form-control" style="padding:0px;" disabled [(ngModel)]="datosPensiones.InicioVigencia" name="inicioVigencia">
+                                                </div>
+                                                <div class="col-md-2 paddRL">-</div>
+                                                <div class="form-group col-md-5" style="padding:0px;">
+                                                    <input type="text" style="padding:0px;" class="form-control" disabled [(ngModel)]="datosPensiones.FinVigencia" name="finVigencia">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                            <div class="row">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h5 class="titulo tituloLinea"><b>Forma de Pago de Pensión</b></h5>
+                                    </div>
+                                </div>
+                                <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                    <label class="frmLblColor">Vía Pago</label>
+                                    <input type="text" class="form-control" disabled [(ngModel)]="datosPensiones.ViaPago" name="viaPago">
+
+                                </div>
+                                <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                    <label class="frmLblColor">Sucursal</label>
+                                    <input type="text" class="form-control" disabled [(ngModel)]="datosPensiones.Sucursal" name="sucursal">
+                                    <!-- <select  class="form-control" disabled [(ngModel)]="datosPensiones.Sucursal" name="sucursal">
+                          <option ></option>
+                        </select> -->
+                                </div>
+                                <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                    <label class="frmLblColor">Banco</label>
+                                    <input type="text" class="form-control" disabled [(ngModel)]="datosPensiones.Banco" name="banco">
+                                    <!-- <select  class="form-control" disabled [(ngModel)]="datosPensiones.Banco" name="banco">
+                          <option ></option>
+                        </select> -->
+                                </div>
+                                <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                    <label class="frmLblColor">Tipo Cta.</label>
+                                    <input type="text" class="form-control" disabled [(ngModel)]="datosPensiones.TipoCta" name="tipoCta">
+                                    <!-- <select  class="form-control" disabled [(ngModel)]="datosPensiones.TipoCta" name="tipoCta">
+                          <option ></option>
+                        </select> -->
+                                </div>
+                                <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                    <label class="frmLblColor">N° Cuenta</label>
+                                    <input type="text" class="form-control" disabled [(ngModel)]="datosPensiones.NoCuenta" name="noCuenta">
+                                </div>
+                            </div>
+
+                            <div class="row">
+
+                                <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                    <label class="frmLblColor">N° Cuenta CCI</label>
+                                    <input type="text" class="form-control" disabled [(ngModel)]="datosPensiones.NoCuentaCCI" name="noCuentaCCI">
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h5 class="titulo tituloLinea"><b>Plan de Salud</b></h5>
+                                    </div>
+                                </div>
+                                <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                    <label class="frmLblColor">Sucursal</label>
+                                    <input type="text" class="form-control" disabled [(ngModel)]="datosPensiones.Institucion" name="institucion">
+                                    <!-- <select  class="form-control" disabled [(ngModel)]="datosPensiones.Institucion" name="institucion">
+                          <option ></option>
+                        </select> -->
+                                </div>
+                                <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                    <label class="frmLblColor">Modalidad de Pago</label>
+                                    <input type="text" class="form-control" disabled [(ngModel)]="datosPensiones.ModalidadPago" name="modalidadPago">
+                                </div>
+                                <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                    <label class="frmLblColor">Monto de Pago</label>
+                                    <input type="text" class="form-control" disabled [ngModel]="datosPensiones.MontoPago | number:'1.2-2'" name="montoPago">
+                                </div>
+                                <!--<div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                    <label class="frmLblColor">Periodo Efecto</label>
+                                    <input type="text" class="form-control" disabled [(ngModel)]="datosPensiones.PeriodoEfecto" name="periodoEfecto">
+                                </div>-->
+
+                            </div>
+                            <div class="row">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h5 class="titulo tituloLinea"><b>Retención Judicial</b></h5>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="table-responsive">
+                                        <mat-table [dataSource]="dataSourcePagoPensiones" class="table table-hover">
+                                            <mat-header-row *matHeaderRowDef="columnasPagoPensiones; sticky: true"></mat-header-row>
+                                            <mat-row *matRowDef="let row; columns: columnasPagoPensiones;"></mat-row>
+                                            <ng-container matColumnDef="periodoVigencia">
+                                                <mat-header-cell *matHeaderCellDef>
+                                                    <div>Periodo Vigencia</div>
+
+                                                </mat-header-cell>
+                                                <mat-cell class="duration-cell" *matCellDef="let lesson;">{{lesson.PeriodoVigencia}}</mat-cell>
+                                            </ng-container>
+                                            <ng-container matColumnDef="tipoRetencion">
+                                                <mat-header-cell *matHeaderCellDef>
+                                                    <div>Tipo Retención</div>
+
+                                                </mat-header-cell>
+                                                <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.TipoRetencion}}</mat-cell>
+                                            </ng-container>
+                                            <ng-container matColumnDef="rut">
+                                                <mat-header-cell *matHeaderCellDef>
+                                                    <div>Rut</div>
+
+                                                </mat-header-cell>
+                                                <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.Rut}}</mat-cell>
+                                            </ng-container>
+                                            <ng-container matColumnDef="nombreAfiliado">
+                                                <mat-header-cell *matHeaderCellDef>
+                                                    <div>Nombre Afiliado</div>
+
+                                                </mat-header-cell>
+                                                <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.Nombre}}</mat-cell>
+                                            </ng-container>
+                                            <ng-container matColumnDef="modalidad">
+                                                <mat-header-cell *matHeaderCellDef>
+                                                    <div>Modalidad</div>
+
+                                                </mat-header-cell>
+                                                <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.Modalidad}}</mat-cell>
+                                            </ng-container>
+                                            <ng-container matColumnDef="fechaEfecto">
+                                                <mat-header-cell *matHeaderCellDef>
+                                                    <div>Fecha Efecto</div>
+
+                                                </mat-header-cell>
+                                                <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.FechaEfecto}}</mat-cell>
+                                            </ng-container>
+
+                                        </mat-table>
+
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                        </form>
+                    </div>
+
+                    <!-- Fin datos Pensiones -->
+                </div>
+                <!---<div class="tab-pane fade" id="datosLiquidaciones">
+                     Inicio datos Liquidaciones
+                    <div class="col-lg-12 col-md-12 col-sm-12 marg-prim">
+                        <div class="row">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h5 class="titulo tituloLinea"><b>Fecha de Pago de Pensión</b></h5>
+                                </div>
+                            </div>
+                            <div class="form-group col-lg-4 col-md-4 col-sm-4 ">
+                                <label class="frmLblColor">Ingrese Fecha a Procesar</label>
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="row">
+                                        <div class="form-group col-md-12" style="padding:0px;">
+                                            <div class="form-group col-md-5" style="padding:0px;">
+
+                                                <input type="date" class="form-control" [(ngModel)]="fechaProcIni" name="fechaProcIni">
+                                            </div>
+                                            <div class="col-md-1">-</div>
+                                            <div class="form-group col-md-5" style="padding:0px;">
+
+                                                <input type="date" class="form-control" [(ngModel)]="fechaProcFin" name="fechaProcFin">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3 ">
+                                <label class="frmLblColor">Concepto</label>
+                                
+                                <div>
+                                    <mat-form-field>
+
+                                        <mat-select class="selectConcepto" multiple [formControl]="concepto" (selectionChange)="conceptosCmb($event)">
+                                            <mat-select-trigger *ngIf="concepto.value?.length > 0">
+                                                {{concepto.value ? concepto.value[0].Nombre : ''}}
+                                                <span *ngIf="concepto.value?.length > 1" class="example-additional-selection">
+                        (+{{concepto.value.length - 1}} {{concepto.value?.length === 2 ? '' : ''}})
+                      </span>
+                                            </mat-select-trigger>
+                                            <mat-option *ngFor="let conp of conceptos" [value]="conp">{{conp.Nombre}}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <div class="col-md-2" style="padding: 22px 0px;">
+                                    <button type="button" class="btn btn-azul btn-azul-fix mr" (click)="procesar()">
+                  <i class="fa fa-gear"></i>Procesar
+                </button></div>
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                <div class="col-md-2" style="padding: 22px 0px;"><button type="button" class="btn btn-azul btn-azul-fix mr">Generar Liquidación</button></div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="table-responsive text-center">
+                                  
+                                    <mat-table [dataSource]="dataSourceLiquidacion" class="table table-hover">
+                                        <mat-header-row *matHeaderRowDef="columnasLiquidacion; sticky: true"></mat-header-row>
+                                        <mat-row *matRowDef="let row; columns: columnasLiquidacion;"></mat-row>
+                                        <ng-container matColumnDef="periodo">
+                                            <mat-header-cell *matHeaderCellDef>
+                                                <div>Periodo</div>
+
+                                            </mat-header-cell>
+                                            <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.Periodo}}</mat-cell>
+                                        </ng-container>
+                                        <ng-container matColumnDef="codigo">
+                                            <mat-header-cell *matHeaderCellDef>
+                                                <div>Código</div>
+
+                                            </mat-header-cell>
+                                            <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.Codigo}}</mat-cell>
+                                        </ng-container>
+                                        <ng-container matColumnDef="concepto">
+                                            <mat-header-cell *matHeaderCellDef>
+                                                <div>Concepto</div>
+
+                                            </mat-header-cell>
+                                            <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.Concepto}}</mat-cell>
+                                        </ng-container>
+                                        <ng-container matColumnDef="monto">
+                                            <mat-header-cell *matHeaderCellDef>
+                                                <div>Monto</div>
+
+                                            </mat-header-cell>
+                                            <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.Monto}}</mat-cell>
+                                        </ng-container>
+
+
+
+                                    </mat-table>
+                                    <mat-paginator [length]="0" [pageSize]="10" [pageSizeOptions]="[10, 20, 50]" [showFirstLastButtons]="true"></mat-paginator>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                 Fin datos Liquidaciones 
+                </div>-->
+
+                <div class="tab-pane fade" id="datosDocumentos">
+                    <!-- Inicio datos Documentos -->
+                    <div class="col-lg-12 col-md-12 col-sm-12 marg-prim">
+                        <!--<div class="row">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h5 class="titulo tituloLinea"><b>Emisión de Certificados</b></h5>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="table-responsive text-center">
+                                    <table class="table table-bordered table-hover tableBorder">
+                                        <thead>
+                                            <tr>
+                                                <th class="thBorder">Item</th>
+                                                <th class="thBorder">Documento</th>
+                                                <th class="thBorder">Acciones</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td class="tdBorder"></td>
+                                                <td class="tdBorder"></td>
+                                                <td class="tdBorder"><i style="color:#0090B2" class="fa fa-gear exclam"></i>&nbsp;<i style="color:#0090B2" class="fa fa-eye exclam"></i></td>
+
+                                            </tr>
+                                            <tr>
+                                                <td class="tdBorder"></td>
+                                                <td class="tdBorder"></td>
+                                                <td class="tdBorder"></td>
+
+                                            </tr>
+                                            <tr>
+                                                <td class="tdBorder"></td>
+                                                <td class="tdBorder"></td>
+                                                <td class="tdBorder"></td>
+
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>-->
+                        <div class="row">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h5 class="titulo tituloLinea"><b>Documentos Asociados a la Póliza</b></h5>
+                                </div>
+                            </div>
+                            <!-- <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="table-responsive text-center">
+                                    <table class="table table-bordered table-hover tableBorder">
+                                        <thead>
+                                            <tr>
+                                                <th class="thBorder">Item</th>
+                                                <th class="thBorder">Documento</th>
+                                                <th class="thBorder">Acciones</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td class="tdBorder"></td>
+                                                <td class="tdBorder"></td>
+                                                <td class="tdBorder"><i style="color:#0090B2" class="fa fa-eye exclam"></i></td>
+
+                                            </tr>
+                                            <tr>
+                                                <td class="tdBorder"></td>
+                                                <td class="tdBorder"></td>
+                                                <td class="tdBorder"></td>
+
+                                            </tr>
+                                            <tr>
+                                                <td class="tdBorder"></td>
+                                                <td class="tdBorder"></td>
+                                                <td class="tdBorder"></td>
+
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>-->
+                            <button class="btn btn-azul btn-azul-fix mr" (click)="generarArchivos('boletas', '')">Boletas</button>
+                            <button class="btn btn-azul btn-azul-fix mr" (click)="generarArchivos('polizas', '')">Poliza</button>
+                        </div>
+                    </div>
+                    <!-- Fin datos Documentos -->
+                </div>
+                <div class="tab-pane fade" id="datosDocumentosBoletas">
+                    <!-- Inicio datos Documentos -->
+                    <div class="col-lg-12 col-md-12 col-sm-12 marg-prim">
+                        <div class="row">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h5 class="titulo tituloLinea"><b>Fecha Búsqueda</b></h5>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 col-md-12 col-sm-12 marg-prim">
+                                <div class="col-lg-12 col-md-12 col-sm-12 marg-prim grid">
+                                    <div class="col-lg-4 col-md-8 col-sm-10 margin-in">
+                                        <label class="text"></label>
+                                        <label class=" frmLblColor">Periodo de Pago Desde</label>
+                                        <div>
+                                            <input type="month" class="form-control" required id="FecDesde" [(ngModel)]="FecDesde" name="FecDesde" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-8 col-sm-10 margin-in">
+                                        <label class="text"></label>
+                                        <label class=" frmLblColor">Periodo de Pago Hasta</label>
+                                        <div>
+                                            <input type="month" class="form-control" required id="FecHasta" [(ngModel)]="FecHasta" name="FecHasta" />
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div class="col-lg-2 col-md-4 col-sm-4 ">
+                        <button class="btn btn-azul btn-azul-fix mr colum5" (click)="generarArchivos('boletas', 'boletasMes')" style="margin: 27px">Generar Boletas</button>
+                    </div>
+                    <!-- Fin datos Documentos -->
+                </div>
+
+                <div class="tab-pane fade" id="datosFechaPago">
+                    <!-- Inicio datos familiar -->
+                    <div class="col-lg-12 col-md-12 col-sm-12 marg-prim">
+                        <!--div de la tabla -->
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h5 class="titulo" style="margin: 0px;"><b>Resultados</b></h5>
+                            </div>
+                            <div class="panel-body camposForm">
+
+                                <div class="table-responsive text-center">
+                                    <mat-table matSort [dataSource]="dataSourceFechas" class="table table-hover">
+                                        <mat-header-row *matHeaderRowDef="columnasFecha; sticky: true"></mat-header-row>
+                                        <mat-row *matRowDef="let row; columns: columnasFecha;"></mat-row>
+                                        <ng-container matColumnDef="numIden">
+                                            <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                                <div style="align-content: center;">
+                                                    <p>Número Iden</p>
+                                                </div>
+
+                                            </mat-header-cell>
+                                            <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.Num_Iden}}</mat-cell>
+                                        </ng-container>
+                                        <ng-container matColumnDef="perPago">
+                                            <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                                <div>Periodo de Pago</div>
+
+                                            </mat-header-cell>
+                                            <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.Periodo_Pago}}</mat-cell>
+                                        </ng-container>
+                                        <ng-container matColumnDef="montoBruto">
+                                            <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                                <div>Monto Bruto</div>
+
+                                            </mat-header-cell>
+                                            <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.Monto_Bruto}}</mat-cell>
+                                        </ng-container>
+                                        <ng-container matColumnDef="montoEsSalud">
+                                            <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                                <div>Monto EsSalud</div>
+
+                                            </mat-header-cell>
+                                            <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.Monto_EsSalud}}</mat-cell>
+                                        </ng-container>
+                                        <ng-container matColumnDef="montoTotal">
+                                            <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                                <div>Monto Pagado</div>
+
+                                            </mat-header-cell>
+                                            <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.Monto_Total}}</mat-cell>
+                                        </ng-container>
+                                        <ng-container matColumnDef="Fecha">
+                                            <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                                <div>Fecha Pago</div>
+
+                                            </mat-header-cell>
+                                            <mat-cell class="duration-cell" *matCellDef="let lesson">
+                                                {{lesson.Fecha}}
+                                                <div> </div>
+                                            </mat-cell>
+                                        </ng-container>
+                                        <ng-container matColumnDef="TipoPago">
+                                            <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                                <div>Tipo Pago</div>
+
+                                            </mat-header-cell>
+                                            <mat-cell class="duration-cell" *matCellDef="let lesson">
+                                                {{lesson.TipoPago}}
+                                                <div> </div>
+                                            </mat-cell>
+                                        </ng-container>
+                                    </mat-table>
+                                    <mat-paginator [length]="0" [pageSize]="10" [pageSizeOptions]="[ 10, 20, 50]" [showFirstLastButtons]="true"></mat-paginator>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-12 col-md-12 col-sm-12 marg-prim" *ngIf="poliza">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="row" class="align">
+                <div class="col-lg-12 col-md-12 col-sm-12 pb">
+                    <button type="button" class="btn btn-azul btn-azul-fix mr" style="text-align: center;"><i class="fa fa-print"></i> Generar Documento</button>
+                    <button type="button" class="btn btn-azul btn-azul-fix" style="text-align: center;" (click)="volverConsulta()"><i class="fa fa-sign-out-alt"></i> Regresar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--<div class="col-lg-12 col-md-12 col-sm-12 marg-prim" *ngIf="calculo || familiar || pagoPensiones || liquidaciones || documentos">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="row">
+                <div class="col-md-12" class="align" style="padding-bottom: 15px;">
+                    <button type="button" class="btn btn-azul btn-azul-fix mr"><i class="fa fa-print"></i>Constancia</button>
+                </div>
+            </div>
+        </div>
+    </div>-->
+
+
+
+
+    <!-- Modales -->
+    <div class="modal fade" id="modalTelefonosPoliza" role="dialog" style="margin-top: 70px;">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title text-center"><b>Teléfonos</b></h4>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <form>
+                            <div class="col-md-12" style="margin-right: 0px;margin-left: 0px;">
+                                <div class="form-group col-md-7 col-md-offset-2">
+                                    <label class="frmLblColor">Teléfono 1</label>
+                                    <input [(ngModel)]="datosPoliza.Telefono1" disabled name="Telefono1" type="text" class="form-control">
+                                </div>
+                                <div class="form-group col-md-7 col-md-offset-2">
+                                    <label class="frmLblColor">Teléfono 2</label>
+                                    <input [(ngModel)]="datosPoliza.Telefono2" disabled name="Telefono2" type="text" class="form-control">
+                                </div>
+                                <div class="form-group col-md-7 col-md-offset-2">
+                                    <label class="frmLblColor">Teléfono 3</label>
+                                    <input [(ngModel)]="datosPoliza.Telefono3" disabled name="Telefono3" type="text" class="form-control">
+                                </div>
+
+                            </div>
+                        </form>
+                        <div class="row" style="text-align: center; margin-bottom: 10px;">
+                            <!-- <button type="button" class="btn btn-azul mr" data-dismiss="modal"> Aceptar</button> &nbsp;
+                  <button type="button" class="btn btn-azul mr" data-dismiss="modal"> Cancelar</button> -->
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" style="display: none;"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalCorreosPoliza" role="dialog" style="margin-top: 70px;">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title text-center"><b>Correos Electrónicos</b></h4>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <form>
+                            <div class="col-md-12" style="margin-right: 0px;margin-left: 0px;">
+                                <div class="form-group col-md-7 col-md-offset-2">
+                                    <label class="frmLblColor">Correo Electrónico 1</label>
+                                    <input [(ngModel)]="datosPoliza.Correo1" disabled name="Correo1" type="text" class="form-control">
+                                </div>
+                                <div class="form-group col-md-7 col-md-offset-2">
+                                    <label class="frmLblColor">Correo Electrónico 2</label>
+                                    <input [(ngModel)]="datosPoliza.Correo2" disabled name="Correo2" type="text" class="form-control">
+                                </div>
+                                <div class="form-group col-md-7 col-md-offset-2">
+                                    <label class="frmLblColor">Correo Electrónico 3</label>
+                                    <input [(ngModel)]="datosPoliza.Correo3" disabled name="Correo3" type="text" class="form-control">
+                                </div>
+
+                            </div>
+                        </form>
+                        <div class="row" style="text-align: center; margin-bottom: 10px;">
+                            <!-- <button type="button" class="btn btn-azul mr" data-dismiss="modal"> Aceptar</button> &nbsp;
+                  <button type="button" class="btn btn-azul mr" data-dismiss="modal"> Cancelar</button> -->
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" style="display: none;"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalTelefonosGpoFamiliar" role="dialog" style="margin-top: 70px;">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title text-center"><b>Teléfonos</b></h4>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <form>
+                            <div class="col-md-12" style="margin-right: 0px;margin-left: 0px;">
+                                <div class="form-group col-md-7 col-md-offset-2">
+                                    <label class="frmLblColor">Teléfono 1</label>
+                                    <input [(ngModel)]="datosGpoFamiliar.Telefono1" disabled name="Telefono1" type="text" class="form-control">
+                                </div>
+                                <div class="form-group col-md-7 col-md-offset-2">
+                                    <label class="frmLblColor">Teléfono 2</label>
+                                    <input [(ngModel)]="datosGpoFamiliar.Telefono2" disabled name="Telefono2" type="text" class="form-control">
+                                </div>
+                                <div class="form-group col-md-7 col-md-offset-2">
+                                    <label class="frmLblColor">Teléfono 3</label>
+                                    <input [(ngModel)]="datosGpoFamiliar.Telefono3" disabled name="Telefono3" type="text" class="form-control">
+                                </div>
+
+                            </div>
+                        </form>
+                        <div class="row" style="text-align: center; margin-bottom: 10px;">
+                            <!-- <button type="button" class="btn btn-azul mr" data-dismiss="modal"> Aceptar</button> &nbsp;
+                  <button type="button" class="btn btn-azul mr" data-dismiss="modal"> Cancelar</button> -->
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" style="display: none;"></div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="modalCorreosGpoFamiliar" role="dialog" style="margin-top: 70px;">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title text-center"><b>Correos Electrónicos</b></h4>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <form>
+                            <div class="col-md-12" style="margin-right: 0px;margin-left: 0px;">
+                                <div class="form-group col-md-7 col-md-offset-2">
+                                    <label class="frmLblColor">Correo Electrónico 1</label>
+                                    <input [(ngModel)]="datosGpoFamiliar.Email1" disabled name="Correo1" type="text" class="form-control">
+                                </div>
+                                <div class="form-group col-md-7 col-md-offset-2">
+                                    <label class="frmLblColor">Correo Electrónico 2</label>
+                                    <input [(ngModel)]="datosGpoFamiliar.Email2" disabled name="Correo2" type="text" class="form-control">
+                                </div>
+                                <div class="form-group col-md-7 col-md-offset-2">
+                                    <label class="frmLblColor">Correo Electrónico 3</label>
+                                    <input [(ngModel)]="datosGpoFamiliar.Email3" disabled name="Correo3" type="text" class="form-control">
+                                </div>
+
+                            </div>
+                        </form>
+                        <div class="row" style="text-align: center; margin-bottom: 10px;">
+                            <!-- <button type="button" class="btn btn-azul mr" data-dismiss="modal"> Aceptar</button> &nbsp;
+                  <button type="button" class="btn btn-azul mr" data-dismiss="modal"> Cancelar</button> -->
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" style="display: none;"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalDirecciones" role="dialog" style="margin-top: 70px;">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title text-center"><b>Dirección</b></h4>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <form>
+                            <div class="row">
+                                <!-- Dirección Expediente -->
+                                <div *ngIf="opcionDir === ''" class="form-group col-lg-3 col-md-3 col-sm-3 col-md-offset-1" id="custom-select">
+                                    <label class="frmLblColor">Departamento</label>
+                                    <input type="text" class="form-control" disabled [(ngModel)]="datosGpoFamiliar.Departamento" name="departamento">
+                                </div>
+                                <div *ngIf="opcionDir === ''" class="form-group col-lg-3 col-md-3 col-sm-3" id="custom-select">
+                                    <label class="frmLblColor">Provincia</label>
+                                    <input type="text" class="form-control" disabled [(ngModel)]="datosGpoFamiliar.Provincia" name="provincia">
+                                </div>
+                                <div *ngIf="opcionDir === ''" class="form-group col-lg-3 col-md-3 col-sm-3" id="custom-select">
+                                    <label class="frmLblColor">Distrito</label>
+                                    <input type="text" class="form-control" disabled [(ngModel)]="datosGpoFamiliar.Distrito" name="distrito">
+                                </div>
+
+                                <!-- Dirección Correspondencia -->
+                                <div *ngIf="opcionDir === 'Corresp'" class="form-group col-lg-3 col-md-3 col-sm-3 col-md-offset-1" id="custom-select">
+                                    <label class="frmLblColor">Departamento</label>
+                                    <input type="text" class="form-control" disabled [(ngModel)]="datosGpoFamiliar.Departamento_Corr" name="departamento">
+                                </div>
+                                <div *ngIf="opcionDir === 'Corresp'" class="form-group col-lg-3 col-md-3 col-sm-3" id="custom-select">
+                                    <label class="frmLblColor">Provincia</label>
+                                    <input type="text" class="form-control" disabled [(ngModel)]="datosGpoFamiliar.Provincia_Corr" name="provincia">
+                                </div>
+                                <div *ngIf="opcionDir === 'Corresp'" class="form-group col-lg-3 col-md-3 col-sm-3" id="custom-select">
+                                    <label class="frmLblColor">Distrito</label>
+                                    <input type="text" class="form-control" disabled [(ngModel)]="datosGpoFamiliar.Distrito_Corr" name="distrito">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer" style="display: none;"></div>
+            </div>
+        </div>
+    </div>
+    <!-- Fin Modales -->

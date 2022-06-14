@@ -1,0 +1,304 @@
+<form [formGroup]="formSearch">
+    <!-- <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="titulo" style="margin: 0px;">
+                    Selección de Póliza
+                </h3>
+            </div>
+            <div class="panel-body">
+                <label class="frmLblColor">N° Póliza</label>
+
+                <div class="form-inline">
+                    <div class="form-group">
+                        <input type="text" class="form-control inpLg inpBG" id="pNum" style="margin-right: 25px;" formControlName="nPoliza" maxlength="10" [class.is-invalid]="inputValidation" (keypress)="numberOnly($event)">
+                    </div>
+                    <div class="form-group btnCenter">
+                        <button type="submit" class="btn btn-azul">Buscar</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover tableBorder">
+                <thead class="text-center">
+                    <tr>
+                        <th class="thBorder frmLblColor">Pólizas</th>
+                        <th class="thBorder frmLblColor">Nombre del Asegurado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let pre of this.tblPolPriRe" (click)="seleccionarFilaPoliza(pre.NumPoliza)">
+                        <td class="tdBorder">{{ pre.NumPoliza }}</td>
+                        <td class="tdBorder">{{ pre.NomCompleto }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div> -->
+
+    <div class="col-lg-12 col-md-12 col-sm-12 ">
+        <div class="panel panel-default">
+            <div class="panel-body camposForm">
+                <form>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                                    <label>N° PÓLIZA</label>&nbsp;
+                                    <label class="frmLblColor">{{pol.NumPoliza}}</label>
+                                </div>
+                                <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                                    <label>FECHA EMISIÓN</label>&nbsp;
+                                    <label class="frmLblColor">{{pol.FecEmision}}</label>
+                                </div>
+                                <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                                    <label>N° COTIZACIÓN</label>&nbsp;
+                                    <label class="frmLblColor">{{pol.NumCotizacion}}</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-lg-8 col-md-8 col-sm-8">
+                                    <label>TITULAR</label>&nbsp;
+                                    <label class="frmLblColor">{{pol.NomCompleto}}</label>
+                                </div>
+                                <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                                    <label>CUSPP</label>&nbsp;
+                                    <label class="frmLblColor">{{pol.CodCuspp}}</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-12 col-md-12 col-sm-12">
+
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="col-lg-12 col-md-12 col-sm-12 m-3">
+
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h5 class="titulo"><b>Datos del Asegurado</b></h5>
+                        </div>
+                    </div>
+                    <!--
+                    <div class="row">
+                        <div class="form-group col-lg-3 col-md-3 col-sm-3" id="custom-select">
+                            <label class="frmLblColor">Tipo de Identificación</label>
+                            <select class="form-control" disabled>
+                            <option>{{ pol.GlsTipoidencor }}</option>
+                        </select>
+                        </div>
+                        <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                            <label class="frmLblColor">N° Identificación</label>
+                            <input type="text" class="form-control" id="inpNIdentificación" value="{{ pol.NumIdenafi }}" disabled>
+                        </div>
+                        <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                            <label class="frmLblColor">Nombre</label>
+                            <input type="text" class="form-control" value="{{ pol.NomCompleto }}" disabled>
+                        </div>
+                        <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                            <label class="frmLblColor">CUSPP</label>
+                            <input type="text" class="form-control" value="{{ pol.CodCuspp }}" disabled>
+                        </div>
+                    </div>-->
+
+                    <div class="row" style="margin-top: 20px;">
+                        <div class="col-md-12">
+                            <h5 class="titulo"><b>Modalidad</b></h5>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                            <label class="frmLblColor">Tipo de Pensión</label>
+                            <input type="text" class="form-control" value="{{ pol.TipoPensionCom }}" disabled>
+                        </div>
+                        <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                            <label class="frmLblColor">Tipo de Renta</label>
+                            <input type="text" class="form-control" value="{{  pol.TipoRentaCom }}" disabled>
+                        </div>
+                        <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                            <label class="frmLblColor">Moneda</label>
+                            <input type="text" class="form-control" value="{{ pol.TipoMonedaCom }}" disabled>
+                        </div>
+                        <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                            <label class="frmLblColor">Modalidad</label>
+                            <input type="text" class="form-control" value="{{ pol.TipoModalidadCom }}" disabled>
+                        </div>
+                        <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                            <label class="frmLblColor">% Rta. Escalonada.</label>
+                            <input type="text" class="form-control" value="{{ pol.PrcRentaesc | number: '1.2-2' }}" disabled>
+                        </div>
+                    </div>
+                    <div class="row">
+
+                        <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                            <label class="frmLblColor">Años Diferidos</label>
+                            <input type="text" class="form-control" value="{{ pol.NumMesdif }}" disabled>
+                        </div>
+                        <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                            <label class="frmLblColor">Meses Garantizados</label>
+                            <input type="text" class="form-control" value="{{ pol.NumMesgar }}" disabled>
+                        </div>
+                        <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                            <label class="frmLblColor">Meses Escalonados</label>
+                            <input type="text" class="form-control" value="{{ pol.NumMesesc }}" disabled>
+                        </div>
+                        <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                            <label class="frmLblColor">Reasjuste Trim.</label>
+                            <input type="text" class="form-control" value="{{ pol.MtoValreajustetri | number: '1.2-8' }}" disabled>
+                        </div>
+                        <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                            <label class="frmLblColor">Fecha Devengue</label>
+                            <input type="text" class="form-control" value="{{ pol.FecDev }}" disabled>
+                        </div>
+                    </div>
+                    <!-- antes estaba Reasjuste Trim.
+                    <div class="row">
+
+                    </div>-->
+
+                    <div class="row" style="margin-bottom: 10px;">
+
+                        <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                            <label class="frmLblColor">Fecha Aceptación</label>
+                            <input type="text" class="form-control" value="{{ pol.FecAcepta }}" disabled>
+                        </div>
+                        <input type="hidden" class="form-control" formControlName="prcPension" value="{{ pol.PrcPension }}" disabled>
+                        <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                            <label class="frmLblColor">Prima Cotizada ({{ monedaNS.SimboloMoneda }})</label>
+                            <input type="text" class="form-control" value="{{ pol.MtoPriuni | number: '1.2-2' }}" disabled>
+                        </div>
+                        <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                            <label class="frmLblColor">Pensión Cotización ({{ monedaSolDolar.SimboloMoneda }})</label>
+                            <input type="text" class="form-control" value="{{ pol.MtoSumpension | number: '1.2-2' }}" disabled>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6 col-md-6 col-sm-12 panelPol1">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="titulo" style="margin: 0px;">
+                        Antecedentes Recepcionados
+                    </h3>
+                </div>
+                <div class="panel-body" style="height: 220px; width: 100%; overflow-y: hidden;">
+                    <div class="row">
+                        <div class="form-group col-lg-8 col-md-8">
+                            <label class="frmLblColor col-lg-6 col-md-6 col-sm-12" style="padding: 0px;">Fecha Información AFP</label>
+                            <input type="date" class="form-control" id="fechaInfoAfp" formControlName="fechaInfoAFP" [(ngModel)]="fecTras" [class.is-invalid]="fechaInfoAfp">
+                            <!-- <small *ngIf="fechaInfoAfp" class="text-danger">Debe Ingresar la decha de Traspaso de la Prima.</small> -->
+                        </div>
+                        <div class="form-group col-lg-8 col-md-8">
+                            <label class="frmLblColor">Prima Definitiva ({{ monedaNS.SimboloMoneda }})</label>
+                            <input type="text" class="form-control" id="primaDefNS" formControlName="primaDefinitivaNS" [class.is-invalid]="primaDefinitivaNS" (ngModelChange)="primDefNs=$event" [ngModel]="primDefNs | decimalPipe:'1-2-2'" (keypress)="numberDecimal($event)">
+                            <!-- <small *ngIf="primaDefinitivaNS" class="text-danger">Debe Ingresar un Valor para Monto Prima Recibida o Recaudada.</small> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class=" col-lg-6 col-md-6 col-sm-12 panelPol2 ">
+            <div class="panel panel-default ">
+                <div class="panel-heading ">
+                    <h3 class="titulo " style="margin: 0px; ">
+                        Diferencias
+                    </h3>
+                </div>
+                <div class="panel-body" style="height: 220px; width: 100%; overflow-y: hidden;">
+                    <div class="row ">
+                        <div class="form-group col-lg-8 col-md-8 col-sm-6">
+                            <!-- <input type="text " class="form-control " value="" hidden="true"> -->
+                            <label class="frmLblColor col-lg-6 col-md-6 col-sm-12 " style="padding: 0px; ">Factor de Variación Renta</label>
+                            <input type="text " class="form-control " formControlName="factorVariacionRenta" value="{{ pol.PrcFacvar | number: '1.2-8' }}" disabled>
+                        </div>
+                        <div class="form-group col-lg-8 col-md-8 ">
+                            <label class="frmLblColor col-lg-6 col-md-6 col-sm-12 " style="padding: 0px; ">Tipo de Cambio</label>
+                            <input type="text " class="form-control" formControlName="tipoCambio" value="{{ pol.MtoValmonedarec | number: '1.3-3' }}" disabled>
+                        </div>
+                        <div class="form-group col-lg-4">
+                            <button type="button" [disabled]="isDisabled" id="btnCalcular" class="btn btn-azul btnCenter btn-azul-fix btnPad " (click)="calcular()">Calcular</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <div class="col-lg-12 col-md-12 col-sm-12 ">
+        <div class="panel panel-default ">
+            <div class="panel-heading ">
+                <h3 class="titulo " style="margin: 0px; ">
+                    Definición de Pensión y Primas
+                </h3>
+            </div>
+            <div class="panel-body ">
+
+                <div class="row ">
+                    <div class="col-lg-12 col-md-12 col-sm-12 ">
+                        <div class="row ">
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3 ">
+                                <label class="col-lg-12 col-md-12 col-sm-12 frmLblColor " style="padding-left: 0px; "><b>Compañia</b></label>
+                                <label class="col-lg-12 col-md-12 col-sm-12 frmLblColor " style="padding-left: 0px; ">Mto. Pensión Definitiva ({{ monedaSolDolar.SimboloMoneda }})</label>
+
+                                <input *ngIf="pol.CodTippension!='08'" type="text" class="form-control" formControlName="mtoPenDefComp" value="{{ pol.MtoSumpensioninf | number: '1.2-2' }}" disabled>
+                                <input *ngIf="pol.CodTippension=='08'" type="text" class="form-control" formControlName="mtoPenDefComp" value="{{ pol.MtoSumPensionDef | number: '1.2-2' }}" disabled>
+                            </div>
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3 ">
+                                <label class="col-lg-12 col-md-12 col-sm-12 frmLblColor " style="padding-left: 0px; "><b>AFP</b></label>
+                                <label class="col-lg-12 col-md-12 col-sm-12 frmLblColor" style="padding-left: 0px; ">({{ monedaNS.SimboloMoneda }})</label>
+                                <input *ngIf="pol.CodTippension!='08'" type="text " class="form-control" formControlName="primDefComp" value="{{ pol.MtoPensionafp | number: '1.2-2' }}" disabled>
+                                <input *ngIf="pol.CodTippension=='08'" type="text " class="form-control" formControlName="primDefComp" value="{{ pol.MtoSumpensionafp | number: '1.2-2' }}" disabled>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row ">
+                    <div class="col-lg-12 col-md-12 col-sm-12 ">
+                        <div class="row ">
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3 ">
+                                <label class="col-lg-12 col-md-12 col-sm-12 frmLblColor" style="padding-left: 0px;">Prima Definitiva ({{ monedaNS.SimboloMoneda }})</label>
+                                <input type="text " class="form-control" formControlName="mtoPenDefNS" value="{{ pol.MtoPricia | number: '1.2-2' }}" disabled>
+                            </div>
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3 ">
+                                <label class="col-lg-12 col-md-12 col-sm-12 frmLblColor" style="padding-left: 0px;">({{ monedaNS.SimboloMoneda }})</label>
+                                <input type="text " class="form-control" formControlName="primDefNS" value="{{ pol.MtoPriafp | number: '1.2-2' }}" disabled>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</form>
+
+<div class="col-lg-12 col-md-12 col-sm-12 ">
+    <div class="row ">
+        <div class="col-lg-12 col-md-12 col-sm-12 width 50%">
+            <div class="form-group  btnCenter" style="text-align: right;">
+                <button type="button " class="btn btn-azul btn-azul-fix mr" (click)="guardar()"><i class="fa fa-save "></i> Guardar</button>
+                <button type="button " class="btn btn-azul btn-azul-fix" [routerLink]="['/consultaAntPrimaAfp/']"> Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>

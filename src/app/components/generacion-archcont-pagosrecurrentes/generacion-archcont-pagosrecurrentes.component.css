@@ -1,0 +1,106 @@
+tr>th {
+    text-align: center;
+}
+.btn-azul-fix {
+  font-size: 11px;
+}
+.tittle {
+    margin: 0px;
+    color: #0090B2;
+    font-size: 12px;
+}
+
+.text {
+    color: #555;
+    font-size: 11px;
+}
+
+
+/* Large desktops and laptops */
+
+@media (min-width: 1200px) {
+    .mr {
+        margin-right: 60px;
+    }
+    .btnAlign {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+    .pt {
+        padding-top: 22px;
+    }
+}
+
+
+/* Landscape tablets and medium desktops */
+
+@media (min-width: 992px) and (max-width: 1199px) {
+    .mr {
+        margin-right: 60px;
+    }
+    .btnAlign {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+    .pt {
+        padding-top: 22px;
+    }
+}
+
+
+/* Portrait tablets and small desktops */
+
+@media (min-width: 768px) and (max-width: 991px) {
+    .btnAlign {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+}
+
+
+/* Landscape phones and portrait tablets */
+
+@media (max-width: 767px) {
+    .btnAlign {
+        text-align: center;
+    }
+}
+
+
+/* Portrait phones and smaller */
+
+@media (max-width: 480px) {
+    button {
+        width: 60%;
+    }
+    .btnAlign {
+        text-align: center;
+    }
+}
+
+.mat-table {
+  height: 410px;
+  overflow: auto;
+  background-color: #ffffff;
+}
+
+.mat-row {
+  border-bottom: 1px solid lightgray;
+}
+
+.mat-cell,
+.mat-header-cell {
+  color: black;
+  display: block;
+  background-color: #ffffff;
+  text-align: center;
+  font-size: 11px;
+  padding: 15px 0px;
+}
+
+.mat-header-cell {
+  color: black;
+  background-color: #ffffff;
+  display: block;
+  font-size: 12px;
+}

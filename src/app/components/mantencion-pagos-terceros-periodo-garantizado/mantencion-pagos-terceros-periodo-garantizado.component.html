@@ -1,0 +1,611 @@
+<div class="col-lg-12 col-md-12 col-sm-12 ">
+    <div class="panel panel-default">
+        <div class="panel-body camposForm campo">
+            <form>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                <label>N° Póliza:</label>&nbsp;
+                                <label class="frmLblColor">{{infoPensionado.NumPoliza}}</label>
+                            </div>
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                <label>N° Endoso:</label>&nbsp;
+                                <label class="frmLblColor">{{infoPensionado.NumEndoso}}</label>
+                            </div>
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                <label>Documento:</label>&nbsp;
+                                <label class="frmLblColor">{{infoPensionado.TipNumIdent}}</label>
+                            </div>
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                <label>CUSPP:</label>&nbsp;
+                                <label class="frmLblColor">{{infoPensionado.CUSPP}}</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-lg-9 col-md-9 col-sm-9">
+                                <label>Titular:</label>&nbsp;
+                                <label class="frmLblColor">{{infoPensionado.Nombre}}</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="col-lg-12 col-md-12 col-sm-12 ">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h5 class="titulo" style="margin: 0px;"><b>Detalle de Pago</b></h5>
+        </div>
+        <div class="panel-body camposForm">
+            <form>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="form-group col-lg-2 col-md-2 col-xs-12 column5">
+                                <label class="frmLblColor">Fecha Recepción</label>
+                                <input type="date" class="form-control form-control-sm" name="fecRecepcion" [(ngModel)]="fechaRecepcion">
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-xs-12 column5">
+                                <label class="frmLblColor">Tipo Cambio</label>
+                                <input type="text" class="form-control form-control-sm" [ngModel]="detallePagoTabla.vlTipCambio | number:'1.3-3'" name="vlTipCambio" disabled>
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-xs-12 column5">
+                                <label class="frmLblColor">Fecha Inicio Per. Gar.</label>
+                                <input type="text" class="form-control form-control-sm" [(ngModel)]="detallePagoDatos.FecInipagopen" name="FecInipencia" disabled>
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-xs-12 column5">
+                                <label class="frmLblColor">Fecha Pago</label>
+                                <input #fecPag type="date" class="form-control form-control-sm" name="fecPago" [(ngModel)]="fechaPago" (focusout)="fechaPagoChange(fecPag.value)">
+                            </div>
+
+                            <div class="form-group col-lg-2 col-md-2 col-xs-12 column5">
+                                <label class="frmLblColor">Fecha Devengue</label>
+                                <input type="text" class="form-control form-control-sm" [(ngModel)]="detallePagoDatos.FecDev" name="FecDev" disabled>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-lg-2 col-md-2 col-xs-12 column5">
+                                <label class="frmLblColor">Fecha Fin Per. Gar.</label>
+                                <input type="text" class="form-control form-control-sm" [(ngModel)]="detallePagoDatos.FecFinpergar" name="FecFinpergar" disabled>
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-xs-12 column5">
+                                <label class="frmLblColor">Tasa Interés Anual</label>
+                                <input #tasaInt type="text" class="form-control form-control-sm" name="tasaInteres" [(ngModel)]="tasaInteres" (keypress)="onlyDecimalNumberKey($event)">
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-xs-12 column5">
+                                <label class="frmLblColor">Fecha Ini. Pago</label>
+                                <input type="text" class="form-control form-control-sm" [(ngModel)]="detallePagoDatos.FecInipencia" name="FecInipagopen" disabled>
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-xs-12 column5">
+                                <label class="frmLblColor">Pensión Referencia</label>
+                                <input type="text" class="form-control form-control-sm" name="penReferencia" [(ngModel)]="detallePagoDatos.MtoPension" name="MtoPension" disabled>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div>
+    <!--Tabla-->
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <mat-table [dataSource]="dataSource" class="table table-hover">
+                        <mat-header-row *matHeaderRowDef="columnas; sticky: true"></mat-header-row>
+                        <mat-row *matRowDef="let row; columns: columnas;" (click)="datosRow(row)"></mat-row>
+                        <ng-container matColumnDef="item">
+                            <mat-header-cell *matHeaderCellDef>
+                                <div>Item</div>
+                            </mat-header-cell>
+                            <mat-cell class="duration-cell" *matCellDef="let lesson; let i=index">{{i+1}}</mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="parentesco">
+                            <mat-header-cell *matHeaderCellDef>
+                                <div>Parentesco</div>
+                            </mat-header-cell>
+                            <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.Parentesco}}</mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="dni">
+                            <mat-header-cell *matHeaderCellDef>
+                                <div>Tipo Ident.</div>
+                            </mat-header-cell>
+                            <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.TipoIden}}</mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="nIdent">
+                            <mat-header-cell *matHeaderCellDef>
+                                <div>N° Ident.</div>
+                            </mat-header-cell>
+                            <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.num_idenben}}</mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="asegurado">
+                            <mat-header-cell *matHeaderCellDef>
+                                <div>Asegurado</div>
+                            </mat-header-cell>
+                            <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.gls_nomben}} {{lesson.gls_nomsegben}} {{lesson.gls_patben}} {{lesson.gls_matben}}</mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="estPension">
+                            <mat-header-cell *matHeaderCellDef>
+                                <div>Est. Pensión</div>
+                            </mat-header-cell>
+                            <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.EstPension}}</mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="estPagoGar">
+                            <mat-header-cell *matHeaderCellDef>
+                                <div>Est. Pago Gar.</div>
+                            </mat-header-cell>
+                            <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.vlEstPago}}</mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="porPension">
+                            <mat-header-cell *matHeaderCellDef>
+                                <div>% Pensión</div>
+                            </mat-header-cell>
+                            <mat-cell class="duration-cell" *matCellDef="let lesson">{{ lesson.prc_pension | number:'1.2-2' }}</mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="mtoPension">
+                            <mat-header-cell *matHeaderCellDef>
+                                <div>Monto Pensión</div>
+                            </mat-header-cell>
+                            <mat-cell class="duration-cell" *matCellDef="let lesson">{{ lesson.mto_pension | number:'1.2-2' }}</mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="mesesPag">
+                            <mat-header-cell *matHeaderCellDef>
+                                <div>Meses Pag.</div>
+                            </mat-header-cell>
+                            <mat-cell class="duration-cell" *matCellDef="let lesson">{{ lesson.num_mesespag }}</mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="mesesNoDe">
+                            <mat-header-cell *matHeaderCellDef>
+                                <div>Meses No. De.</div>
+                            </mat-header-cell>
+                            <mat-cell class="duration-cell" *matCellDef="let lesson">{{ lesson.num_mesesnodev }}</mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="pensionNoP">
+                            <mat-header-cell *matHeaderCellDef>
+                                <div>Pensión No P.</div>
+                            </mat-header-cell>
+                            <mat-cell class="duration-cell" *matCellDef="let lesson">{{ lesson.mto_pago | number:'1.2-2' }}</mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="fechaPago">
+                            <mat-header-cell *matHeaderCellDef>
+                                <div>Fecha Pago</div>
+                            </mat-header-cell>
+                            <mat-cell class="duration-cell" *matCellDef="let lesson">{{ lesson.fechaPago }}</mat-cell>
+                        </ng-container>
+                    </mat-table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Fin de tabla -->
+    <!--Tabs-->
+
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="panel with-nav-tabs panel-default">
+            <div class="panel-heading">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#antecedentesGenerales" data-toggle="tab">Antecedentes Generales</a></li>
+                    <li><a href="#antecedentesCalculo" data-toggle="tab">Antecedentes de Cálculo</a></li>
+                </ul>
+            </div>
+            <div class="panel-body">
+                <div class="tab-content">
+                    <div class="tab-pane fade in active" id="antecedentesGenerales">
+
+                        <div class="col-lg-12 col-md-12 col-sm-12 m-3 ">
+
+                            <form>
+
+                                <div class="row">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h5 class="titulo tituloLinea"><b>Definición Periodo de Pago</b></h5>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-lg-2 col-md-2 col-sm-2 column5" id="custom-select">
+                                        <label class="frmLblColor">Tipo Documento</label>
+                                        <select class="form-control" [(ngModel)]="detallePagoTabla.cod_tipoidenben" name="cod_tipoidenben" disabled>
+                                            <option value="">Seleccionar</option>
+                                            <option *ngFor="let item of this.cmbTipoIdent" value="{{ item.Codigo }}">{{ item.Nombre }}</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                        <label class="frmLblColor">N° Documento</label>
+                                        <input type="text" class="form-control" [(ngModel)]="detallePagoTabla.num_idenben" name="num_idenben" disabled>
+                                    </div>
+                                    <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                        <label class="frmLblColor">Apellido Paterno</label>
+                                        <input type="text" class="form-control" [(ngModel)]="detallePagoTabla.gls_patben" name="gls_patben" disabled>
+                                    </div>
+                                    <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                        <label class="frmLblColor">Apellido Materno</label>
+                                        <input type="text" class="form-control" [(ngModel)]="detallePagoTabla.gls_matben" name="gls_matben" disabled>
+                                    </div>
+                                    <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                        <label class="frmLblColor">Primer Nombre</label>
+                                        <input type="text" class="form-control" [(ngModel)]="detallePagoTabla.gls_nomben" name="gls_nomben" disabled>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                        <label class="frmLblColor">Segundo Nombre</label>
+                                        <input type="text" class="form-control" [(ngModel)]="detallePagoTabla.gls_nomsegben" name="gls_nomsegben" disabled>
+                                    </div>
+                                    <div class="form-group col-lg-2 col-md-2 col-sm-2 column5" id="custom-select">
+                                        <label class="frmLblColor">Género</label>
+                                        <select class="form-control" [(ngModel)]="detallePagoTabla.cod_sexo" name="cod_sexo" disabled>
+                                            <option value="">Seleccione una opción</option>
+                                            <option *ngFor="let item of cmbSexo" value="{{ item.cod_elemento }}">{{ item.gls_elemento }}</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                        <label class="frmLblColor">Fecha Nac.</label>
+                                        <input type="text" class="form-control" [(ngModel)]="detallePagoTabla.fec_nacben" name="fec_nacben" disabled>
+                                    </div>
+                                    <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                        <label class="frmLblColor">Parentesco</label>
+                                        <input type="text" class="form-control" [(ngModel)]="detallePagoTabla.Parentesco" name="Parentesco" disabled>
+                                    </div>
+                                    <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                        <label class="frmLblColor">Grupo Familiar</label>
+                                        <input type="text" class="form-control" [(ngModel)]="detallePagoTabla.GrupoFam" name="cod_grufam" disabled>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                        <label class="frmLblColor">Pensión</label>
+                                        <input type="text" class="form-control" [ngModel]="detallePagoTabla.mto_pension | number:'1.2-2'" name="mto_pension" disabled>
+                                    </div>
+                                    <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                        <label class="frmLblColor">Es. Pago Pensión</label>
+                                        <input type="text" class="form-control" [(ngModel)]="detallePagoTabla.EstPension" name="cod_estpension" disabled>
+                                    </div>
+                                    <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                        <label class="frmLblColor">% Pensión</label>
+                                        <input type="text" class="form-control" [ngModel]="detallePagoTabla.prc_pension | number:'1.2-2'" name="prc_pension" disabled>
+                                    </div>
+                                    <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                        <label class="frmLblColor">Pensión Gar.</label>
+                                        <input type="text" class="form-control" [ngModel]="detallePagoTabla.mto_pensiongar | number:'1.2-2'" name="mto_pensiongar" disabled>
+                                    </div>
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h5 class="titulo tituloLinea"><b>Antecedentes de Direccción</b></h5>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-lg-2 col-md-2 col-sm-2 column4">
+                                        <label class="frmLblColor">Direccción</label>
+                                        <input type="text" class="form-control" [(ngModel)]="detallePagoTabla.gls_dirben" name="dirExpediente" (keypress)="onlyAlphaNumeric($event)" maxlength="500">
+
+                                    </div>
+                                    <div class="form-group col-lg-2 col-md-2 col-sm-2 column4">
+                                        <label class="frmLblColor">Ubigeo</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" [(ngModel)]="Direccion" name="dirCorrespondencia" disabled>
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-primary btnrad" type="button" data-toggle="modal" data-target="#modalDirecciones"><i class="fa fa-plus"></i></button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-lg-2 col-md-2 col-sm-2 column4">
+                                        <label class="frmLblColor">Teléfono</label>
+                                        <div class="input-group">
+                                            <input name="telefono" type="text" class="form-control" [(ngModel)]="detallePagoTabla.gls_fonoben" name="gls_fonoben" disabled>
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-primary btnrad" type="button" data-toggle="modal" data-target="#modalTelefonos"><i class="fa fa-plus"></i></button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-lg-2 col-md-2 col-sm-2 column4">
+                                        <label class="frmLblColor">Email</label>
+                                        <div class="input-group">
+                                            <input name="email" type="text" class="form-control" [(ngModel)]="detallePagoTabla.gls_correoben" name="gls_correoben" disabled>
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-primary btnrad" type="button" data-toggle="modal" data-target="#modalCorreos"><i class="fa fa-plus"></i></button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+
+
+                    </div>
+
+                    <div class="tab-pane fade" id="antecedentesCalculo">
+                        <div class="col-lg-12 col-md-12 col-sm-12 m-3 ">
+                            <form>
+                                <div class="row">
+                                    <div class="form-group col-lg-2 col-md-2 col-sm-2 column4">
+                                        <label class="frmLblColor">Estado de Pago Per. Garantizado</label>
+                                        <input type="text" class="form-control" [(ngModel)]="detallePagoTabla.vlEstPago" name="vlEstPago" disabled>
+                                    </div>
+                                </div>
+
+                                <!-- Forma de Pago -->
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                        <div class="panel panel-default">
+                                            <div class="panel-body camposForm">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <h5 class="titulo tituloLinea"><b>Forma de Pago</b></h5>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="form-group col-lg-6 col-md-6 col-sm-6 column2">
+                                                        <label class="frmLblColor">Vía Pago</label>
+                                                        <select class="form-control" [(ngModel)]="ViaPago" name="ViaPago">
+                                                            <option  *ngFor="let item of cmbViaPago" value="{{ item.cod_elemento }}">{{ item.gls_elemento }}</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group col-lg-6 col-md-6 col-sm-6 column2">
+                                                        <label class="frmLblColor">Sucursal</label>
+                                                        <select class="form-control" [(ngModel)]="Sucursal" name="Sucursal" [disabled]="sucursal">
+                                                            <option  *ngFor="let item of cmbSucursal" value="{{ item.cod_elemento }}">{{ item.gls_elemento }}</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="form-group col-lg-6 col-md-6 col-sm-6 column2">
+                                                        <label class="frmLblColor">Banco</label>
+                                                        <select class="form-control" [(ngModel)]="Banco" name="Banco" (change)="cambiarBanco('combo')" [disabled]="banco">
+                                                            <option  *ngFor="let item of cmbBanco" value="{{ item.cod_elemento }}">{{ item.gls_elemento }}</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group col-lg-6 col-md-6 col-sm-6 column2">
+                                                        <label class="frmLblColor">Tipo Cta.</label>
+                                                        <select class="form-control" [(ngModel)]="TipoCta" name="TipoCta" (change)="cambiarTipoCuenta()" [disabled]="tipoCta">
+                                                            <option value="00">Seleccione una opción</option>
+                                                            <option  *ngFor="let item of cmbTipoCta" value="{{ item.COD_CUENTA }}">{{ item.GLS_CUENTA }}</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="form-group col-lg-6 col-md-6 col-sm-6 column2">
+                                                        <label class="frmLblColor">N° Cuenta</label>
+                                                        <input type="text" class="form-control" [(ngModel)]="detallePagoTabla.num_cuenta" name="noCuenta" [disabled]="noCuenta" [maxlength]="maxLengthNoCuenta" oninput="this.value = this.value.toUpperCase()">
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <span style="height: 3.7vh;"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                        <div class="panel panel-default">
+                                            <div class="panel-body camposForm">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <h5 class="titulo tituloLinea"><b>Detalle de Pago</b></h5>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="form-group col-lg-6 col-md-6 col-sm-6 column2">
+                                                        <label class="frmLblColor">Tipo Cambio</label>
+                                                        <input type="text" class="form-control" [ngModel]="detallePagoTabla.Mto_ValMoneda | number:'1.3-3'" name="tipoCambio" disabled>
+                                                    </div>
+                                                    <div class="form-group col-lg-2 col-lg-6 col-md-6 col-sm-6 column2">
+                                                        <label class="frmLblColor">Inicio Periodo Garantizado a Pagar</label>
+                                                        <input type="text" class="form-control" [(ngModel)]="detallePagoTabla.fec_inipagopen" name="inPerGarPag" disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="form-group col-lg-2 col-lg-6 col-md-6 col-sm-6 column2">
+                                                        <label class="frmLblColor">Fin Periodo Gar. a Pagar</label>
+                                                        <input type="text" class="form-control" [(ngModel)]="detallePagoTabla.fec_terpagopengar" name="finPerGarPag" disabled>
+                                                    </div>
+                                                    <div class="form-group col-lg-6 col-md-6 col-sm-6 column2">
+                                                        <label class="frmLblColor">Meses Transcurridos</label>
+                                                        <input type="text" class="form-control" [(ngModel)]="detallePagoTabla.num_mesespag" name="num_mesespag" disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="form-group col-lg-6 col-md-6 col-sm-6 column2">
+                                                        <label class="frmLblColor">Meses no Devengados</label>
+                                                        <input type="text" class="form-control" [(ngModel)]="detallePagoTabla.num_mesesnodev" name="mesNoDev" disabled>
+                                                    </div>
+                                                    <div class="form-group col-lg-6 col-md-6 col-sm-6 column2">
+                                                        <label class="frmLblColor">Pensión no Percibida a Valor Pte.</label>
+                                                        <input type="text" class="form-control" [ngModel]="detallePagoTabla.mto_pago | number:'1.2-2'" name="penPercib" disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12" style="text-align: right">
+                                                        <button type="button" class="btn btn-azul" style="border-radius: 8px !important;" (click)="calcular()">
+                                                            <i class="fa fa-cog" ></i>Calcular
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Termina Forma de Pago -->
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="row" style="text-align: center; margin-bottom: 10px;">
+            <button type="button" class="btn btn-azul mr" (click)="Guardar(this.dataSource.filteredData)"><i class="fa fa-save"></i> Guardar</button> &nbsp;
+            <button type="button" class="btn btn-azul mr"><i class="fa fa-print"></i> Generar Documento</button> &nbsp;
+            <button type="button" class="btn btn-azul" [routerLink]="['/consultaPagoTercerosPG/']"> Cancelar</button>
+        </div>
+    </div>
+
+    <!-- INICIO MODALS -->
+    <div class="modal fade" id="modalConfirmar" role="dialog" style="margin-top: 70px;">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title text-center"><b>Calcular</b></h4>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <div class="row" style="margin-right: 0px;margin-left: 0px; text-align: center;">
+                            <div class="form-group col-md-12">
+                                <label class="frmLblColor modal-titulo">Los cambios realizados calcularán nuevos montos.</label>
+
+                            </div>
+                            <div class="img" style="text-align: center; margin-bottom: 20px;">
+                                <img [src]="imagenLoading" alt="{{titleLoading}}">
+                            </div>
+
+                        </div>
+                        <div class="row" style="text-align: center; margin-bottom: 10px;">
+                            <button type="button" class="btn btn-azul mr" data-dismiss="modal" (click)="calculoCorr()"> Aceptar</button> &nbsp;
+                            <button type="button" class="btn btn-azul mr" data-dismiss="modal"> Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" style="display: none;"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Inician Modales -->
+
+    <div class="modal fade" id="modalCorreos" role="dialog" data-backdrop="static" data-keyboard="false" style="margin-top: 70px;">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" (click)="cerrarModalCorreos()">&times;</button>
+                    <h4 class="modal-title text-center"><b>Correos Electrónicos</b></h4>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <form>
+                            <div class="col-md-12" style="margin-right: 0px;margin-left: 0px;">
+                                <div class="form-group col-md-7 col-md-offset-2">
+                                    <label class="frmLblColor">Correo Electrónico 1</label>
+                                    <input type="text" class="form-control" id="inpCorreo1" [(ngModel)]="detallePagoTabla.gls_correoben" maxlength="80" name="GlsCorreo">
+                                </div>
+                                <div class="form-group col-md-7 col-md-offset-2">
+                                    <label class="frmLblColor">Correo Electrónico 2</label>
+                                    <input type="text" class="form-control" id="inpCorreo2Afi" [(ngModel)]="detallePagoTabla.GLS_CORREO2" maxlength="80" name="GlsCorreo2">
+                                </div>
+                                <div class="form-group col-md-7 col-md-offset-2">
+                                    <label class="frmLblColor">Correo Electrónico 3</label>
+                                    <input type="text" class="form-control" id="inpCorreo3Afi" [(ngModel)]="detallePagoTabla.GLS_CORREO3" maxlength="80" name="GlsCorreo3">
+                                </div>
+                            </div>
+
+                        </form>
+                        <div class="row" style="text-align: center; margin-bottom: 10px;">
+                            <button type="button" class="btn btn-azul-fix btn-azul mr" (click)="aceptarModalCorreos()"> Aceptar</button> &nbsp;
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" style="display: none;"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalTelefonos" role="dialog" data-backdrop="static" data-keyboard="false" style="margin-top: 70px;">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" (click)="cerrarModalTel()">&times;</button>
+                    <h4 class="modal-title text-center"><b>Teléfonos</b></h4>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <form>
+
+                            <div class="col-md-12" style="margin-right: 0px;margin-left: 0px;">
+                                <div class="form-group col-md-7 col-md-offset-2">
+                                    <label class="frmLblColor">Teléfono 1</label>
+                                    <input type="text" class="form-control" id="inpTelefono1Afi" [(ngModel)]="detallePagoTabla.gls_fonoben" name="GlsFono" (keypress)="numberOnly($event)" minlength="7" maxlength="9">
+                                </div>
+                                <div class="form-group col-md-7 col-md-offset-2">
+                                    <label class="frmLblColor">Teléfono 2</label>
+                                    <input type="text" class="form-control" id="inpTelefono2Afi" [(ngModel)]="detallePagoTabla.GLS_FONO2" name="GlsFono2" (keypress)="numberOnly($event)" minlength="7" maxlength="9">
+                                </div>
+                                <div class="form-group col-md-7 col-md-offset-2">
+                                    <label class="frmLblColor">Teléfono 3</label>
+                                    <input type="text" class="form-control" id="inpTelefono3Afi" [(ngModel)]="detallePagoTabla.GLS_FONO3" name="GlsFono3" (keypress)="numberOnly($event)" minlength="7" maxlength="9">
+                                </div>
+
+                            </div>
+
+                        </form>
+                        <div class="row" style="text-align: center; margin-bottom: 10px;">
+                            <button type="button" class="btn btn-azul btn-azul-fix mr" (click)="aceptarModalTel()"> Aceptar</button> &nbsp;
+                            <!-- <button type="button" class="btn btn-azul mr" data-dismiss="modal"> Cancelar</button> -->
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" style="display: none;"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalDirecciones" role="dialog" data-backdrop="static" data-keyboard="false" style="margin-top: 70px;">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title text-center"><b>Dirección</b></h4>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <form>
+                            <div class="row">
+                                <!-- Dirección Expediente -->
+                                <div class="form-group col-lg-3 col-md-3 col-sm-3 col-md-offset-1" id="custom-select">
+                                    <label class="frmLblColor">Departamento</label>
+                                    <select class="form-control" [(ngModel)]="Departamento" name="Departamento" (change)="onChangeLlenaProvincia()">
+                                            <option value="">Seleccione una opción</option>
+                                            <option *ngFor="let item of cmbDepartamento" value="{{ item.codigo }}">{{ item.descripcion }}</option>
+                                        </select>
+                                </div>
+                                <div class="form-group col-lg-3 col-md-3 col-sm-3" id="custom-select">
+                                    <label class="frmLblColor">Provincia</label>
+                                    <select class="form-control" [(ngModel)]="Provincia" name="Provincia" (change)="onChangeLlenaDistrito()">
+                                            <option value="">Seleccione una opción</option>
+                                            <option *ngFor="let item of cmbProvincia" value="{{ item.codigo }}" >{{ item.descripcion }}</option>
+                                        </select>
+                                </div>
+                                <div class="form-group col-lg-3 col-md-3 col-sm-3" id="custom-select">
+                                    <label class="frmLblColor">Distrito</label>
+                                    <select class="form-control" [(ngModel)]="Distrito" name="Distrito">
+                                            <option value="">Seleccione una opción</option>
+                                            <option *ngFor="let item of cmbDistrito" value="{{ item.codigo }}" >{{ item.descripcion }}</option>
+                                        </select>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="row" style="text-align: center; margin-bottom: 10px;">
+                            <button type="button" class="btn btn-azul btn-azul-fix mr" (click)="aceptarModalDir()"> Aceptar</button>
+                            <!-- <button type="button" class="btn btn-azul btn-azul-fix mr" data-dismiss="modal" (click)="cambioDirCorr()"> Aceptar</button> -->
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" style="display: none;"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Terminan Modales -->

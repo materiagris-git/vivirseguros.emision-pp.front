@@ -1,0 +1,460 @@
+<div class="col-lg-12 col-md-12 col-sm-12 ">
+    <div class="panel panel-default">
+        <div class="panel-body bg camposForm">
+            <form>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                <label class="title">N° Póliza:</label>&nbsp;
+                                <label class="frmLblColor">{{infoConsulta.NumeroPoliza}}</label>
+                            </div>
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                <label class="title">N° Endoso:</label>&nbsp;
+                                <label class="frmLblColor">{{infoConsulta.NoEndoso}}</label>
+                            </div>
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                <label class="title">CUSPP:</label>&nbsp;
+                                <label class="frmLblColor">{{infoConsulta.CUSPP}}</label>
+                            </div>
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                <label class="title">Fecha de Solicitud</label>&nbsp;
+                                <label class="frmLblColor">{{infoConsulta.Fecha}}</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-lg-9 col-md-9 col-sm-9">
+                                <label class="title">Titular:</label>&nbsp;
+                                <label class="frmLblColor">{{infoConsulta.Titular}}</label>
+                            </div>
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                <label class="title">Documento:</label>&nbsp;
+                                <label class="frmLblColor">{{infoConsulta.Documento}}</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="col-lg-12 col-md-12 col-sm-12">
+    <div class="table-responsive">
+        <mat-table [dataSource]="dataSource" class="table table-hover">
+            <mat-header-row *matHeaderRowDef="columnasReg; sticky: true"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: columnasReg; let lesson;" (dblclick)="seleccionaTblReg(lesson)"></mat-row>
+            <ng-container matColumnDef="solicitud">
+                <mat-header-cell *matHeaderCellDef>
+                    <div>N° Solicitud</div>
+
+                </mat-header-cell>
+                <mat-cell class="duration-cell" *matCellDef="let lesson; let i=index">{{lesson.indRegistro}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="mto_solicitado">
+                <mat-header-cell *matHeaderCellDef>
+                    <div>Mto Solicitado</div>
+
+                </mat-header-cell>
+                <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.mto_solicitado}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="mto_pago">
+                <mat-header-cell *matHeaderCellDef>
+                    <div>Mto Pagado</div>
+
+                </mat-header-cell>
+                <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.mto_pago}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="tipoIden">
+                <mat-header-cell *matHeaderCellDef>
+                    <div>Tipo Ident.</div>
+
+                </mat-header-cell>
+                <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.cod_tipoidensolicita}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="numIden">
+                <mat-header-cell *matHeaderCellDef>
+                    <div>N° Ident.</div>
+
+                </mat-header-cell>
+                <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.num_idensolicita}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="solNombre">
+                <mat-header-cell *matHeaderCellDef>
+                    <div style="text-align: center;">Nombres</div>
+
+                </mat-header-cell>
+                <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.NombreSolicita}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="acciones">
+                <mat-header-cell *matHeaderCellDef>
+                    <div>Acciones</div>
+
+                </mat-header-cell>
+                <mat-cell class="duration-cell" *matCellDef="let lesson"><i style="color:#0090B2" class="fa fa-edit exclam" title="Modificar" (click)="seleccionaTblReg(lesson)"></i></mat-cell>
+            </ng-container>
+        </mat-table>
+        <!-- <mat-paginator [length]="0" [pageSize]="20" [pageSizeOptions]="[5, 10, 20, 50]" [showFirstLastButtons]="true"></mat-paginator> -->
+    </div>
+    <!-- <div class="col-md-12" style="text-align: end;">
+        <button type="button" class="btn btn-default mr" ><i class="glyphicon glyphicon-pencil"></i>Guardar</button>
+        <button type="button" class="btn btn-primary p-0" data-toggle="modal" data-target="#modalEditar"><i class="glyphicon glyphicon-pencil"></i></button>
+    </div> -->
+</div>
+<!-- Termina Tabla Beneficiarios -->
+<div class="col-lg-12 col-md-12 col-sm-12 ">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h5 class="titulo" style="margin: 0px;"><b>Antecedentes del Solicitante</b></h5>
+        </div>
+        <div class="panel-body camposForm">
+            <form>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="form-group col-lg-2 col-md-2 col-xs-12 column5">
+                                <label class="frmLblColor">Tipo de Persona</label>
+                                <select class="form-control" [(ngModel)]="datosGastosSepelio.cod_tipopersona" name="cod_tipopersona">
+                                    <option value="">Seleccione una opción</option>
+                                    <option *ngFor="let tipoPersona of lstTipoPersona" [value]="tipoPersona.cod_elemento">{{tipoPersona.gls_elemento}}</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-xs-12 column5">
+                                <label class="frmLblColor">Tipo de Documento</label>
+                                <select class="form-control" [(ngModel)]="datosGastosSepelio.cod_tipoidensolicita" name="tipoDocumento" (change)="cambiarTipo()">
+                                    <option value="null">Seleccione una opción</option>
+                                    <option *ngFor="let tipoDocumento of lstTipoDocumento" [value]="tipoDocumento.codigo">{{tipoDocumento.Nombre}}</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-xs-12 column5">
+                                <label class="frmLblColor">N° de Documento</label>
+                                <input type="text" class="form-control form-control-sm" [(ngModel)]="datosGastosSepelio.num_idensolicita" name="noDocumento" oninput="this.value = this.value.toUpperCase()" [maxLength]="this.maxLengthNumDocBen" (keypress)="checkType($event)">
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-xs-12 column5">
+                                <label class="frmLblColor">Apellido Paterno</label>
+                                <input type="text" class="form-control form-control-sm" [(ngModel)]="datosGastosSepelio.gls_patsolicita" name="paterno">
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-xs-12 column5">
+                                <label class="frmLblColor">Apellido Materno</label>
+                                <input type="text" class="form-control form-control-sm" [(ngModel)]="datosGastosSepelio.gls_matsolicita" name="materno">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-lg-2 col-md-2 col-xs-12 column5">
+                                <label class="frmLblColor">Primer Nombre</label>
+                                <input type="text" class="form-control form-control-sm" [(ngModel)]="datosGastosSepelio.gls_nomsolicita" name="nombre">
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-xs-12 column5">
+                                <label class="frmLblColor">Segundo Nombre</label>
+                                <input type="text" class="form-control form-control-sm" [(ngModel)]="datosGastosSepelio.gls_nomsegsolicita" name="segNom">
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-xs-12 column5">
+                                <label class="frmLblColor">Teléfono</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" [(ngModel)]="datosGastosSepelio.gls_fonosolicita" name="telefono1">
+                                    <span class="input-group-btn">
+                                      <button class="btn btn-primary btnrad" type="button" data-toggle="modal"  data-target="#modalTelefonos"><i class="fa fa-plus"></i></button>
+                                    </span>
+
+                                </div>
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-xs-12 column5">
+                                <label class="frmLblColor">Correo Electrónico</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" [(ngModel)]="datosGastosSepelio.gls_correosolicita" name="correo1">
+                                    <span class="input-group-btn">
+                                      <button class="btn btn-primary btnrad" type="button" data-toggle="modal"  data-target="#modalCorreos"><i class="fa fa-plus"></i></button>
+                                    </span>
+
+                                </div>
+                            </div>
+                            <div class="form-group col-lg-3 col-md-2 col-xs-12 column5">
+                                <label class="frmLblColor">Ubigeo Expediente</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="inpUbigeoExp" [(ngModel)]="direccionStr" name="CodDireccion" #inpUbigeoExp="ngModel" required disabled>
+                                    <span class="input-group-btn">
+                                  <button class="btn btn-primary btnrad" type="button" data-toggle="modal"  data-target="#modalDireccion" ><i class="fa fa-plus"></i></button>
+                                </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-lg-2 col-md-2 col-xs-12 column40">
+                                <label class="frmLblColor">Dirección</label>
+                                <input type="text" class="form-control form-control-sm" [(ngModel)]="datosGastosSepelio.gls_dirsolicita" name="direccion">
+                            </div>
+
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3 column5" id="custom-select">
+                                <label class="frmLblColor">Parentesco</label>
+                                <select id="slcParentesco" class="form-control" [(ngModel)]="datosGastosSepelio.CodPar" name="codParBenSelect">
+                                    <option value="00">Seleccione una opción</option>
+                                    <option *ngFor="let item of cmbParentesco" value="{{ item.cod_elemento }}">{{ item.gls_elemento }}</option>
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="col-lg-12 col-md-12 col-sm-12 ">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h5 class="titulo" style="margin: 0px;"><b>Detalle de Pago</b></h5>
+        </div>
+        <div class="panel-body camposForm">
+            <form>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="form-group col-lg-2 col-md-2 col-xs-12 column5">
+                                <label class="frmLblColor">Fecha de Recepción</label>
+                                <input type="date" class="form-control form-control-sm" [(ngModel)]="datosGastosSepelio.fec_solpago" name="fechaRec">
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-xs-12 column5">
+                                <label class="frmLblColor">Fecha de Pago</label>
+                                <input #fecpag type="date" class="form-control form-control-sm" [(ngModel)]="datosGastosSepelio.fec_pago" name="fechaPago" (focusout)="fechaPagoChange(fecpag.value)">
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-xs-12 column5">
+                                <label class="frmLblColor">Tope a la Fecha de Fallecimiento</label>
+                                <input type="text" class="form-control form-control-sm" [(ngModel)]="datosGastosSepelio.mto_cobra" name="cobrado" disabled>
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-xs-12 column5">
+                                <label class="frmLblColor">Valor Pagado en S/.</label>
+                                <input type="text" class="form-control form-control-sm" [(ngModel)]="datosGastosSepelio.mto_pago" name="pagado">
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-xs-12 column5">
+                                <label class="frmLblColor">N° Dcto. Pago</label>
+                                <input type="text" class="form-control form-control-sm" [(ngModel)]="datosGastosSepelio.num_dctopago" name="noDctoPago">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-lg-2 col-md-2 col-xs-12 column40">
+                                <label class="frmLblColor">RUC Empresa Funeraria</label>
+                                <input type="text" class="form-control form-control-sm" [(ngModel)]="datosGastosSepelio.num_idenfun" name="ruc" (keypress)="numberOnly($event)" minlength="11" maxlength="11">
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-xs-12 column5">
+                                <label class="frmLblColor">Valor Solicitado</label>
+                                <input type="text" class="form-control form-control-sm" name="mto_solicitado" [(ngModel)]="datosGastosSepelio.mto_solicitado">
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-xs-12 column5">
+                                <label class="frmLblColor">Fecha de emisión del documento</label>
+                                <input type="date" class="form-control form-control-sm" id="fechaEmision" [(ngModel)]="datosGastosSepelio.fechaEmision" name="fechaEmision">
+                            </div>
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3 column5" id="custom-select">
+                                <label class="frmLblColor">Moneda de pago</label>
+                                <select id="slcMoneda" class="form-control" [(ngModel)]="datosGastosSepelio.codMoneda" name="codMoneda">
+                                    <option value="00">Seleccione una opción</option>
+                                    <option *ngFor="let item of cmbMoneda" value="{{ item.cod_elemento }}">{{ item.gls_elemento }}</option>
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div class="col-lg-12 col-md-12 col-sm-12 ">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h5 class="titulo" style="margin: 0px;"><b>Forma de Pago</b></h5>
+        </div>
+        <div class="panel-body camposForm">
+            <form>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="form-group col-lg-2 col-md-2 col-xs-12 column5">
+                                <label class="frmLblColor">Vía Pago</label>
+                                <select class="form-control" [(ngModel)]="datosGastosSepelio.cod_viapago" name="viaPago" (change)="cambiarViaPago()">
+                                    <option *ngFor="let viaPago of lstViaPago" [value]="viaPago.cod_elemento">{{viaPago.gls_elemento}}</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-xs-12 column40">
+                                <label class="frmLblColor">Sucursal</label>
+                                <select class="form-control" [(ngModel)]="datosGastosSepelio.cod_sucursal" name="sucursal" [disabled]="sucursal" (change)="cambiarSucursal()">
+                                    <option *ngFor="let sucursal of lstSucursal" [value]="sucursal.cod_elemento">{{sucursal.gls_elemento}}</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-xs-12 column5">
+                                <label class="frmLblColor">Banco</label>
+                                <select class="form-control" [(ngModel)]="datosGastosSepelio.cod_banco" name="banco" [disabled]="banco" (change)="cambiarBanco('elegir')">
+                                    <option *ngFor="let banco of lstBanco" [value]="banco.cod_elemento">{{banco.gls_elemento}}</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-xs-12 column5">
+                                <label class="frmLblColor">Tipo Cta.</label>
+                                <select class="form-control" [(ngModel)]="datosGastosSepelio.cod_tipcuenta" name="tipoCuenta" [disabled]="tipoCta" (change)="cambiarTipoCuenta('elegir')">
+                                    <option value="00">Seleccione una opción</option>
+                                    <option *ngFor="let tipoCuenta of lstTipoCuenta" [value]="tipoCuenta.COD_CUENTA">{{tipoCuenta.GLS_CUENTA}}</option>
+                                </select>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-lg-2 col-md-2 col-xs-12 column5">
+                                <label class="frmLblColor">N° Cuenta</label>
+                                <input type="text" class="form-control form-control-sm" [(ngModel)]="datosGastosSepelio.num_cuenta" name="numCuenta" [maxLength]="maxLengthNumCuenta" [disabled]="noCuenta" oninput="this.value = this.value.toUpperCase()">
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-xs-12 column5">
+                                <label class="frmLblColor">N° CCI</label>
+                                <input type="text" class="form-control form-control-sm" [(ngModel)]="datosGastosSepelio.cod_CCI" name="cod_CCI" maxlength="20" [disabled]="noCuentaCCI">
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-sm-3 col-xs-12" style="padding-top: 22px;">
+                                <button type="button " class="btn btn-azul btn-azul-fix col-md-12 col-xs-12" (click)="limpiar()"><i class="fa fa-file-o"></i> Cancelar/Limpiar</button>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="col-lg-12 col-md-12 col-sm-12">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group spaceM btnAlign btnCenter">
+                <button type="button" class="btn btn-azul-fix btn-azul mr" (click)="guardarEditar()"><i class="fa fa-save" ></i> Guardar</button>
+                <button type="button" class="btn btn-azul-fix btn-azul mr" (click)="exportar()"><i class="fa fa-print"></i> Generar Documento</button>
+                <button type="button" class="btn btn-azul-fix btn-azul" [routerLink]="['/consultaPagoTercerosGS/']"> Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Inician Modales -->
+
+<div class="modal fade" id="modalCorreos" role="dialog" style="margin-top: 70px;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" (click)="cerrarModalCorreos()">&times;</button>
+                <h4 class="modal-title text-center"><b>Correos Electrónicos</b></h4>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <form>
+                        <div class="col-md-12" style="margin-right: 0px;margin-left: 0px;">
+                            <div class="form-group col-md-7 col-md-offset-2">
+                                <label class="frmLblColor">Correo Electrónico 1</label>
+                                <input type="text" class="form-control" id="inpCorreo1" [(ngModel)]="datosGastosSepelio.gls_correosolicita" name="GlsCorreo">
+                            </div>
+                            <div class="form-group col-md-7 col-md-offset-2">
+                                <label class="frmLblColor">Correo Electrónico 2</label>
+                                <input type="text" class="form-control" id="inpCorreo2Afi" [(ngModel)]="datosGastosSepelio.gls_correosolicita2" name="GlsCorreo2">
+                            </div>
+                            <div class="form-group col-md-7 col-md-offset-2">
+                                <label class="frmLblColor">Correo Electrónico 3</label>
+                                <input type="text" class="form-control" id="inpCorreo3Afi" [(ngModel)]="datosGastosSepelio.gls_correosolicita3" name="GlsCorreo3">
+                            </div>
+                        </div>
+
+                    </form>
+                    <div class="row" style="text-align: center; margin-bottom: 10px;">
+                        <button type="button" class="btn btn-azul-fix btn-azul mr" (click)="aceptarModalCorreos()"> Aceptar</button> &nbsp;
+
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="display: none;"></div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalTelefonos" role="dialog" data-backdrop="static" data-keyboard="false" style="margin-top: 70px;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" (click)="cerrarModalTel()">&times;</button>
+                <h4 class="modal-title text-center"><b>Teléfonos</b></h4>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <form>
+
+                        <div class="col-md-12" style="margin-right: 0px;margin-left: 0px;">
+                            <div class="form-group col-md-7 col-md-offset-2">
+                                <label class="frmLblColor">Teléfono 1</label>
+                                <input type="text" class="form-control" id="inpTelefono1Afi" [(ngModel)]="datosGastosSepelio.gls_fonosolicita" name="GlsFono" (keypress)="numberOnly($event)" minlength="7" maxlength="9">
+                            </div>
+                            <div class="form-group col-md-7 col-md-offset-2">
+                                <label class="frmLblColor">Teléfono 2</label>
+                                <input type="text" class="form-control" id="inpTelefono2Afi" [(ngModel)]="datosGastosSepelio.gls_fonosolicita2" name="GlsFono2" (keypress)="numberOnly($event)" minlength="7" maxlength="9">
+                            </div>
+                            <div class="form-group col-md-7 col-md-offset-2">
+                                <label class="frmLblColor">Teléfono 3</label>
+                                <input type="text" class="form-control" id="inpTelefono3Afi" [(ngModel)]="datosGastosSepelio.gls_fonosolicita3" name="GlsFono3" (keypress)="numberOnly($event)" minlength="7" maxlength="9">
+                            </div>
+
+                        </div>
+
+                    </form>
+                    <div class="row" style="text-align: center; margin-bottom: 10px;">
+                        <button type="button" class="btn btn-azul btn-azul-fix mr" (click)="aceptarModalTel()"> Aceptar</button> &nbsp;
+                        <!-- <button type="button" class="btn btn-azul mr" data-dismiss="modal"> Cancelar</button> -->
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="display: none;"></div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalDireccion" role="dialog" style="margin-top: 70px;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title text-center"><b>Dirección</b></h4>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <form>
+                        <div class="row">
+                            <!-- Dirección Expediente -->
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3 col-md-offset-1" id="custom-select">
+                                <label class="frmLblColor">Departamento</label>
+                                <select class="form-control" (change)="seleccionDepartamento()" [(ngModel)]="datosDireccion.cod_Departamento" name="departamento">
+                                <option value="">Seleccione una opción</option>
+                                <option *ngFor="let departamento of lstDepartamento" [value]="departamento.codigo">{{departamento.descripcion}}</option>
+                            </select>
+                            </div>
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3" id="custom-select">
+                                <label class="frmLblColor">Provincia</label>
+                                <select class="form-control" (change)="seleccionProvincia()" [(ngModel)]="datosDireccion.cod_Provincia" name="provincia">
+                                <option value="">Seleccione una opción</option>
+                                <option *ngFor="let provincia of lstProvincia" [value]="provincia.codigo"> {{provincia.descripcion}}</option>
+                            </select>
+                            </div>
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3" id="custom-select">
+                                <label class="frmLblColor">Distrito</label>
+                                <mat-select [disableOptionCentering]="true" [(ngModel)]="datosDireccion.cod_Direccion" name="Cod_Comuna" (valueChange)="getInfo($event)">
+                                    <mat-select-filter [placeholder]="'Filtro'" [displayMember]="'GlsDistrito'" [array]="cmbDistritoAll" (filteredReturn)="comboDistritoResp =$event"></mat-select-filter>
+                                    <mat-option [value]="0">Seleccione una opción</mat-option>
+                                    <mat-option *ngFor="let item of comboDistritoResp" [value]="item.CodDireccion">
+                                        {{item.GlsDistrito}}
+                                    </mat-option>
+                                </mat-select>
+                            </div>
+                        </div>
+                    </form>
+
+                    <div class="row" style="text-align: center; margin-bottom: 10px;">
+                        <button type="button" class="btn btn-azul btn-azul-fix mr" data-dismiss="modal"> Aceptar</button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="display: none;"></div>
+        </div>
+    </div>
+</div>
+<!-- Terminan Modales -->

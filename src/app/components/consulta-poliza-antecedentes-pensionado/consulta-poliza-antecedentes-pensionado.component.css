@@ -1,0 +1,135 @@
+table tr th,
+td {
+    text-align: center;
+}
+
+.btn-azul-fix {
+    font-size: 11px;
+}
+
+::ng-deep td.t-m {
+    text-align: center;
+}
+
+table tr th,
+td {
+    text-align: center;
+}
+
+tbody {
+    display: block;
+    height: 390px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    font-size: 11px;
+}
+
+thead,
+tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+    /* even columns width , fix width of table too*/
+}
+
+thead {
+    font-size: 12px;
+    width: calc( 100%-1.2em)/*calc( 100% - 1.2em ) scrollbar is average 1em/16px width, remove it from thead width */
+}
+
+.mat-table {
+    height: auto;
+    overflow: auto;
+    background-color: #ffffff;
+}
+
+.mat-cell {
+    height: 60px;
+    border-bottom: 1px solid lightgray;
+}
+
+.mat-header-row,
+.mat-row,
+.mat-footer-row {
+    display: inline-flex;
+    align-items: center;
+    width: 100%;
+}
+
+.mat-cell,
+.mat-header-cell {
+    color: black;
+    display: block;
+    background-color: #ffffff;
+    text-align: center;
+    font-size: 11px;
+    padding: 15px 0px;
+}
+
+.mat-header-cell {
+    color: black;
+    background-color: #ffffff;
+    display: block;
+    font-size: 12px;
+}
+
+.column5 {
+    width: 20%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+    .column5 {
+        width: 100%;
+    }
+    .mat-cell,
+    .mat-footer-cell,
+    .mat-header-cell {
+        flex: none;
+        width: 20% !important;
+        /*Aqui pon lo que quieras width: 20&*/
+        overflow-x: auto;
+        color: black;
+        background-color: #ffffff;
+        text-align: center;
+    }
+}
+
+
+/* Landscape phones and portrait tablets */
+
+@media (max-width: 767px) {
+    .column5 {
+        width: 100%;
+    }
+    .mat-cell,
+    .mat-footer-cell,
+    .mat-header-cell {
+        flex: none;
+        width: 30% !important;
+        /*Aqui pon lo que quieras width: 20&*/
+        overflow-x: auto;
+        color: black;
+        background-color: #ffffff;
+        text-align: center;
+    }
+}
+
+
+/* Portrait phones and smaller */
+
+@media (max-width: 480px) {
+    .column5 {
+        width: 100%;
+    }
+    .mat-cell,
+    .mat-footer-cell,
+    .mat-header-cell {
+        flex: none;
+        width: 40% !important;
+        /*Aqui pon lo que quieras width: 20&*/
+        overflow-x: auto;
+        color: black;
+        background-color: #ffffff;
+        text-align: center;
+    }
+}

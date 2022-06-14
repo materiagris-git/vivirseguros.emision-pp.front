@@ -1,0 +1,557 @@
+<!-- <div class="container-fluid">
+    <app-side-bar-menu></app-side-bar-menu>
+    <router-outlet></router-outlet>
+</div> -->
+
+<div class="wrapper d-flex align-items-stretch">
+    <!-- Sidebar -->
+    <!--   -->
+    <nav *ngIf="currentUser" id="sidebar" class="" [ngClass]="{'active': activo==true}">
+        <header class="stickyHeader header-fix">
+            <!-- <a>My App</a> -->
+            <!-- <img class="imgVida" style="width: 90px; height: 70px;" src="assets/Images/LogoVertical.png" alt=""> -->
+            <img class="imgVida" style="width: 90px; height: 70px;" [src]="imagenLogo" alt="{{titleLogo}}">
+            <div style="text-align: right;margin-top: -55px;">
+                <button type="button" id="sidebarCollapse" (click)="claseActive()" class="btn btn-primary" style="background-color: #0090B2;">
+                  <i class="fa fa-bars"></i>
+                  <span class="sr-only">Toggle Menu</span>
+                </button>
+            </div>
+        </header>
+
+
+        <!-- pruebas -->
+
+
+        <ul class="list-unstyled components mb-5 stickyUl">
+            <!-- *ngIf="ppPrePolizas || ppPrimaAfp" -->
+            <li *ngIf="ppPrePolizas || ppPrimaAfp || ppRecepcionPrimas || ppArchivoConf || ppPrimasRecepcionadas || ppTraspasoPolizas || ppConsultaTraspasos || ppGernArPrimaUnica || ppGenArPrimerosPagos" title="Emisión " class="menP">
+                <a (click)="menuActive('menuEmision')">
+                    <i class="glyphicon glyphicon-folder-close"></i> Emisión<i class="fa fa-caret-down"></i>
+                </a>
+            </li>
+            <ul *ngIf="menuEmision" class=" list-unstyled mb-5 submenu">
+                <li *ngIf="ppPrePolizas || ppPrimaAfp" (click)="subMenu('menuProcCalc')">
+                    <a>
+                        <i class="glyphicon glyphicon-folder-close"></i> <span class="spul">Procesos de Cálculo</span><i class="fa fa-caret-down"></i>
+                    </a>
+                </li>
+                <ul *ngIf="menuProcCalc" class="submenu list-unstyled components mb-5">
+
+                    <li class="col-sm-12" *ngIf="ppPrePolizas" routerLink="/consultaPrePolizas">
+                        <a class="col-sm-10">
+                            <i class="glyphicon glyphicon-folder-close"></i> <span class="spul">Mantenedor de Pre-Póliza</span>
+                        </a>
+
+                    </li>
+
+                    <!-- <ul *ngIf="menuMantPrepoliza" class="submenu list-unstyled components mb-5">
+                        <li class="col-sm-12" routerLink="/consultaPrePolizas" (click)="setDocTitle('Mantenedor de Pre Pólizas')">
+                            <a class="col-sm-10">
+                                <i class="glyphicon glyphicon-folder-close"></i> <span class="spul"> Consulta Pre-Pólizas</span>
+                            </a>
+
+                        </li>
+                    </ul> -->
+
+                    <li class="col-sm-12" *ngIf="ppPrimaAfp" routerLink="/consultaAntPrimaAfp">
+                        <a class="col-sm-10">
+                            <i class="glyphicon glyphicon-folder-close"></i> <span class="spul">Antecedentes de Prima AFP</span>
+                        </a>
+
+                    </li>
+                    <!-- <ul *ngIf="menuTraspasoAFP" class="submenu list-unstyled components mb-5">
+                        <li class="col-sm-12" routerLink="/consultaAntPrimaAfp" (click)="setDocTitle('Generar Solicitud de Traspaso AFP')">
+                            <a class="col-sm-10">
+                                <i class="glyphicon glyphicon-folder-close"></i> <span class="spul"> Consulta Generación Solicitud de Traspaso a AFP – Generar Solicitud de Traspaso a AFP</span>
+                            </a>
+
+                        </li>
+                    </ul> -->
+
+                </ul>
+                <li *ngIf="ppRecepcionPrimas || ppArchivoConf || ppPrimasRecepcionadas" (click)="menuActive('menuProduccion')">
+                    <a>
+                        <i class="glyphicon glyphicon-folder-close"></i> <span class="spul">Producción</span><i class="fa fa-caret-down"></i>
+                    </a>
+                </li>
+                <ul *ngIf="menuProduccion" class="submenu list-unstyled components mb-5">
+                    <li *ngIf="ppRecepcionPrimas" class="col-sm-12" routerLink="/consultaIngresoPrimas">
+                        <a class="col-sm-10">
+                            <i class="glyphicon glyphicon-folder-close"></i> <span class="spul">Recepción de Primas</span>
+                        </a>
+
+                    </li>
+                    <!-- <ul *ngIf="menuRecepcionPrimas" class="submenu list-unstyled components mb-5">
+                        <li class="col-sm-12" routerLink="/consultaIngresoPrimas" (click)="setDocTitle('Mantenedor Ingreso Primas')">
+                            <a class="col-sm-10">
+                                <i class="glyphicon glyphicon-folder-close"></i> <span class="spul"> Consulta Mantenedor de Ingreso de Primas – Mantenedor de Ingreso de Primas </span>
+                            </a>
+
+                        </li>
+                    </ul> -->
+                    <li *ngIf="ppArchivoConf" class="col-sm-12" routerLink="/archivoConfirmacionPrimas">
+                        <a class="col-sm-10">
+                            <i class="glyphicon glyphicon-folder-close"></i> <span class="spul">Archivo Confirmación</span>
+                        </a>
+
+                    </li>
+                    <!-- <ul *ngIf="menuArchivoConf" class="submenu list-unstyled components mb-5">
+                        <li class="col-sm-12" routerLink="/archivoConfirmacionPrimas" (click)="setDocTitle('Generación de Archivo de Confirmación de Primas')">
+                            <a class="col-sm-10">
+                                <i class="glyphicon glyphicon-folder-close"></i> <span class="spul"> Generación de Archivo de Confirmación de Primas </span>
+                            </a>
+
+                        </li>
+                    </ul> -->
+                    <li *ngIf="ppPrimasRecepcionadas" class="col-sm-12" routerLink="/consultaPrimasRecepcionadas">
+                        <a class="col-sm-10">
+                            <i class="glyphicon glyphicon-folder-close"></i> <span class="spul">Consulta Primas Recepcionadas</span>
+                        </a>
+
+                    </li>
+                    <!-- <ul *ngIf="menuPrimasRecepcionadas" class="submenu list-unstyled components mb-5">
+                        <li class="col-sm-12" routerLink="/consultaPrimasRecepcionadas" (click)="setDocTitle('Consulta de Primas Recepcionadas')">
+                            <a class="col-sm-10">
+                                <i class="glyphicon glyphicon-folder-close"></i> <span class="spul"> Consulta de Primas Recepcionadas</span>
+                            </a>
+
+                        </li>
+                    </ul> -->
+
+                </ul>
+                <li *ngIf="ppTraspasoPolizas || ppConsultaTraspasos" (click)="subMenu('menuTraspasoPagoPensiones')">
+                    <a>
+                        <i class="glyphicon glyphicon-folder-close"></i> <span class="spul">Traspaso a Pago Pensiones</span><i class="fa fa-caret-down"></i>
+                    </a>
+                </li>
+                <ul *ngIf="menuTraspasoPagoPensiones" class="submenu list-unstyled components mb-5">
+                    <li *ngIf="ppTraspasoPolizas" class="col-sm-12" routerLink="/trasPolPagoPensiones">
+                        <a class="col-sm-10">
+                            <i class="glyphicon glyphicon-folder-close"></i> <span class="spul">Traspaso</span>
+                        </a>
+
+                    </li>
+                    <!-- <ul *ngIf="menuTraspasoPolizas" class="submenu list-unstyled components mb-5">
+                        <li class="col-sm-12" >
+                            <a class="col-sm-10">
+                                <i class="glyphicon glyphicon-folder-close"></i> <span class="spul"> Traspaso de Polizas Recibidas a Pago de Pensiones</span>
+                            </a>
+
+                        </li>
+                    </ul> -->
+                    <li *ngIf="ppConsultaTraspasos" class="col-sm-12" routerLink="/consultaPolizasTraspasadas">
+                        <a class="col-sm-10">
+                            <i class="glyphicon glyphicon-folder-close"></i> <span class="spul">Consulta de Traspasos</span>
+                        </a>
+
+
+                    </li>
+                    <!-- <ul *ngIf="menuTraspasos" class="submenu list-unstyled components mb-5">
+                        <li class="col-sm-12" routerLink="/consultaPolizasTraspasadas" (click)="setDocTitle('Consulta de Pólizas Traspasadas')">
+                            <a class="col-sm-10">
+                                <i class="glyphicon glyphicon-folder-close"></i> <span class="spul"> Consulta de Pólizas Traspasadas</span>
+                            </a>
+
+                        </li>
+                    </ul> -->
+                </ul>
+                <li *ngIf="ppGernArPrimaUnica" (click)="subMenu('menuArchivosContables')">
+                    <a>
+                        <i class="glyphicon glyphicon-folder-close"></i> <span class="spul">Archivos Contables</span> <i class="fa fa-caret-down"></i>
+                    </a>
+                </li>
+                <ul *ngIf="menuArchivosContables " class="submenu list-unstyled components mb-5">
+                    <li *ngIf="ppGernArPrimaUnica" class="col-sm-12" routerLink="/primaUnica">
+                        <a class="col-sm-10">
+                            <i class="glyphicon glyphicon-folder-close"></i> <span class="spul">Prima Única</span>
+                        </a>
+
+                    </li>
+                    <!-- <ul *ngIf="menuPrimaUnica" class="submenu list-unstyled components mb-5">
+                        <li class="col-sm-12" routerLink="/primaUnica" (click)="setDocTitle('Generacion de Archivo Contable de Prima Unica')">
+                            <a class="col-sm-10">
+                                <i class="glyphicon glyphicon-folder-close"></i> <span class="spul"> Generación de Archivo Contable de Prima Única</span>
+                            </a>
+
+                        </li>
+                    </ul> -->
+
+                    <!-- <ul *ngIf="menuPrimerosPagos" class="submenu list-unstyled components mb-5">
+                        <li class="col-sm-12" routerLink="/archConPrimPagos" (click)="setDocTitle('Generación de Archivo de Contable Primeros Pagos')">
+                            <a class="col-sm-10">
+                                <i class="glyphicon glyphicon-folder-close"></i> <span class="spul"> Generación de Archivo Contable de Primeros Pagos</span>
+                            </a>
+
+                        </li>
+                    </ul> -->
+                </ul>
+                <li *ngIf="ppEstadisticas" title="Estadísticas" class="submenu list-unstyled components mb-5" routerLink="/estadisticas">
+                    <a>
+                        <i class="glyphicon glyphicon-folder-close"></i> Estadísticas
+                    </a>
+                </li>
+            </ul>
+            <li *ngIf="ppConsultaGeneral" title="Consulta General " class="menP" routerLink="/consultaGeneral">
+                <a (click)="menuActive('menuConsultaGeneral')">
+                    <i class="glyphicon glyphicon-folder-close"></i> Consulta General
+                </a>
+            </li>
+
+            <li *ngIf="ppReporteHerederos" title="Reporte Herederos " class="menP" routerLink="/reporteHerederos">
+                <a (click)="menuActive('menuReporteHerederos')">
+                    <i class="glyphicon glyphicon-folder-close"></i> Herederos
+                </a>
+            </li>
+
+            <li *ngIf="ppAntecedentesPensionado || ppTutoresApoderados || ppCertSupervivencia || ppGenArDatosBen || ppRetencionJudicial || ppGenerarEndoso || ppCalendarioPagos || ppCalculoPagosRecu || ppPagosTercerosGS || ppPagosTercerosPG || ppArPagosRecurrentes || ppPagosTerceros"
+                title="Pago de Pensiones" class="menP">
+                <a (click)="menuActive('menuPagoPensiones')">
+                    <i class="glyphicon glyphicon-folder-close"></i> Pago Pensiones<i class="fa fa-caret-down"></i>
+                </a>
+            </li>
+            <ul *ngIf="menuPagoPensiones" class=" list-unstyled mb-5 submenu">
+                <li *ngIf="ppAntecedentesPensionado || ppTutoresApoderados || ppCertSupervivencia || ppGenArDatosBen || ppRetencionJudicial || ppInformeContRetencionJudicial || ppGenerarEndoso" class="col-sm-12" (click)="menuActive('menuMantencionInformacion')">
+                    <a class="col-sm-10">
+                        <i class="glyphicon glyphicon-folder-close"></i> <span class="spul">Mantención de Información</span>
+                    </a>
+                    <div class="col-sm-2 padd">
+                        <i class="fa fa-caret-down "></i>
+                    </div>
+                </li>
+                <ul *ngIf="menuMantencionInformacion" class=" list-unstyled mb-5 submenu">
+                    <li *ngIf="ppAntecedentesPensionado || ppTutoresApoderados || ppCertSupervivencia || ppGenArDatosBen" class="col-sm-12" (click)="subMenu('menuAntecedentesPensionado')">
+                        <a class="col-sm-10">
+                            <i class="glyphicon glyphicon-folder-close"></i> <span class="spul">Antecedentes Pensionado</span>
+                        </a>
+                        <div class="col-sm-2 padd">
+                            <i class="fa fa-caret-down "></i>
+                        </div>
+                    </li>
+                    <ul *ngIf="menuAntecedentesPensionado" class=" list-unstyled mb-5 submenu">
+                        <li *ngIf="ppAntecedentesPensionado" class="col-sm-12" routerLink="/consultaPolizaAntecedentesPensionado">
+                            <a class="col-sm-10">
+                                <i class="glyphicon glyphicon-folder-close"></i> <span class="spul">Mantención Antecedentes Generales</span>
+                            </a>
+
+                        </li>
+                        <!-- <ul *ngIf="menuAntecedentesGenerales" class=" list-unstyled mb-5 submenu">
+                            <li class="col-sm-12" routerLink="/consultaPolizaAntecedentesPensionado" (click)="setDocTitle('Consulta Mantención de Antecedentes del Pensionado – Mantención de Antecedentes del Pensionado')">
+                                <a class="col-sm-10">
+                                    <i class="glyphicon glyphicon-folder-close"></i> <span class="spul">Consulta Mantención de Antecedentes del Pensionado – Mantención de Antecedentes del Pensionado</span>
+                                </a>
+
+                            </li>
+                        </ul> -->
+                        <li *ngIf="ppTutoresApoderados" class="col-sm-12" routerLink="/consultaMantenedorTutoresApoderados">
+                            <a class="col-sm-10">
+                                <i class="glyphicon glyphicon-folder-close"></i> <span class="spul">Asignación de Tutor/Apoderado</span>
+                            </a>
+
+                        </li>
+                        <!-- <ul *ngIf="menuAsignacionTutorApoderado" class=" list-unstyled mb-5 submenu">
+                            <li class="col-sm-12" routerLink="/consultaMantenedorTutoresApoderados" (click)="setDocTitle('Consulta Mantenedor de Tutores/Apoderados – Mantenedor de Tutores/Apoderados')">
+                                <a class="col-sm-10">
+                                    <i class="glyphicon glyphicon-folder-close"></i> <span class="spul">Consulta Mantenedor de Tutores/Apoderados – Mantenedor de Tutores/Apoderados</span>
+                                </a>
+
+                            </li>
+                        </ul> -->
+                        <li *ngIf="ppCertSupervivencia" class="col-sm-12" routerLink="/consultaPolizaMantCertSE">
+                            <a class="col-sm-10">
+                                <i class="glyphicon glyphicon-folder-close"></i> <span class="spul">Certificado de Supervivencia/Estudios</span>
+                            </a>
+
+                        </li>
+                        <li *ngIf="ppHijosMayores" class="col-sm-12" routerLink="/hijosMayores">
+                            <a class="col-sm-10">
+                                <i class="glyphicon glyphicon-folder-close"></i> <span class="spul">Consulta de Hijos con Mayoría de Edad</span>
+                            </a>
+
+                        </li>
+                        <li *ngIf="ppCorreoInicioPoliza" class="col-sm-12" routerLink="/correoInicioPoliza">
+                            <a class="col-sm-10">
+                                <i class="glyphicon glyphicon-folder-close"></i> <span class="spul">Consulta Correos Inicio Póliza</span>
+                            </a>
+
+                        </li>
+                        <!-- <ul *ngIf="menuCertificadoSupervivenciaEstudios" class=" list-unstyled mb-5 submenu">
+                            <li class="col-sm-12" routerLink="/consultaPolizaMantCertSE" (click)="setDocTitle('Consulta Mantenedor de Certificados de Supervivencia/Certificados de Estudios – Mantenedor de Certificados de Supervivencia/Certificados de Estudios')">
+                                <a class="col-sm-10">
+                                    <i class="glyphicon glyphicon-folder-close"></i> <span class="spul">Consulta Mantenedor de Certificados de Supervivencia/Certificados de Estudios – Mantenedor de Certificados de Supervivencia/Certificados de Estudios</span>
+                                </a>
+
+                            </li>
+                        </ul> -->
+                        <li *ngIf="ppGenArDatosBen" class="col-sm-12" routerLink="/ArchivoDatosBeneficiarios">
+                            <a class="col-sm-10">
+                                <i class="glyphicon glyphicon-folder-close"></i> <span class="spul">Generación Archivo Datos Beneficiarios</span>
+                            </a>
+
+                        </li>
+                        <!-- <ul *ngIf="menuArchivoDatosBeneficiario" class=" list-unstyled mb-5 submenu">
+                            <li class="col-sm-12" routerLink="/ArchivoDatosBeneficiarios" (click)="setDocTitle('Generación de Archivo de Datos de Beneficiario')">
+                                <a class="col-sm-10">
+                                    <i class="glyphicon glyphicon-folder-close"></i> <span class="spul">Generación de Archivo de Datos de Beneficiario</span>
+                                </a>
+
+                            </li>
+                        </ul> -->
+                    </ul>
+                    <li *ngIf="ppRetencionJudicial || ppInformeContRetencionJudicial" class="col-sm-12" (click)="subMenu('menuRetencionJudicial')">
+                        <a class="col-sm-10">
+                            <i class="glyphicon glyphicon-folder-close"></i> <span class="spul">Retención Judicial</span>
+                        </a>
+                        <div class="col-sm-2 padd">
+                            <i class="fa fa-caret-down "></i>
+                        </div>
+                    </li>
+                    <ul *ngIf="menuRetencionJudicial" class=" list-unstyled mb-5 submenu">
+                        <li *ngIf="ppRetencionJudicial" class="col-sm-12" routerLink="/retencionesJudiciales">
+                            <a class="col-sm-10">
+                                <i class="glyphicon glyphicon-folder-close"></i> <span class="spul">Ingreso de Orden Judicial</span>
+                            </a>
+
+
+                        </li>
+                        <!-- <ul *ngIf="menuIngresoOrdenJudicial" class=" list-unstyled mb-5 submenu">
+                            <li class="col-sm-12" routerLink="/retencionesJudiciales" (click)="setDocTitle('Consulta Mantenedor de Retenciones Judiciales – Mantenedor de Retenciones Judiciales')">
+                                <a class="col-sm-10">
+                                    <i class="glyphicon glyphicon-folder-close"></i> <span class="spul">Consulta Mantenedor de Retenciones Judiciales – Mantenedor de Retenciones Judiciales</span>
+                                </a>
+
+                            </li>
+                        </ul> -->
+                        <li *ngIf="ppInformeContRetencionJudicial" class="col-sm-12" routerLink="/InformeControlRetencionJudicial" (click)="subsubMenu('menuInformeControl')">
+                            <a class="col-sm-10">
+                                <i class="glyphicon glyphicon-folder-close"></i> <span class="spul">Informe de Control</span>
+                            </a>
+
+
+                        </li>
+                        <!-- <ul *ngIf="menuInformeControl" class=" list-unstyled mb-5 submenu">
+                            <li class="col-sm-12">
+                                <a class="col-sm-10">
+                                    <i class="glyphicon glyphicon-folder-close"></i> <span class="spul">Informe Control Retención Judicial</span>
+                                </a>
+
+                            </li>
+                        </ul> -->
+                    </ul>
+                    <li *ngIf="ppGenerarEndoso" class="col-sm-12" (click)="subMenu('menuEndosos')">
+                        <a class="col-sm-10">
+                            <i class="glyphicon glyphicon-folder-close"></i> <span class="spul">Endosos</span>
+                        </a>
+                        <div class="col-sm-2 padd">
+                            <i class="fa fa-caret-down "></i>
+                        </div>
+                    </li>
+                    <ul *ngIf="menuEndosos" class=" list-unstyled mb-5 submenu">
+                        <li *ngIf="ppGenerarEndoso" class="col-sm-12" routerLink="/consultaPoliza">
+                            <a class="col-sm-10">
+                                <i class="glyphicon glyphicon-folder-close"></i> <span class="spul">Generar Endosos</span>
+                            </a>
+
+                        </li>
+                        <!-- <ul *ngIf="menuGenerarEndosos" class=" list-unstyled mb-5 submenu">
+                            <li class="col-sm-12" routerLink="/consultaPoliza" (click)="setDocTitle('Consulta Póliza')">
+                                <a class="col-sm-10">
+                                    <i class="glyphicon glyphicon-folder-close"></i> <span class="spul">Consulta Mantenedor de Endosos Simples y Actuariales - Mantenedor de Endosos Simples y Actuariales</span>
+                                </a>
+
+                            </li>
+                        </ul> -->
+                    </ul>
+
+                </ul>
+                <li *ngIf="ppCalendarioPagos || ppCalculoPagosRecu || ppPagosTercerosGS || ppPagosTercerosPG || ppArPagosRecurrentes || ppPagosTerceros" class="col-sm-12" (click)="subMenu('menuCalculoPension')">
+                    <a class="col-sm-10">
+                        <i class="glyphicon glyphicon-folder-close"></i> <span class="spul">Generación Cálculo de Pensión</span>
+                    </a>
+                    <div class="col-sm-2 padd">
+                        <i class="fa fa-caret-down "></i>
+                    </div>
+                </li>
+                <ul *ngIf="menuCalculoPension" class=" list-unstyled mb-5 submenu">
+                    <li *ngIf="ppCalendarioPagos" class="col-sm-12" routerLink="/MantencionCalendario">
+                        <a class="col-sm-10">
+                            <i class="glyphicon glyphicon-folder-close"></i> <span class="spul">Calendario de Pagos</span>
+                        </a>
+
+                    </li>
+
+                    <li *ngIf="ppCalculoPagosRecu" class="col-sm-12" (click)="subMenu('menuPensionesRecurrentes')">
+                        <a class="col-sm-10">
+                            <i class="glyphicon glyphicon-folder-close"></i> <span class="spul">Pensiones Recurrentes</span>
+                        </a>
+                        <div class="col-sm-2 padd">
+                            <i class="fa fa-caret-down "></i>
+                        </div>
+                    </li>
+                    <ul *ngIf="menuPagosRecurrentes" class=" list-unstyled mb-5 submenu">
+                        <li *ngIf="ppCalculoPagosRecu" class="col-sm-12" routerLink="/calculoPagosRecurrentes">
+                            <a class="col-sm-10">
+                                <i class="glyphicon glyphicon-folder-close"></i> <span class="spul">Calculo Pensiones Recurrentes</span>
+                            </a>
+
+                        </li>
+
+                        <li *ngIf="ppFechaPagosRecu" class="col-sm-12" routerLink="/fechaPagosRecurrentes">
+                            <a class="col-sm-10">
+                                <i class="glyphicon glyphicon-folder-close"></i> <span class="spul">Actualizacion Fecha de Pagos</span>
+                            </a>
+
+
+                        </li>
+                        <li *ngIf="ppPagosSuspendidos" class="col-sm-12" routerLink="/pagosSuspendidos">
+                            <a class="col-sm-10">
+                                <i class="glyphicon glyphicon-folder-close"></i> <span class="spul">Pagos Suspendidos</span>
+                            </a>
+
+                        </li>
+                    </ul>
+
+                    <li *ngIf="ppPagosTercerosGS || ppPagosTercerosPG || ppPagosTerceros" class="col-sm-12" (click)="subMenu('menuRegistroPagoTerceros')">
+                        <a class="col-sm-10">
+                            <i class="glyphicon glyphicon-folder-close"></i> <span class="spul">Registro de Pago a Terceros</span>
+                        </a>
+                        <div class="col-sm-2 padd">
+                            <i class="fa fa-caret-down "></i>
+                        </div>
+                    </li>
+                    <ul *ngIf="menuRegistroPagosTerceros" class=" list-unstyled mb-5 submenu">
+                        <li *ngIf="ppPagosTercerosGS" class="col-sm-12" routerLink="/consultaPagoTercerosGS">
+                            <a class="col-sm-10">
+                                <i class="glyphicon glyphicon-folder-close"></i> <span class="spul">Gastos de Sepelio</span>
+                            </a>
+
+
+                        </li>
+
+                        <li *ngIf="ppPagosTercerosPG" class="col-sm-12" routerLink="/consultaPagoTercerosPG">
+                            <a class="col-sm-10">
+                                <i class="glyphicon glyphicon-folder-close"></i> <span class="spul">Periodo Garantizado</span>
+                            </a>
+
+
+                        </li>
+                        <li *ngIf="ppPagosTerceros" class="col-sm-12" routerLink="/busquedaPagoTerceros">
+                            <a class="col-sm-10">
+                                <i class="glyphicon glyphicon-folder-close"></i> <span class="spul">Consulta de Pagos a Terceros</span>
+                            </a>
+
+
+                        </li>
+                    </ul>
+
+                </ul>
+                <li *ngIf="ppArPagosRecurrentes || PPInformeNormativo || ppGenArPrimerosPagos" class="col-sm-12" (click)="subMenu('menuReportesPP')">
+                    <a class="col-sm-10">
+                        <i class="glyphicon glyphicon-folder-close"></i> <span class="spul">Reportes</span>
+                    </a>
+                    <div class="col-sm-2 padd">
+                        <i class="fa fa-caret-down "></i>
+                    </div>
+                </li>
+                <ul *ngIf="menuReportesPP" class=" list-unstyled mb-5 submenu">
+
+                    <li *ngIf="ppArPagosRecurrentes" routerLink="/genACPagosRecurrentes" class="col-sm-12">
+                        <a class="col-sm-10">
+                            <i class="glyphicon glyphicon-folder-close"></i> <span class="spul">Primeros Pagos</span>
+                        </a>
+
+                    </li>
+                    <li *ngIf="PPInformeNormativo" routerLink="/informeNormativo" class="col-sm-12">
+                        <a class="col-sm-10">
+                            <i class="glyphicon glyphicon-folder-close"></i> <span class="spul">Informe Normativo</span>
+                        </a>
+
+                    </li>
+                    <li *ngIf="ppGenArPrimerosPagos" class="col-sm-12" routerLink="/archConPrimPagos">
+                        <a class="col-sm-10">
+                            <i class="glyphicon glyphicon-folder-close"></i> <span class="spul">Vencimientos</span>
+                        </a>
+
+
+                    </li>
+                    <li *ngIf="ppConsultaIndicadores" class="col-sm-12" routerLink="/consultaIndicadores">
+                        <a class="col-sm-10">
+                            <i class="glyphicon glyphicon-folder-close"></i> <span class="spul">Indicadores</span>
+                        </a>
+                    </li>
+                </ul>
+            </ul>
+
+            <li *ngIf="ppMantenedorUbigeo" title="Catálogos" class="menP">
+                <a (click)="menuActive('menuCatalogos')">
+                    <i class="glyphicon glyphicon-folder-close"></i> Catálogos<i class="fa fa-caret-down"></i>
+                </a>
+            </li>
+            <ul *ngIf="menuCatalogos" class=" list-unstyled mb-5 submenu">
+                <li *ngIf="ppCatalogoGeneral" class="col-sm-12" routerLink="/catalogos">
+                    <a class="col-sm-10">
+                        <i class="glyphicon glyphicon-folder-close"></i> <span class="spul">Catálogo General</span>
+                    </a>
+                </li>
+                <li *ngIf="ppMantenimientoGeneral" class="col-sm-12" routerLink="/mantenimientoGeneral">
+                    <a class="col-sm-10">
+                        <i class="glyphicon glyphicon-folder-close"></i> <span class="spul">Mantenimiento General</span>
+                    </a>
+                </li>
+                <li *ngIf="ppMantenedorUbigeo" class="col-sm-12" routerLink="/mantenimientoUbigeo">
+                    <a class="col-sm-10">
+                        <i class="glyphicon glyphicon-folder-close"></i> <span class="spul">Mantenimiento Ubigeo</span>
+                    </a>
+                </li>
+                <li *ngIf="ppMantenedorTipoDoc" class="col-sm-12" routerLink="/mantenimientoTipoDoc">
+                    <a class="col-sm-10">
+                        <i class="glyphicon glyphicon-folder-close"></i> <span class="spul">Mantenimiento Tipo de Documento</span>
+                    </a>
+                </li>
+            </ul>
+
+            <!-- <li>
+                <a href="#">
+                    <i class="fa fa-user-alt"></i> Cuenta
+                </a>
+            </li>-->
+            <li>
+                <a href="{{ this.urlCotizador }}">
+                    <i class="glyphicon glyphicon-log-out"></i> Cotizador
+                </a>
+            </li>
+            <li>
+                <a href="{{ this.urlCotizadorCerrarSesion }}">
+                    <i class="glyphicon glyphicon-log-out"></i> Cerrar Sesión
+                </a>
+            </li>
+            <a class="col-sm-10" style="font-size: 10px;">
+                <span style="color:floralwhite">V 1.42</span>
+            </a>
+
+        </ul>
+
+
+
+        <!-- fin pruebas -->
+
+
+
+
+    </nav>
+    <!-- Content -->
+    <div id="content" class="">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light header-fix">
+            <div class="col-md-12 br row">
+                <h3 class="col-md-11 title-fix">{{ titleService.getTitle() }}</h3>
+            </div>
+        </nav>
+
+        <div class="container-fluid contNav">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>
+<ngx-spinner bdOpacity=0.9 bdColor="rgba(180,175,175,0.4)" size="medium" color="#0a6792" type="ball-clip-rotate" [fullScreen]="true">
+    <p style="color: #0a6792"> Cargando... </p>
+</ngx-spinner>

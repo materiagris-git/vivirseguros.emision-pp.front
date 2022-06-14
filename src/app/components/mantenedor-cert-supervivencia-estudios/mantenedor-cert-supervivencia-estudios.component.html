@@ -1,0 +1,309 @@
+<div class="col-lg-12 col-md-12 col-sm-12 ">
+    <div class="panel panel-default">
+        <div class="panel-body camposForm">
+            <form>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                <label class="tituloModal">N° Póliza: </label>&nbsp;
+                                <label class="frmLblColor">{{infoConCertSup.NumPoliza}}</label>
+                            </div>
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                <label class="tituloModal">N° Endoso:</label>&nbsp;
+                                <label class="frmLblColor">{{infoConCertSup.NumEndoso}}</label>
+                            </div>
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                <label class="tituloModal">CUSPP:</label>&nbsp;
+                                <label class="frmLblColor">{{infoConCertSup.CUSPP}}</label>
+                            </div>
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                <label class="tituloModal">Fecha de Solicitud:</label>&nbsp;
+                                <label class="frmLblColor">{{infoConCertSup.Fecha}}</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-lg-9 col-md-9 col-sm-9">
+                                <label class="tituloModal">Titular:</label>&nbsp;
+                                <label class="frmLblColor">{{infoConCertSup.Titular}}</label>
+                            </div>
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                <label class="tituloModal">Documento:</label>&nbsp;
+                                <label class="frmLblColor">{{TipoNumIdent}}</label>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="col-lg-12 col-md-12 col-sm-12">
+    <div class="panel panel-default">
+
+        <div class="panel-body">
+            <div class="col-lg-12 col-md-12 col-sm-12 m-3">
+                <div class="row ">
+                    <div class="col-md-12">
+                        <h5 class="titulo tituloLinea"><b>Beneficiarios</b></h5>
+                    </div>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="table-responsive-sm">
+                        <mat-table [dataSource]="dataSource" class="table table-hover">
+                            <mat-header-row *matHeaderRowDef="columnas; sticky: true"></mat-header-row>
+                            <mat-row *matRowDef="let row; columns: columnas" (click)="cargaBeneficiarioInfo(row)"></mat-row>
+                            <ng-container matColumnDef="item">
+                                <mat-header-cell *matHeaderCellDef>
+                                    <div>N° Orden</div>
+                                </mat-header-cell>
+                                <mat-cell class="duration-cell" *matCellDef="let lesson; let i = index">{{ i + 1 }}</mat-cell>
+                            </ng-container>
+                            <ng-container matColumnDef="Parentesco">
+                                <mat-header-cell *matHeaderCellDef>
+                                    <div>Parentesco</div>
+                                </mat-header-cell>
+                                <mat-cell class="duration-cell" *matCellDef="let lesson">{{ lesson.Parentesco }}
+                                </mat-cell>
+                            </ng-container>
+                            <ng-container matColumnDef="TipoIdentificacion">
+                                <mat-header-cell *matHeaderCellDef>
+                                    <div>Tipo Ident.</div>
+                                </mat-header-cell>
+                                <mat-cell class="duration-cell" *matCellDef="let lesson">{{ lesson.TipoIdentificacion }}</mat-cell>
+                            </ng-container>
+                            <ng-container matColumnDef="NIdentificacion">
+                                <mat-header-cell *matHeaderCellDef>
+                                    <div>N° Identificación</div>
+                                </mat-header-cell>
+                                <mat-cell class="duration-cell" *matCellDef="let lesson">{{ lesson.Num_IdenBen }}</mat-cell>
+                            </ng-container>
+                            <ng-container matColumnDef="Nombre">
+                                <mat-header-cell *matHeaderCellDef>
+                                    <div>Beneficiario</div>
+                                </mat-header-cell>
+                                <mat-cell class="duration-cell" *matCellDef="let lesson">{{ lesson.NombreCompleto }}
+                                </mat-cell>
+                            </ng-container>
+                            <ng-container matColumnDef="FechaNac">
+                                <mat-header-cell *matHeaderCellDef>
+                                    <div>Fecha Nac.</div>
+                                </mat-header-cell>
+                                <mat-cell class="duration-cell" *matCellDef="let lesson">{{ lesson.FecNac }}
+                                </mat-cell>
+                            </ng-container>
+                            <ng-container matColumnDef="Acciones">
+                                <mat-header-cell *matHeaderCellDef>
+                                    <div>Acciones</div>
+                                </mat-header-cell>
+                                <mat-cell class="duration-cell" *matCellDef="let lesson">
+                                    <!-- <i class="fa fa-plus-circle exclam iconTbl"></i>&nbsp; -->
+                                    <i class="fa fa-eye exclam iconTbl" (click)="cargarBenInfoCertEstudios(lesson)" data-toggle="modal" data-target="#modalInfoBeneficiario"></i>&nbsp;
+                                    <!-- <i class="fa fa-book iconTbl" title="Certificado Supervivencia"></i>&nbsp;
+                                    <i class="fa fa-school iconTbl" title="Certificado Estudios" *ngIf="lesson.Cod_Par == '30'"></i> -->
+                                </mat-cell>
+                            </ng-container>
+                        </mat-table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12 m-3">
+                <div class="row ">
+                    <div class="col-md-12">
+                        <h5 class="titulo tituloLinea"><b>Beneficiario</b></h5>
+                    </div>
+                </div>
+                <form>
+                    <div class="row">
+                        <div class="form-group col-lg-3 col-md-3 col-sm-3 column4">
+                            <label class="frmLblColor">Tipo Documento</label>
+                            <input type="text" class="form-control" [(ngModel)]="infoBeneficiario.TipoIdentificacion" name="TipoIdentificacion" disabled>
+                        </div>
+                        <div class="form-group col-lg-3 col-md-3 col-sm-3  column4">
+                            <label class="frmLblColor">N° Documento.</label>
+                            <input type="text" class="form-control" [(ngModel)]="infoBeneficiario.Num_IdenBen" name="Num_IdenBen" disabled>
+                        </div>
+                        <div class="form-group col-lg-3 col-md-3 col-sm-3 column4">
+                            <label class="frmLblColor">Beneficiario</label>
+                            <input type="text" class="form-control" [(ngModel)]="infoBeneficiario.NombreCompleto" name="NombreCompleto" disabled>
+                        </div>
+                        <div class="form-group col-lg-3 col-md-3 col-sm-3 column4">
+                            <label class="frmLblColor">Parentesco</label>
+                            <input type="text" class="form-control" [(ngModel)]="infoBeneficiario.Parentesco" name="Parentesco" disabled>
+                        </div>
+                    </div>
+
+                    <div class=" row ">
+                        <div class="form-group col-lg-2 col-md-2 col-sm-2 column4 " id="custom-select">
+                            <label class="frmLblColor">Tipo de Certificado</label>
+                            <select class="form-control" [(ngModel)]="TipoCertificado" name="TipoCertificado" [disabled]="isDisabledTipoCert" (change)=comboTipoCert(TipoCertificado)>
+                                <option *ngFor="let item of cmbTipoCertificado" value="{{ item.cod_elemento }}">{{ item.gls_elemento }}</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-lg-2 col-md-2 col-sm-2 column40 ">
+                            <label class="frmLblColor ">Cargar Documento</label>
+                            <input type="text" class="form-control" [(ngModel)]="fileName" name="fileName" disabled>
+                            <input type="file" (change)="detectFiles($event)" class="form-control hidden" #fileInput id="file" accept=".docx,.doc,.pdf,image/*" [(ngModel)]="fileNameArch" name="fileNameArch">
+                        </div>
+                        <div class="form-group col-lg-2 col-md-2 col-sm-2 column5 ">
+                            <div style="margin-top: 22px; ">
+                                <button type="button" (click)="fileInput.click()" class="btn btn-primary col-md-10 col-xs-12 btn-azul-fix btnCircle"> <i class="glyphicon glyphicon-cloud-upload"></i>&nbsp;Cargar</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="col-lg-12 col-md-12 col-sm-12 m-3 ">
+                <div class="row ">
+                    <div class="col-md-12 ">
+                        <h5 class="titulo tituloLinea "><b>Antecedentes de Certificado de Supervivencia</b></h5>
+                    </div>
+                </div>
+                <form>
+                    <div class="row ">
+                        <div class="form-group col-lg-3 col-md-3 col-sm-3 column4 ">
+                            <label class="frmLblColor">Fecha de Vigencia</label>
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="row">
+                                    <div class="form-group col-md-12" style="padding:0px;">
+                                        <div class="form-group col-md-5" style="padding:0px;">
+                                            <input type="date" class="form-control" style="padding:0px;" [(ngModel)]="infiBenefCSE.FecInicer" name="FecInicer" (focusout)="fechaEfecto()" [disabled]="isDisabledFecIniCer">
+                                        </div>
+                                        <div class="col-md-2">-</div>
+                                        <div class="form-group col-md-5" style="padding:0px;">
+                                            <input type="date" style="padding:0px;" class="form-control" [(ngModel)]="infiBenefCSE.FecTercer" name="FecTercer" [disabled]="isDisabledFecTercer">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-3 col-md-3 col-sm-3 column4 ">
+                            <label class="frmLblColor ">Fecha Recepción</label>
+                            <input type="date" class="form-control" [(ngModel)]="infiBenefCSE.FecReccia" name="FecReccia" [disabled]="isDisabledFecReccia">
+                        </div>
+                        <div class="form-group col-lg-3 col-md-3 col-sm-3 column4 ">
+                            <label class="frmLblColor ">Fecha Ingreso</label>
+                            <input type="text" class="form-control" [(ngModel)]="infiBenefCSE.FecIngcia" name="FecIngcia" disabled>
+                        </div>
+                        <div class="form-group col-lg-3 col-md-3 col-sm-3 column4 ">
+                            <label class="frmLblColor ">Periodo de Efecto</label>
+                            <input type="text" class="form-control" [(ngModel)]="infiBenefCSE.FecEfecto" name="FecEfecto" disabled>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-lg-3 col-md-3 col-sm-3 column4">
+                            <label class="frmLblColor">Institución</label>
+                            <input type="text" class="form-control" [(ngModel)]="infiBenefCSE.GlsNomInstitucion" name="GlsNomInstitucion" [disabled]="isDisabledNomInst" maxlength="50">
+                        </div>
+
+                        <div *ngIf="EstadoCert" class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                            <label class="frmLblColor">Activo</label>
+
+                            <select class="form-control" [(ngModel)]="infiBenefCSE.Estado" name="Estado" [disabled]="isDisabledEst">
+                                <option  value="">-- Seleccione --</option>
+                                <option  value="S">SI</option>
+                                <option  value="N">NO</option>
+                                
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-lg-12 col-md-12 col-sm-12 ">
+    <div class="row " style="text-align: right; margin-bottom: 10px; ">
+        <button type="button " class="btn btn-azul btn-azul-fix mr" (click)="guardarCert()"><i class="fa fa-save "></i> Guardar</button> &nbsp;
+        <!--<button type="button" class="btn btn-azul btn-azul-fix mr"><i class="fa fa-print "></i> Generar Documento</button> &nbsp;-->
+        <button type="button" class="btn btn-azul btn-azul-fix mr" (click)="cancelar()"> Cancelar</button> &nbsp;
+    </div>
+</div>
+
+
+<!-- Modales -->
+<div class="modal fade" id="modalInfoBeneficiario" role="dialog" style="margin-top: 70px;" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title text-center tituloModal"><b>Información del Beneficiario</b></h4>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <form>
+                        <div class="row" style="margin-right: 0px;margin-left: 0px;">
+                            <div class="form-group col-md-2">
+                                <label class="tituloModal" style="color: black;">Tipo Documento</label>
+                                <input type="text" class="form-control" [(ngModel)]="TipoDoc" name="TipoIdentificacion" disabled>
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label class="tituloModal" style="color: black;">N° de Doc.</label>
+                                <input type="text " class="form-control" [(ngModel)]="NumDoc" name="NumIdenben" disabled>
+                            </div>
+                            <div class="form-group col-md-5">
+                                <label class="tituloModal" style="color: black;">Beneficiario</label>
+                                <input type="text " class="form-control" [(ngModel)]="Beneficiario" name="Nombre" disabled>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label class="tituloModal" style="color: black;" s>Filtrar por</label>
+                                <select class="form-control" [(ngModel)]="tipoCertFiltro" name="TipoCertificado" (change)="filtrarTC()">
+                                <option value="">TODOS</option>
+                                <option *ngFor="let item of cmbTipoCertificado" value="{{ item.cod_elemento }}">{{ item.gls_elemento }}</option>
+                            </select>
+                            </div>
+                        </div>
+
+                    </form>
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="table-responsive-sm">
+                            <mat-table [dataSource]="dsBeneficiarios" class="table table-hover">
+                                <mat-header-row *matHeaderRowDef="columnas2; sticky: true"></mat-header-row>
+                                <mat-row *matRowDef="let row; columns: columnas2" (click)="infoBenfModal(row)"></mat-row>
+                                <ng-container matColumnDef="Desde">
+                                    <mat-header-cell *matHeaderCellDef>
+                                        <div>Desde:</div>
+                                    </mat-header-cell>
+                                    <mat-cell class="duration-cell" *matCellDef="let lesson">{{ lesson.FecInicer }}
+                                    </mat-cell>
+                                </ng-container>
+                                <ng-container matColumnDef="Hasta">
+                                    <mat-header-cell *matHeaderCellDef>
+                                        <div>Hasta:</div>
+                                    </mat-header-cell>
+                                    <mat-cell class="duration-cell" *matCellDef="let lesson">{{ lesson.FecTercer }}</mat-cell>
+                                </ng-container>
+                                <ng-container matColumnDef="Institucion">
+                                    <mat-header-cell *matHeaderCellDef>
+                                        <div>Institución:</div>
+                                    </mat-header-cell>
+                                    <mat-cell class="duration-cell" *matCellDef="let lesson">{{ lesson.GlsNomInstitucion }}</mat-cell>
+                                </ng-container>
+                                <ng-container matColumnDef="tCertificado">
+                                    <mat-header-cell *matHeaderCellDef>
+                                        <div>Tipo de Certificado:</div>
+                                    </mat-header-cell>
+                                    <mat-cell class="duration-cell" *matCellDef="let lesson">{{ lesson.Certificado }}</mat-cell>
+                                </ng-container>
+                                <ng-container matColumnDef="archivo">
+                                    <mat-header-cell *matHeaderCellDef>
+                                        <div>Archivo</div>
+                                    </mat-header-cell>
+                                    <mat-cell class="duration-cell" *matCellDef="let lesson"><button class="btn btn-azul" (click)="generarArchivo(lesson)">Ver Certificado</button></mat-cell>
+                                </ng-container>
+                            </mat-table>
+                        </div>
+                    </div>
+                    <div class="row" style="text-align: center; margin-bottom: 20px;">
+                        <button type="button" class="btn btn-azul mr" data-dismiss="modal"> Aceptar</button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer " style="display: none; "></div>
+        </div>
+    </div>
+</div>
+<!-- Fin Modales -->

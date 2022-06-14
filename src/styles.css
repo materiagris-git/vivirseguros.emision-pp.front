@@ -1,0 +1,327 @@
+/*** PANEL ***/
+
+select.form-control,
+option,
+input.form-control {
+    font-size: 11px;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator,
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-clear-button {
+    display: none;
+}
+
+input[type="date"]:hover::-webkit-calendar-picker-indicator {
+    display: block;
+}
+
+.panel {
+    border-radius: 1px !important;
+}
+
+.panel-heading {
+    background-color: #fffdfd !important;
+}
+
+.panel.with-nav-tabs .panel-heading {
+    padding: 0px 0px 0px 0px;
+    background-color: #fffdfd !important;
+}
+
+.panel.with-nav-tabs .nav-tabs {
+    border-bottom: none;
+}
+
+.panel.with-nav-tabs .nav-justified {
+    margin-bottom: 0px;
+}
+
+.with-nav-tabs.panel-default .nav-tabs>li>a,
+.with-nav-tabs.panel-default .nav-tabs>li>a:hover,
+.with-nav-tabs.panel-default .nav-tabs>li>a:focus {
+    color: rgb(189, 182, 182);
+    font-size: 12px;
+}
+
+.with-nav-tabs.panel-default .nav-tabs>.open>a,
+.with-nav-tabs.panel-default .nav-tabs>.open>a:hover,
+.with-nav-tabs.panel-default .nav-tabs>.open>a:focus,
+.with-nav-tabs.panel-default .nav-tabs>li>a:hover,
+.with-nav-tabs.panel-default .nav-tabs>li>a:focus {
+    color: rgb(189, 182, 182);
+    background-color: #ddd;
+    border-color: transparent;
+    font-size: 12px;
+}
+
+.with-nav-tabs.panel-default .nav-tabs>li.active>a,
+.with-nav-tabs.panel-default .nav-tabs>li.active>a:hover,
+.with-nav-tabs.panel-default .nav-tabs>li.active>a:focus {
+    color: #0090B2;
+    background-color: #f5f5f5;
+    border-color: #ddd;
+    border-radius: 1px !important;
+    border-top: none;
+    border-bottom: none;
+    font-size: 12px;
+}
+
+.with-nav-tabs.panel-default .nav-tabs>li.dropdown .dropdown-menu {
+    background-color: #f5f5f5;
+    border-color: #ddd;
+}
+
+.with-nav-tabs.panel-default .nav-tabs>li.dropdown .dropdown-menu>li>a {
+    color: #777;
+}
+
+.with-nav-tabs.panel-default .nav-tabs>li.dropdown .dropdown-menu>li>a:hover,
+.with-nav-tabs.panel-default .nav-tabs>li.dropdown .dropdown-menu>li>a:focus {
+    background-color: #ddd;
+}
+
+.with-nav-tabs.panel-default .nav-tabs>li.dropdown .dropdown-menu>.active>a,
+.with-nav-tabs.panel-default .nav-tabs>li.dropdown .dropdown-menu>.active>a:hover,
+.with-nav-tabs.panel-default .nav-tabs>li.dropdown .dropdown-menu>.active>a:focus {
+    color: #fff;
+    background-color: #555;
+}
+
+
+/********************************************************************/
+
+
+/* Botones */
+
+.btn-azul {
+    background-color: #0090B2;
+    border-radius: 3px !important;
+    color: white;
+    padding: 5px 0px;
+    width: 165px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 11px !important;
+}
+
+.btn-azul:hover {
+    color: white !important;
+    text-decoration: none;
+    font-size: 11px !important;
+}
+
+.btn-azul:focus {
+    color: white !important;
+    font-size: 11px !important;
+}
+
+
+/* Titulos */
+
+.titulo {
+    font-size: 12px;
+    color: #0090B2;
+}
+
+
+/* Fuente para los label */
+
+.frmLblColor {
+    color: #555;
+    font: caption;
+    font-size: 11px;
+}
+
+
+/* Fondo para el icono de pregunta en los label */
+
+.bgIcon {
+    color: #0090B2;
+}
+
+
+/* [SELECT FIED] */
+
+#custom-select select {
+    /* Esconde la flecha por defecto */
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+
+/* Flecha perzonalizada */
+
+#custom-select:after {
+    /* Simbolo de HTML */
+    content: "\25bc";
+    color: black;
+    /* Posicionamiento de la flecha */
+    padding: 30px 8px;
+    position: absolute;
+    right: 12px;
+    top: 0;
+    text-align: center;
+    pointer-events: none;
+}
+
+
+/* Separador */
+
+.separador {
+    height: 5px;
+    width: 20px;
+    background-color: gray;
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+
+/* Radio Buttons */
+
+.text input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.checkmark {
+    position: absolute;
+    top: 4px;
+    left: 0;
+    height: 14px;
+    width: 14px;
+    background-color: #eee;
+    border-radius: 50%;
+    border: 1px solid #e3e3e3;
+}
+
+.text input:checked~.checkmark {
+    background-color: #eee;
+    border: 1px solid #3695ab;
+}
+
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+.text input:checked~.checkmark:after {
+    display: block;
+}
+
+.text .checkmark:after {
+    top: 2px;
+    left: 2px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #3695ab;
+}
+
+
+/* Modal CSS */
+
+.modal-body {
+    background-color: #FFFFFF;
+}
+
+.modal-content {
+    color: #fff;
+    -webkit-box-shadow: none !important;
+    -moz-box-shadow: none !important;
+    -o-box-shadow: none !important;
+    box-shadow: none !important;
+    -webkit-border-radius: 1x !important;
+    -moz-border-radius: 1px !important;
+    border-radius: 1px !important;
+    background-color: #0090B2 !important;
+}
+
+
+/* Input y Select Oscuros */
+
+input {
+    border-radius: 3px !important;
+    font-size: 11px;
+    /* background-color: #f4f4f4 !important; */
+}
+
+
+/* select {
+    background-color: #f4f4f4 !important;
+} */
+
+
+/*Borders Table */
+
+.tableBorder {
+    border: 2px solid #e3e3e3 !important;
+}
+
+.thBorder {
+    text-align: center;
+    color: #555;
+    border-bottom: 2px solid #e3e3e3 !important;
+    border-left: 2px solid #e3e3e3 !important;
+}
+
+.tdBorder {
+    border-top: 1px solid #e3e3e3 !important;
+    border-bottom: 1px solid #e3e3e3 !important;
+    border-left: 2px solid #e3e3e3 !important;
+    border-right: 2px solid #e3e3e3 !important;
+}
+
+.dataTables_filter input {
+    border-radius: 3px !important;
+    background-color: #fff !important;
+    color: black;
+}
+
+input.ng-touched.ng-invalid {
+    border-color: red;
+}
+
+.tituloLinea {
+    border-bottom: 1px solid #ccc!important;
+    margin-bottom: 20px;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.mat-paginator {
+    background: #008BAA;
+    color: #fff;
+}
+
+.mat-primary .mat-option.mat-selected:not(.mat-option-disabled) {
+    color: #fff;
+}
+
+.mat-form-field.mat-focused.mat-primary .mat-select-arrow {
+    color: #fff;
+}
+
+.mat-form-field.mat-focused .mat-form-field-ripple {
+    background-color: #fff;
+}
+
+::ng-deep td.t-m {
+    text-align: center;
+}
+
+.btn{
+    margin-bottom: 5px!important;
+}

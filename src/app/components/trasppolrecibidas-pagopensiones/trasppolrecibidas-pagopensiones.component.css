@@ -1,0 +1,129 @@
+.btnFlechas {
+  background-color: #0090b2;
+  border-radius: 3px !important;
+  color: white;
+  padding: 6px 0px;
+  width: 100px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 11px;
+}
+
+.btn-azul-fix {
+  font-size: 11px;
+}
+
+/* Large desktops and laptops */
+
+@media (min-width: 1200px) {
+  .btnAlign {
+    text-align: end;
+    margin-bottom: 30px;
+  }
+  .tablePol1 {
+    padding-left: 0px;
+  }
+  .tablePol2 {
+    padding-right: 0px;
+  }
+  .marginTopArrows {
+    margin-top: 90px;
+  }
+}
+
+/* Landscape tablets and medium desktops */
+
+@media (min-width: 992px) and (max-width: 1199px) {
+  .btnAlign {
+    text-align: end;
+    margin-bottom: 30px;
+  }
+  .tablePol1 {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+  .tablePol2 {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+  .marginTopArrows {
+    margin-top: 90px;
+  }
+}
+
+/* Portrait tablets and small desktops */
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .btnAlign {
+    text-align: end;
+    margin-bottom: 30px;
+  }
+  .tablePol1 {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+  .tablePol2 {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+  .marginTopPanel {
+    margin-top: 20px;
+  }
+}
+
+/* Landscape phones and portrait tablets */
+
+@media (max-width: 767px) {
+  .btnCenter {
+    text-align: center;
+  }
+}
+
+/* Portrait phones and smaller */
+
+@media (max-width: 480px) {
+  button {
+    width: 60%;
+  }
+  .btnCenter {
+    text-align: center;
+  }
+  .tablePol1 {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+  .tablePol2 {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+  .marginTopPanel {
+    margin-top: 20px;
+  }
+}
+.btn-op {
+  background-color: #0096b7;
+  color: #bcfbff;
+  box-shadow: none !important;
+  font-weight: bold;
+  width: 50px;
+  height: 25px;
+  margin: 5px;
+  font-size: 11px;
+}
+
+.text {
+  color: #9c9c9c;
+  font-size: 11px;
+}
+
+thead, tbody,
+th{
+  text-align-last: center;
+  color: #9c9c9c;
+}
+
+.scroll-table {
+  height: 250px;
+  overflow-y: scroll;
+}

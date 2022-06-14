@@ -1,0 +1,230 @@
+.column5 {
+    width: 20%;
+}
+
+.column40 {
+    width: 40%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+    .column5 {
+        width: 100%;
+    }
+    .column40 {
+        width: 100%;
+    }
+}
+
+@media (max-width: 767px) {
+    .column5 {
+        width: 100%;
+    }
+    .column40 {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .column5 {
+        width: 100%;
+    }
+    .column40 {
+        width: 100%;
+    }
+}
+
+.cdk-global-overlay-wrapper,
+.cdk-overlay-container,
+.cdk-overlay-pane {
+    z-index: 99999 !important;
+}
+
+.mat-select-trigger {
+    padding-top: 4px;
+}
+
+ ::ng-deep .cdk-overlay-container {
+    position: fixed!important;
+    z-index: 999999999999999999!important;
+}
+
+mat-select {
+    font-size: 11px;
+    width: 100%;
+    border: 1px solid #CCCCCC;
+    height: 35px;
+    padding-top: 6px;
+    padding-right: 12px;
+    padding-bottom: 6px;
+    padding-left: 12px;
+    border-radius: 3px;
+}
+
+mat-option {
+    background-color: white;
+}
+
+
+/* Large desktops and laptops */
+
+@media (min-width: 1200px) {
+    .spaceM {
+        margin-top: 10px;
+        margin-bottom: 35px;
+    }
+    .mr {
+        margin-right: 10px;
+    }
+    .btnAlign {
+        text-align: end;
+        margin-bottom: 30px;
+    }
+}
+
+
+/* Landscape tablets and medium desktops */
+
+@media (min-width: 992px) and (max-width: 1199px) {
+    .inpLg {
+        width: 300px;
+    }
+    .mr {
+        margin-right: 12px;
+    }
+    .btnAlign {
+        text-align: end;
+        margin-bottom: 30px;
+    }
+}
+
+
+/* Portrait tablets and small desktops */
+
+@media (min-width: 768px) and (max-width: 991px) {
+    .mr {
+        margin-right: 12px;
+    }
+    .btnAlign {
+        text-align: end;
+        margin-bottom: 30px;
+    }
+}
+
+
+/* Landscape phones and portrait tablets */
+
+@media (max-width: 767px) {
+    .btnCenter {
+        text-align: center;
+    }
+    .mr {
+        margin-right: 12px;
+    }
+}
+
+
+/* Portrait phones and smaller */
+
+@media (max-width: 480px) {
+    button {
+        width: 60%;
+    }
+    .mr {
+        margin-right: 0px;
+        margin-bottom: 12px;
+    }
+    .btnCenter {
+        text-align: center;
+    }
+}
+
+.panel-body.bg {
+    background-color: rgb(187, 187, 187);
+}
+
+.title {
+    font-size: 12px;
+}
+
+mat-select {
+    font-size: 11px;
+    width: 100%;
+    border: 1px solid #CCCCCC;
+    height: 35px;
+    padding-top: 6px;
+    padding-right: 12px;
+    padding-bottom: 6px;
+    padding-left: 12px;
+    border-radius: 3px;
+}
+
+mat-option {
+    background-color: white;
+}
+
+.mat-table {
+    height: 250px;
+    overflow: auto;
+    background-color: #ffffff;
+}
+
+.mat-row {
+    border-bottom: 1px solid lightgray;
+}
+
+.mat-cell,
+.mat-header-cell {
+    color: black;
+    display: block;
+    background-color: #ffffff;
+    text-align: center;
+    font-size: 11px;
+    padding: 15px 0px;
+}
+
+.mat-header-cell {
+    color: black;
+    background-color: #ffffff;
+    display: block;
+    font-size: 12px;
+}
+
+.mat-column-item,
+.mat-column-acciones {
+    word-wrap: break-word !important;
+    white-space: unset !important;
+    flex: 0 0 8% !important;
+    width: 8% !important;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word;
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+}
+
+.mat-column-benNombre {
+    text-align: left;
+    word-wrap: break-word !important;
+    white-space: unset !important;
+    flex: 0 0 33% !important;
+    width: 33% !important;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word;
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+}
+
+.mat-header-cell,
+.mat-header-row {
+    padding: 0px !important;
+    min-height: 20px !important;
+}
+
+.mat-select-trigger {
+    padding-top: 4px;
+}

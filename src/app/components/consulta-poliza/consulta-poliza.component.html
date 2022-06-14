@@ -1,0 +1,1046 @@
+<div id="busqueda">
+    <div class="col-lg-12 col-md-12 col-sm-12 ">
+        <div class="col-lg-12 col-md-12 col-sm-12 marg-prim grid">
+            <form>
+                <div class="row col-lg-12 col-md-12 col-sm-12">
+                    <div class="col-lg-2 col-md-2 col-sm-2 margin-in">
+                        <label class="frmLblColor">Número de Póliza</label>
+                        <div>
+                            <input type="text" [(ngModel)]="busqueda.NumeroPoliza" name="NumPoliza" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-2 margin-in fix-btn">
+                        <label class="frmLblColor">CUSPP</label>
+                        <div>
+                            <input type="text" [(ngModel)]="busqueda.CUSPP" name="CUSPP" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-2 margin-in">
+                        <label class="frmLblColor">Tipo Documento</label>
+                        <div class="select">
+                            <select class="form-control" (change)="cambiarTipoDoc()" [(ngModel)]="busqueda.TipoDocumento" name="TipoDoc">
+                  <option value="">Seleccionar</option>
+                  <option *ngFor="let item of this.cmbTipoIdent" value="{{ item.Codigo }}" >{{ item.Nombre }}</option>
+                </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-2 margin-in fix-btn">
+                        <label class="frmLblColor">Número de Documento</label>
+                        <div>
+                            <input type="text" [(ngModel)]="busqueda.NoDocumetnto" [disabled]="varEditar" name="NumDoc" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-2 margin-in fix-btn">
+                        <label class="frmLblColor">N° Endoso</label>
+                        <div>
+                            <input type="text" [(ngModel)]="busqueda.NoEndoso" name="NumEndoso" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row col-lg-12 col-md-12 col-sm-12 marg-prim">
+                    <div class="col-lg-2 col-md-2 col-sm-2 margin-in">
+                        <label class="frmLblColor">Apellido Materno</label>
+                        <div>
+                            <input type="text" [(ngModel)]="busqueda.Materno" name="ApellidoMat" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-2 margin-in">
+                        <label class="frmLblColor">Apellido Paterno</label>
+                        <div>
+                            <input type="text" [(ngModel)]="busqueda.Paterno" name="ApellidoPat" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-2 margin-in">
+                        <label class="frmLblColor">Primer Nombre</label>
+                        <div>
+                            <input type="text" [(ngModel)]="busqueda.Nombre" name="Nombre" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-2 margin-in">
+                        <label class="frmLblColor">Segundo Nombre</label>
+                        <div>
+                            <input type="text" [(ngModel)]="busqueda.SegundoNombre" name="SegundoNombre" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-2 margin-in btn-fix">
+                        <div>
+                            <button type="button" class="btn btn-azul btn-azul-fix col-md-12 col-xs-12" (click)="consultar()"><i class="glyphicon glyphicon-search "></i> Buscar</button>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-2 margin-in btn-fix">
+                        <div>
+                            <button type="button " class="btn btn-azul btn-azul-fix col-md-12 col-xs-12" (click)="limpiar()"><i class="fa fa-file"></i> Limpiar</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="col-lg-12 col-md-12 col-sm-12 marg-prim">
+        <!--div de la tabla -->
+        <div class="panel panel-default">
+            <div class="pan-fix">
+                <h5 class="titulo"><b>Resultados</b></h5>
+            </div>
+            <div class="panel-body camposForm">
+                <div class="table-responsive-sm">
+                    <mat-table [dataSource]="dataSource" class="table table-hover">
+                        <mat-header-row *matHeaderRowDef="columnas; sticky: true"></mat-header-row>
+                        <mat-row *matRowDef="let row; columns: columnas;"></mat-row>
+                        <ng-container matColumnDef="item">
+                            <mat-header-cell *matHeaderCellDef>
+                                <div>Item</div>
+
+                            </mat-header-cell>
+                            <mat-cell class="duration-cell" *matCellDef="let lesson; let i=index">{{i+1}}</mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="numPol">
+                            <mat-header-cell *matHeaderCellDef>
+                                <div>N° Póliza
+                                </div>
+
+                            </mat-header-cell>
+                            <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.NumeroPoliza}}</mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="cuspp">
+                            <mat-header-cell *matHeaderCellDef>
+                                <div>CUSPP
+                                </div>
+
+                            </mat-header-cell>
+                            <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.CUSPP}}</mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="documento">
+                            <mat-header-cell *matHeaderCellDef>
+                                <div>Documento
+                                </div>
+
+                            </mat-header-cell>
+                            <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.TipoDocumento}}-{{lesson.NoDocumetnto}} </mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="endoso">
+                            <mat-header-cell *matHeaderCellDef>
+                                <div>Endoso
+                                </div>
+
+                            </mat-header-cell>
+                            <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.NoEndoso}} </mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="nomAfiliado">
+                            <mat-header-cell *matHeaderCellDef>
+                                <div>Nombre del Afiliado</div>
+
+                            </mat-header-cell>
+                            <mat-cell class="duration-cell" *matCellDef="let lesson">{{ lesson.Nombre }} {{ lesson.SegundoNombre }} {{ lesson.Paterno }} {{ lesson.Materno }}</mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="fecha">
+                            <mat-header-cell *matHeaderCellDef>
+                                <div>Fecha Emisión</div>
+
+                            </mat-header-cell>
+                            <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.Fecha}}</mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="estatus">
+                            <mat-header-cell *matHeaderCellDef>
+                                <div>Estatus</div>
+
+                            </mat-header-cell>
+                            <mat-cell *matCellDef="let lesson" class="duration-cell"> <span *ngIf="lesson.EstatusEndoso > 0">Pendiente de Endoso</span><span *ngIf="lesson.EstatusEndoso == 0">Finalizado</span></mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="acciones">
+                            <mat-header-cell *matHeaderCellDef>
+                                <div>Acciones</div>
+
+                            </mat-header-cell>
+                            <mat-cell class="duration-cell" *matCellDef="let lesson"><i style="color:#0090B2" class="fa fa-search exclam" (click)="mantenedorEndososSimplesActuariales(lesson)" [routerLink]="['/mantenedorEndososSimplesActuariales']"></i> &nbsp;&nbsp;
+                                <i style="color:#0090B2" class="fas fa-info-circle icon" (click)="MovimientosEndoso(lesson.NumeroPoliza)" data-toggle="modal" data-target="#modalMovimientosPoliza"></i>
+                            </mat-cell>
+                        </ng-container>
+                    </mat-table>
+                    <mat-paginator [length]="0" [pageSize]="20" [pageSizeOptions]="[5, 10, 20, 50]" [showFirstLastButtons]="true"></mat-paginator>
+                </div>
+                <!-- <tr>
+              <td class="text-center">
+                <button type="button" class="btn btn-icon btn-sm">
+                  <i class="fas fa-eye"></i>
+                </button>
+                <button type="button" class="btn btn-icon btn-sm">
+                  <i class="fas fa-donate"></i>
+                </button>
+                <button type="button" class="btn btn-icon btn-sm">
+                  <i class="fas fa-print icon"></i>
+                </button>
+              </td>
+            </tr> -->
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+
+</div>
+
+<!-- Empieza contenido -->
+<div class="container-fluid" id="contenido">
+    <div class="col-lg-12 col-md-12 col-sm-12 marg-prim">
+        <div class="col-lg-12 col-md-12 col-sm-12 grid title-pad">
+            <label class="title">Póliza</label>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12 marg-prim grid">
+            <div class="col-lg-4 col-md-4 col-sm-4 margin-in">
+                <label class="text">N° Póliza</label>
+                <div>
+                    <input type="text" class="form-control" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-12 col-md-12 col-sm-12 marg-prim">
+        <div class="col-lg-12 col-md-12 col-sm-12 marg-prim grid">
+            <div class="row col-lg-12 col-md-12 col-sm-12 marg-prim">
+                <div class="col-lg-3 col-md-3 col-sm-6 margin-in">
+                    <label class="text">N° de Cotización</label>
+                    <div>
+                        <input type="text" class="form-control" />
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-6 margin-in">
+                    <label class="text">N° Operación</label>
+                    <div>
+                        <input type="text" class="form-control" />
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-6 margin-in fix-btn">
+                    <label class="text">Fec. de Emisión</label>
+                    <div>
+                        <input type="text" class="form-control" />
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-6 margin-in">
+                    <label class="text">Fec. de Ingreso al SPP</label>
+                    <div>
+                        <input type="text" class="form-control" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- -->
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="panel-heading grid">
+            <ul class="nav nav-tabs">
+                <li class="title active">
+                    <a href="#datosAfiliado" data-toggle="tab">Datos del Afiliado</a>
+                </li>
+                <li class="title">
+                    <a href="#datosCalculo" data-toggle="tab">Datos de Cálculo </a>
+                </li>
+                <li class="title">
+                    <a href="#datosAsegurado" data-toggle="tab">Datos de Asegurados</a
+              >
+            </li>
+          </ul>
+        </div>
+        <div class="panel-body grid">
+          <div class="tab-content">
+            <div class="tab-pane fade in active" id="datosAfiliado">
+              <!-- Datos Afiliado -->
+              <div class="col-lg-12 col-md-12 col-sm-12 marg-prim">
+                <div class="col-lg-12 col-md-12 col-sm-12 grid">
+                  <div class="row">
+                    <div class=" col-lg-12 col-md-12 col-sm-12 marg-prim">
+
+                      <div class="col-lg-3 col-md-3 col-sm-6 marg">
+                        <label class="text">Tipo de Identificación</label>
+                        <div class="select">
+                          <select class="form-control">
+                            <option value="volvo"></option>
+                            <option value="saab">1</option>
+                            <option value="opel">2</option>
+                            <option value="audi">3</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-lg-3 col-md-3 col-sm-6 marg">
+                        <label class="text">N° de Identificación</label>
+                        <div>
+                          <input type="text" class="form-control" />
+                        </div>
+                      </div>
+                      <div class="col-lg-3 col-md-3 col-sm-6 marg">
+                        <label class="text">1er. Nombre</label>
+                        <div>
+                          <input type="text" class="form-control" />
+                        </div>
+                      </div>
+                      <div class="col-lg-3 col-md-3 col-sm-6 marg">
+                        <label class="text">2do. Nombre</label>
+                        <div>
+                          <input type="text" class="form-control" />
+                        </div>
+                      </div>
+
+                      <div class="col-lg-3 col-md-3 col-sm-6 marg">
+                        <label class="text">Ap. Paterno</label>
+                        <div>
+                          <input type="text" class="form-control" />
+                        </div>
+                      </div>
+                      <div class="col-lg-3 col-md-3 col-sm-6 marg">
+                        <label class="text">Ap. Materno</label>
+                        <div>
+                          <input type="text" class="form-control" />
+                        </div>
+                      </div>
+                      <div class="col-lg-3 col-md-3 col-sm-6 marg">
+                        <label class="text">Fecha de Nac.</label>
+                        <div>
+                          <input type="text" class="form-control" />
+                        </div>
+                      </div>
+                      <div class="col-lg-3 col-md-3 col-sm-6 marg">
+                        <label class="text">Fecha Fallec.</label>
+                        <div>
+                          <input type="text" class="form-control" />
+                        </div>
+                      </div>
+                      <div class="col-lg-3 col-md-3 col-sm-6 marg">
+                        <label class="text">Sexo</label>
+                        <div>
+                          <input type="text" class="form-control" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <br />
+
+                  <div class="row">
+                    <div class=" col-lg-12 col-md-12 col-sm-12 marg-prim">
+                      <div class="col-lg-3 col-md-3 col-sm-6">
+                        <label class="text">Departamento</label>
+                        <div>
+                          <input type="text" class="form-control" />
+                        </div>
+                      </div>
+                      <div class="col-lg-3 col-md-3 col-sm-6">
+                        <label class="text">Provincia</label>
+                        <div>
+                          <input type="text" class="form-control" />
+                        </div>
+                      </div>
+                      <div class="col-lg-3 col-md-3 col-sm-6">
+                        <label class="text">Distrito</label>
+                        <div>
+                          <input type="text" class="form-control" />
+                        </div>
+                      </div>
+                      <div class="col-lg-3 col-md-3 col-sm-6">
+                        <label class="text">Nacionalidad</label>
+                        <div>
+                          <input type="text" class="form-control" />
+                        </div>
+                      </div>
+                      <div class="col-lg-3 col-md-3 col-sm-6 marg">
+                        <label class="text">Teléfono 1</label>
+                        <div>
+                          <input type="text" class="form-control" />
+                        </div>
+                      </div>
+                      <div class="col-lg-3 col-md-3 col-sm-6 marg">
+                        <label class="text">Teléfono 2</label>
+                        <div>
+                          <input type="text" class="form-control" />
+                        </div>
+                      </div>
+                      <div class="col-lg-3 col-md-3 col-sm-6 marg">
+                        <label class="text">Teléfono 3</label>
+                        <div>
+                          <input type="text" class="form-control" />
+                        </div>
+                      </div>
+                      <div class="col-lg-3 col-md-3 col-sm-6 marg">
+                        <label class="text">Correo 1</label>
+                        <div>
+                          <input type="text" class="form-control" />
+                        </div>
+                      </div>
+                      <div class="col-lg-3 col-md-3 col-sm-6 marg">
+                        <label class="text">Correo 2</label>
+                        <div>
+                          <input type="text" class="form-control" />
+                        </div>
+                      </div>
+                      <div class="col-lg-3 col-md-3 col-sm-6 marg">
+                        <label class="text">Correo 3</label>
+                        <div>
+                          <input type="text" class="form-control" />
+                        </div>
+                      </div>
+                      <div class="col-lg-6 col-md-6 col-sm-6 marg">
+                        <label class="text">Domicilio</label>
+                        <div>
+                          <input type="text" class="form-control" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <br />
+
+                  <div class="row">
+                    <div class=" col-lg-12 col-md-12 col-sm-12 marg-prim">
+                      <div class="col-lg-3 col-md-3 col-sm-6">
+                        <label class="text">N° de Liquidación</label>
+                        <div>
+                          <input type="text" class="form-control" />
+                        </div>
+                      </div>
+                      <div class="col-lg-3 col-md-3 col-sm-6">
+                        <label class="text">Tipo Pensión</label>
+                        <div>
+                          <input type="text" class="form-control" />
+                        </div>
+                      </div>
+                      <div class="col-lg-3 col-md-3 col-sm-6">
+                        <label class="text">Fec. Invalidez</label>
+                        <div>
+                          <input type="text" class="form-control" />
+                        </div>
+                      </div>
+                      <div class="col-lg-3 col-md-3 col-sm-6">
+                        <label class="text">Causal Invalidez</label>
+                        <div>
+                          <input type="text" class="form-control" />
+                        </div>
+                      </div>
+                      <div class="col-lg-3 col-md-3 col-sm-6 marg">
+                        <label class="text">Estado Civil</label>
+                        <div>
+                          <input type="text" class="form-control" />
+                        </div>
+                      </div>
+                      <div class="col-lg-3 col-md-3 col-sm-6 marg">
+                        <label class="text">AFP</label>
+                        <div>
+                          <input type="text" class="form-control" />
+                        </div>
+                      </div>
+                      <div class="col-lg-3 col-md-3 col-sm-6 marg">
+                        <label class="text">Inst. Salud</label>
+                        <div>
+                          <input type="text" class="form-control" />
+                        </div>
+                      </div>
+                      <div class="col-lg-3 col-md-3 col-sm-6 marg">
+                        <label class="text">Representante</label>
+                        <div>
+                          <input type="text" class="form-control" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-12 col-md-12 col-sm-12 marg-prim">
+                <div class="col-lg-12 col-md-12 col-sm-12 grid title-pad">
+                  <label class="title">Forma de Pago de Pensión</label>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 marg-prim grid">
+                  <div class="col-lg-3 col-md-3 col-sm-3 margin-in">
+                    <label class="text">Via Pago</label>
+                    <div>
+                      <input type="text" class="form-control" />
+                    </div>
+                  </div>
+                  <div class="col-lg-3 col-md-3 col-sm-3 ">
+                    <label class="text">Sucursal</label>
+                    <div>
+                      <input type="text" class="form-control" />
+                    </div>
+                  </div>
+                  <div class="col-lg-3 col-md-3 col-sm-3">
+                    <label class="text">Tipo Cta.</label>
+                    <div>
+                      <input type="text" class="form-control" />
+                    </div>
+                  </div>
+                  <div class="col-lg-3 col-md-3 col-sm-3">
+                    <label class="text">Banco</label>
+                    <div>
+                      <input type="text" class="form-control" />
+                    </div>
+                  </div>
+                  <div class="col-lg-3 col-md-3 col-sm-3 margin-in marg">
+                    <label class="text">N° Cuenta</label>
+                    <div>
+                      <input type="text" class="form-control" />
+                    </div>
+                  </div>
+                  <div class="col-lg-3 col-md-3 col-sm-3 marg">
+                    <label class="text">N° Cuenta CCI</label>
+                    <div>
+                      <input type="text" class="form-control" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Fin Datos Afiliado -->
+            </div>
+            <div class="tab-pane fade" id="datosCalculo">
+              <!-- datos de calculo -->
+              <div class="col-lg-12 col-md-12 col-sm-12 marg-prim">
+                <div class="col-lg-12 col-md-12 col-sm-12 grid">
+                  <div class="row">
+                    <div class=" col-lg-12 col-md-12 col-sm-12 marg-prim">
+                      <div class="col-lg-3 col-md-3 col-sm-6 marg">
+                        <label class="text">Fecha Devengue</label>
+                        <div>
+                          <input type="text" class="form-control" />
+                        </div>
+                      </div>
+                      <div class="col-lg-3 col-md-3 col-sm-6 marg">
+                        <label class="text">Fec. Incorp. Póliza</label>
+                        <div>
+                          <input type="text" class="form-control" />
+                        </div>
+                      </div>
+                      <div class="col-lg-3 col-md-3 col-sm-6 marg">
+                        <label class="text">Fecha Inicio Primer pago</label>
+                        <div>
+                          <input type="text" class="form-control" />
+                        </div>
+                      </div>
+                      <div class="col-lg-3 col-md-3 col-sm-6 marg">
+                        <label class="text">Tipo Moneda</label>
+                        <div>
+                          <input type="text" class="form-control" />
+                        </div>
+                      </div>
+                      <div class="col-lg-3 col-md-3 col-sm-6 marg">
+                        <label class="text">Reajuste Trimestral</label>
+                        <div>
+                          <input type="text" class="form-control" />
+                        </div>
+                      </div>
+
+                      <div class="col-lg-3 col-md-3 col-sm-6 marg">
+                        <label class="text">Tipo de Renta</label>
+                        <div>
+                          <input type="text" class="form-control" />
+                        </div>
+                      </div>
+                      <div class="col-lg-3 col-md-3 col-sm-6 marg">
+                        <label class="text">Años Dif</label>
+                        <div>
+                          <input type="text" class="form-control" />
+                        </div>
+                      </div>
+                      <div class="col-lg-3 col-md-3 col-sm-6 marg">
+                        <label class="text">Modalidad</label>
+                        <div>
+                          <input type="text" class="form-control" />
+                        </div>
+                      </div>
+                      <div class="col-lg-3 col-md-3 col-sm-6 marg">
+                        <label class="text">Años Gar.</label>
+                        <div>
+                          <input type="text" class="form-control" />
+                        </div>
+                      </div>
+                      <div class="col-lg-3 col-md-3 col-sm-6 marg">
+                        <label class="text">Años Escalonada</label>
+                        <div>
+                          <input type="text" class="form-control" />
+                        </div>
+                      </div>
+                      <div class="col-lg-3 col-md-3 col-sm-6 marg">
+                        <label class="text">Prc. Renta Escalonada</label>
+                        <div>
+                          <input type="text" class="form-control" />
+                        </div>
+                      </div>
+                      <div class="col-lg-3 col-md-3 col-sm-6 marg">
+                        <label class="text">Rentabilidad AFP</label>
+                        <div>
+                          <input type="text" class="form-control" />
+                        </div>
+                      </div>
+                      <div class="col-lg-3 col-md-3 col-sm-6 marg">
+                        <label class="text">Prc. Renta Temporal</label>
+                        <div>
+                          <input type="text" class="form-control" />
+                        </div>
+                      </div>
+                      <div class="col-lg-3 col-md-3 col-sm-6 marg">
+                        <label class="text">CUSPP</label>
+                        <div>
+                          <input type="text" class="form-control" />
+                        </div>
+                      </div>
+                      <div class="col-lg-3 col-md-3 col-sm-6 marg">
+                        <label class="text">Ind. Cobertura</label>
+                        <div>
+                          <input type="text" class="form-control" />
+                        </div>
+                      </div>
+                      <div class="col-lg-3 col-md-3 col-sm-6 marg">
+                        <label class="text">Cobertura Conyuge</label>
+                        <div>
+                          <input type="text" class="form-control" />
+                        </div>
+                      </div>
+                      <div class="col-lg-3 col-md-3 col-sm-6 marg">
+                        <label class="text">Gratificación</label>
+                        <div>
+                          <input type="text" class="form-control" />
+                        </div>
+                      </div>
+                      <div class="col-lg-3 col-md-3 col-sm-6 marg">
+                        <label class="text">N° Identificación</label>
+                        <div>
+                          <input type="text" class="form-control" />
+                        </div>
+                      </div>
+                      <div class="col-lg-3 col-md-3 col-sm-6 marg">
+                        <label class="text">Comisión</label>
+                        <div>
+                          <input type="text" class="form-control" />
+                        </div>
+                      </div>
+                      <div class="col-lg-3 col-md-3 col-sm-6 marg">
+                        <label class="text">Tipo Ident. Intermediario</label>
+                        <div>
+                          <input type="text" class="form-control" />
+                        </div>
+                      </div>
+                      <div class="col-lg-3 col-md-3 col-sm-6 marg">
+                        <label class="text"
+                          >N° Identificación Intermediario</label
+                        >
+                        <div>
+                          <input type="text" class="form-control" />
+                        </div>
+                      </div>
+                      <div class="col-lg-3 col-md-3 col-sm-6 marg">
+                        <label class="text">Mto. Pensión</label>
+                        <div>
+                          <input type="text" class="form-control" />
+                        </div>
+                      </div>
+                      <div class="col-lg-3 col-md-3 col-sm-6 marg">
+                        <label class="text">Mto. Pensión Gar.</label>
+                        <div>
+                          <input type="text" class="form-control" />
+                        </div>
+                      </div>
+                      <div class="col-lg-3 col-md-3 col-sm-6 marg">
+                        <label class="text">Tasa Cto. Equiv.</label>
+                        <div>
+                          <input type="text" class="form-control" />
+                        </div>
+                      </div>
+                      <div class="col-lg-3 col-md-3 col-sm-6 marg">
+                        <label class="text">Tasa Venta</label>
+                        <div>
+                          <input type="text" class="form-control" />
+                        </div>
+                      </div>
+                      <div class="col-lg-3 col-md-3 col-sm-6 marg">
+                        <label class="text">Tasa TIR</label>
+                        <div>
+                          <input type="text" class="form-control" />
+                        </div>
+                      </div>
+                      <div class="col-lg-3 col-md-3 col-sm-6 marg-prim">
+                        <label class="text">Fecha Traspaso Prima</label>
+                        <div>
+                          <input type="text" class="form-control" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-12 col-md-12 col-sm-12 ">
+                <div class="row">
+                  <div class="col-lg-12 col-md-12 col-sm-12 marg-prim">
+                    <div class="col-lg-12 col-md-12 col-sm-12 marg-prim grid">
+                      <div class="row col-lg-12 col-md-12 col-sm-12 marg-prim">
+                        <div class="col-lg-3 col-md-3 col-sm-6 margin-in">
+                          <label class="text">CI. S/.</label>
+                          <div>
+                            <input type="text" class="input-text" />
+                            <label class="text">+ BR.</label>
+                          </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-6 margin-in">
+                          <label class="text">S/.</label>
+                          <div>
+                            <input type="text" class="input-text" />
+                            <label class="text">+ AA.</label>
+                          </div>
+                        </div>
+                        <div
+                          class="col-lg-3 col-md-3 col-sm-6 margin-in"
+                        >
+                          <label class="text">S/.</label>
+                          <div>
+                            <input type="text" class="input-text" />
+                            <label class="text">= Prima U.</label>
+                          </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-6 margin-in">
+                          <label class="text">S/.</label>
+                          <div>
+                            <input type="text" class="input-text" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- fin datos de calculo -->
+            </div>
+            <div class="tab-pane fade" id="datosAsegurado">
+              <!-- Inicio datos Asegurados -->
+              <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="table-responsive text-center">
+                  <table class="table table-bordered table-hover tableBorder">
+                    <thead>
+                      <tr>
+                        <th class="thBorder">N° Orden</th>
+                        <th class="thBorder">Parentesco</th>
+                        <th class="thBorder">Gru. Fam.</th>
+                        <th class="thBorder">Sexo</th>
+                        <th class="thBorder">Sit. Inv</th>
+                        <th class="thBorder">Fec. Inv.</th>
+                        <th class="thBorder">Cau. Inv</th>
+                        <th class="thBorder">Der. Pensión</th>
+                        <th class="thBorder">Fec. Nac.</th>
+                        <th class="thBorder">Tipo Ident.</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td class="tdBorder">1</td>
+                        <td class="tdBorder">99</td>
+                        <td class="tdBorder">00</td>
+                        <td class="tdBorder">M</td>
+                        <td class="tdBorder">P</td>
+                        <td class="tdBorder"></td>
+                        <td class="tdBorder">0</td>
+                        <td class="tdBorder">99</td>
+                        <td class="tdBorder">16/08/1959</td>
+                        <td class="tdBorder">DNI</td>
+                      </tr>
+                      <tr>
+                        <td class="tdBorder">2</td>
+                        <td class="tdBorder">10</td>
+                        <td class="tdBorder">01</td>
+                        <td class="tdBorder">F</td>
+                        <td class="tdBorder">N</td>
+                        <td class="tdBorder"></td>
+                        <td class="tdBorder">0</td>
+                        <td class="tdBorder">99</td>
+                        <td class="tdBorder">21/11/1959</td>
+                        <td class="tdBorder">DNI</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <div class="col-lg-12 col-md-12 col-sm-12 marg-prim">
+                <div class="col-lg-12 col-md-12 col-sm-12 grid title-pad">
+                  <label class="title">Beneficiario</label>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 marg-prim grid">
+                  <div class="row">
+                    <div class="col-lg-3 col-md-3 col-sm-6">
+                      <label class="text">Tipo de Identificación</label>
+                      <div class="select">
+                        <select class="form-control">
+                          <option value="volvo"></option>
+                          <option value="saab">1</option>
+                          <option value="opel">2</option>
+                          <option value="audi">3</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-6">
+                      <label class="text">N° de Identificación</label>
+                      <div>
+                        <input type="text" class="form-control" />
+                      </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-6">
+                      <label class="text">1er. Nombre</label>
+                      <div>
+                        <input type="text" class="form-control" />
+                      </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-6">
+                      <label class="text">2do. Nombre</label>
+                      <div>
+                        <input type="text" class="form-control" />
+                      </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-6 marg">
+                      <label class="text">Ap. Paterno</label>
+                      <div>
+                        <input type="text" class="form-control" />
+                      </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-3 col-sm-6 marg">
+                      <label class="text">Ap. Materno</label>
+                      <div>
+                        <input type="text" class="form-control" />
+                      </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-6 marg">
+                      <label class="text">Fecha de Nac.</label>
+                      <div>
+                        <input type="text" class="form-control" />
+                      </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-6 marg">
+                      <label class="text">Fecha Fallec.</label>
+                      <div>
+                        <input type="text" class="form-control" />
+                      </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-6 marg">
+                      <label class="text">Sexo</label>
+                      <div>
+                        <input type="text" class="form-control" />
+                      </div>
+                    </div>
+                  </div>
+                  <br /><br />
+                  <div class="row">
+                    <div class="col-lg-3 col-md-3 col-sm-6 marg">
+                      <label class="text">Sit. Invalidez</label>
+                      <div>
+                        <input type="text" class="form-control" />
+                      </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-6 marg">
+                      <label class="text">Fecha Invalidez</label>
+                      <div>
+                        <input type="text" class="form-control" />
+                      </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-6 marg">
+                      <label class="text">Causal Invalidez</label>
+                      <div>
+                        <input type="text" class="form-control" />
+                      </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-6 marg">
+                      <label class="text">Es Estudiante</label>
+                      <div class="select">
+                        <select class="form-control">
+                          <option value="volvo"></option>
+                          <option value="saab">1</option>
+                          <option value="opel">2</option>
+                          <option value="audi">3</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-3 col-sm-6 marg">
+                      <label class="text">Teléfono 1</label>
+                      <div>
+                        <input type="text" class="form-control" />
+                      </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-6 marg">
+                      <label class="text">Teléfono 2</label>
+                      <div>
+                        <input type="text" class="form-control" />
+                      </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-6 marg">
+                      <label class="text">Teléfono 3</label>
+                      <div>
+                        <input type="text" class="form-control" />
+                      </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-6 marg">
+                      <label class="text">Correo 1</label>
+                      <div>
+                        <input type="text" class="form-control" />
+                      </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-6 marg">
+                      <label class="text">Correo 2</label>
+                      <div>
+                        <input type="text" class="form-control" />
+                      </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-6 marg">
+                      <label class="text">Correo 3</label>
+                      <div>
+                        <input type="text" class="form-control" />
+                      </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-6 marg">
+                      <label class="text">D° a Pensión</label>
+                      <div>
+                        <input type="text" class="form-control" />
+                      </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-6 marg">
+                      <label class="text">Porcentaje</label>
+                      <div>
+                        <input type="text" class="form-control" />
+                      </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-6 marg">
+                      <label class="text">Pensión</label>
+                      <div>
+                        <input type="text" class="form-control" />
+                      </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-6 marg">
+                      <label class="text">Parentesco</label>
+                      <div>
+                        <input type="text" class="form-control" />
+                      </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-6 marg">
+                      <label class="text">Grupo Familiar</label>
+                      <div>
+                        <input type="text" class="form-control" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Fin datos Asegurados -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row col-lg-12 col-md-12 col-sm-12 marg-prim">
+        <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12 right">
+          <button type="button" class="btn btn-op btn-sm">
+            <i class="far fa-file"></i>Limpiar
+          </button>
+        </div>
+        <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12 right">
+          <button type="button" class="btn btn-op btn-sm">
+            <i class="fas fa-print"></i>Constancia
+          </button>
+        </div>
+        <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12 right">
+          <button type="button" class="btn btn-op btn-sm">
+            <i class="fas fa-print"></i>Imprimir
+          </button>
+        </div>
+      </div>
+
+      <!-- -->
+
+      <!-- Termina contenido-->
+    </div>
+
+
+
+
+
+
+    <!-- Inicio Modales -->
+<!-- Moodal Movimientos de Poliza -->
+<div class="modal fade " id="modalMovimientosPoliza" #modalPreendoso role="dialog" data-backdrop="static" data-keyboard="false" style="margin-top: 70px;">
+  <div class="modal-dialog modal-md">
+      <div class="modal-content">
+          <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title text-center"><b>Movimientos de la Póliza</b> </h4>
+          </div>
+          <div class="modal-body">
+              <div>
+                  <form>
+                      <div class="row">
+                          <div class="col-lg-12 col-md-12 col-sm-12">
+                              <div class="table-container text-center">
+
+                                  <mat-table [dataSource]="dataSourceMovimientos" class="tabla-beneficiarios table-hover">
+                                      <mat-header-row *matHeaderRowDef="columnasMovimientosPoliza; sticky: true"></mat-header-row>
+                                      <mat-row *matRowDef="let row; columns: columnasMovimientosPoliza;"></mat-row>
+                                      <ng-container matColumnDef="item">
+                                          <mat-header-cell *matHeaderCellDef>
+                                              <div>Item</div>
+                                          </mat-header-cell>
+                                          <mat-cell class="duration-cell" *matCellDef="let lesson; let i=index">{{i+1}}</mat-cell>
+                                      </ng-container>
+                                      <ng-container matColumnDef="usuario">
+                                          <mat-header-cell *matHeaderCellDef>
+                                              <div>Usuario</div>
+                                          </mat-header-cell>
+                                          <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.USUARIO}}</mat-cell>
+                                      </ng-container>
+
+                                      <ng-container matColumnDef="endoso">
+                                          <mat-header-cell *matHeaderCellDef>
+                                              <div>No Endoso</div>
+                                          </mat-header-cell>
+                                          <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.ENDOSO}}</mat-cell>
+                                      </ng-container>
+                                      <ng-container matColumnDef="fecha">
+                                          <mat-header-cell *matHeaderCellDef>
+                                              <div>Fecha</div>
+                                          </mat-header-cell>
+                                          <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.FECHA}}</mat-cell>
+                                      </ng-container>
+                                      <ng-container matColumnDef="hora">
+                                          <mat-header-cell *matHeaderCellDef>
+                                              <div>Hora</div>
+                                          </mat-header-cell>
+                                          <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.HORA}}</mat-cell>
+                                      </ng-container>
+                                      <ng-container matColumnDef="descripcion">
+                                        <mat-header-cell *matHeaderCellDef>
+                                            <div>Descripción</div>
+                                        </mat-header-cell>
+                                        <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.DESCRIPCION}}</mat-cell>
+                                    </ng-container>
+
+                                      <ng-container matColumnDef="acciones">
+                                          <mat-header-cell *matHeaderCellDef>
+                                              <div>Acciones</div>
+                                          </mat-header-cell>
+                                          <mat-cell class="duration-cell" *matCellDef="let lesson; let i = index">
+                                              <i *ngIf="lesson.ENDOSO!= '1'" style="color:#0090B2" class="fas fa-download" data-toggle="modal" data-target="#modalMovimientosPoliza" (click)="generarPreEndoso(lesson.POLIZA, lesson.ENDOSO)"></i> &nbsp;</mat-cell>
+                                      </ng-container>
+                                  </mat-table>
+                              </div>
+                              <mat-paginator [length]="0" [pageSize]="10" [pageSizeOptions]="[10, 20, 50]" [showFirstLastButtons]="true"></mat-paginator>
+                          </div>
+                      </div>
+                  </form>
+
+              </div>
+          </div>
+          <div class="modal-footer" style="display: none;"></div>
+      </div>
+  </div>
+</div>
+<!-- Fin de Modal -->
+
+<!-- Fin de modales -->

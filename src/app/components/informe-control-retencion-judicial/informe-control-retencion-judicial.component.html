@@ -1,0 +1,124 @@
+<div class="col-lg-12 col-md-12 col-sm-12 ">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h5 class="titulo" style="margin: 0px;"><b>Informe Control Retención Judicial </b></h5>
+        </div>
+        <div class="panel-body camposForm">
+            <form>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="form-group col-lg-2 col-md-4 col-xs-12">
+                                <label class="frmLblColor">Fecha de Pago (Mes - Año)</label>
+                                <input type="month" class="form-control form-control-sm" [(ngModel)]="FechaActual" name="FechaActual">
+                            </div>
+
+                            <div class="form-group col-lg-2 col-md-4 col-xs-12" style="padding-top: 22px;">
+                                <button type="button" class="btn btn-azul btn-azul-fix col-md-12 col-xs-12" (click)="calcular()"><i class="fa fa-calculator" ></i> Calcular</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--Tabla de resultados-->
+<div>
+    <div class="col-lg-12 col-md-12 col-sm-12 marg-prim">
+        <!--div de la tabla -->
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h5 class="titulo" style="margin: 0px;"><b>Resultados</b></h5>
+            </div>
+            <div class="panel-body camposForm">
+                <div class="table-responsive-sm">
+                    <mat-table [dataSource]="dataSource" class="table table-hover">
+                        <mat-header-row *matHeaderRowDef="columnas; sticky: true"></mat-header-row>
+                        <mat-row *matRowDef="let row; columns: columnas;"></mat-row>
+                        <ng-container matColumnDef="numPol">
+                            <mat-header-cell *matHeaderCellDef>
+                                <div>N° Póliza</div>
+                            </mat-header-cell>
+                            <mat-cell class="duration-cell" *matCellDef="let lesson; let i=index">{{ lesson.NUM_POLIZA }}</mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="tipPension">
+                            <mat-header-cell *matHeaderCellDef>
+                                <div>Tipo de Pensión</div>
+                            </mat-header-cell>
+                            <mat-cell class="duration-cell" *matCellDef="let lesson">{{ lesson.TIPO_PENSION }}</mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="anniosDif">
+                            <mat-header-cell *matHeaderCellDef>
+                                <div>Años Diferidos</div>
+                            </mat-header-cell>
+                            <mat-cell class="duration-cell" *matCellDef="let lesson">{{ lesson.ANOS_DIFERIDOS }}</mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="anniosGar">
+                            <mat-header-cell *matHeaderCellDef>
+                                <div>Años Garantizados</div>
+
+                            </mat-header-cell>
+                            <mat-cell class="duration-cell" *matCellDef="let lesson">{{ lesson.ANOS_GARANTIZADOS }}</mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="anniosEsc">
+                            <mat-header-cell *matHeaderCellDef>
+                                <div>Años Escalonados</div>
+                            </mat-header-cell>
+                            <mat-cell class="duration-cell" *matCellDef="let lesson">{{ lesson.ANOS_ESCALONADOS }}</mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="documento">
+                            <mat-header-cell *matHeaderCellDef>
+                                <div>Documento</div>
+                            </mat-header-cell>
+                            <mat-cell class="duration-cell" *matCellDef="let lesson">{{ lesson.DOCUMENTO }}</mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="nombre">
+                            <mat-header-cell *matHeaderCellDef>
+                                <div>Nombre</div>
+                            </mat-header-cell>
+                            <mat-cell class="duration-cell" *matCellDef="let lesson">{{ lesson.NOMBRE_RECEPTOR }}</mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="mtoTotal">
+                            <mat-header-cell *matHeaderCellDef>
+                                <div>Monto Total a Pagar</div>
+                            </mat-header-cell>
+                            <mat-cell class="duration-cell" *matCellDef="let lesson">{{ lesson.MONTO_TOTAL | number:'1.2-2' }}</mat-cell>
+                        </ng-container>
+                    </mat-table>
+                    <mat-paginator [length]="0" [pageSize]="10" [pageSizeOptions]="[5, 10, 20, 50]" [showFirstLastButtons]="true"></mat-paginator>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- INICIO MODALS -->
+<div class="modal fade" id="modalConfirmar" role="dialog" style="margin-top: 70px;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title text-center"><b>Calcular</b></h4>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <div class="row" style="margin-right: 0px;margin-left: 0px;">
+                        <div class="form-group col-md-12">
+                            <label class="frmLblColor">Los cambios realizados calcularán nuevos montos.</label>
+
+                        </div>
+
+                    </div>
+                    <div class="row" style="text-align: center; margin-bottom: 10px;">
+                        <button type="button" class="btn btn-azul mr" data-dismiss="modal" data-toggle="modal"> Aceptar</button> &nbsp;
+                        <button type="button" class="btn btn-azul mr" data-dismiss="modal"> Cancelar</button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="display: none;"></div>
+        </div>
+    </div>
+</div>

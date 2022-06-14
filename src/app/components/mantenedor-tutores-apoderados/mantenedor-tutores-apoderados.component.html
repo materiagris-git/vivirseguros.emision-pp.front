@@ -1,0 +1,791 @@
+<div class="col-lg-12 col-md-12 col-sm-12 ">
+    <div class="panel panel-default">
+        <div class="panel-body camposForm">
+            <form>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                <label>N° Póliza:</label>&nbsp;
+                                <label class="frmLblColor">{{consulta.NumPoliza}}</label>
+                            </div>
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                <label>N° Endoso:</label>&nbsp;
+                                <label class="frmLblColor">{{consulta.NumEndoso}}</label>
+                            </div>
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                <label>CUSPP:</label>&nbsp;
+                                <label class="frmLblColor">{{consulta.CUSPP}}</label>
+                            </div>
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                <label>Fecha de Solicitud:</label>&nbsp;
+                                <label class="frmLblColor">{{consulta.Fecha}}</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-lg-9 col-md-9 col-sm-9">
+                                <label>Titular:</label>&nbsp;
+                                <label class="frmLblColor">{{consulta.Titular}}</label>
+                            </div>
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                <label>Documento:</label>&nbsp;
+                                <label class="frmLblColor">{{TipoNumIdent}}</label>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="col-lg-12 col-md-12 col-sm-12">
+    <div class="panel with-nav-tabs panel-default">
+        <div class="panel-heading">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#antecedentesTutorApoderado" data-toggle="tab">Antecedentes del Tutor/Apoderado</a></li>
+                <li><a href="#historiaTutorApoderado" data-toggle="tab">Historial de pagos a Tutores/Apoderados</a></li>
+            </ul>
+        </div>
+        <div class="panel-body">
+            <div class="tab-content">
+                <div class="tab-pane fade in active" id="antecedentesTutorApoderado">
+
+                    <div class="col-lg-12 col-md-12 col-sm-12 m-3 ">
+
+                        <form>
+
+                            <div class="row">
+                                <div class="form-group col-lg-3 col-md-3 col-sm-3 column4">
+                                    <label class="frmLblColor">Nombre Beneficiario</label>
+                                    <input type="text" [(ngModel)]="InfoTutor.NombreHijo" (keypress)="soloLetras($event)" name="NombreHijo" class="form-control" disabled>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h5 class="titulo tituloLinea"><b>Vigencia del Poder</b></h5>
+                                    </div>
+                                </div>
+                                <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                    <label class="frmLblColor">Duración (Meses)</label>
+                                    <input type="text" class="form-control" (keypress)="onlyNumberKey($event)" (change)="onValidaFechaEfecto()" [(ngModel)]="InfoTutor.Duracion_Meses" name="Duracion_Meses">
+                                </div>
+                                <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                    <label class="frmLblColor">Periodo de Vigencia Desde</label>
+                                    <input type="date" class="form-control" [(ngModel)]="InfoTutor.fecha_Periodo_Inicio" (change)="onValidaFechaEfecto()" name="fecha_Periodo_Inicio">
+
+                                </div>
+                                <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                    <label class="frmLblColor">Periodo de Vigencia Hasta</label>
+                                    <input type="date" class="form-control" [(ngModel)]="InfoTutor.fecha_Periodo_Fin" name="fecha_Periodo_Fin" disabled>
+                                </div>
+                                <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                    <label class="frmLblColor">Periodo de Efecto</label>
+                                    <input type="date" class="form-control" [(ngModel)]="InfoTutor.FechaEfecto" name="FechaEfecto" disabled>
+                                </div>
+                                <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                    <label class="frmLblColor">Fecha Recepción</label>
+                                    <input type="date" class="form-control" [(ngModel)]="InfoTutor.FechaRecepcion" name="FechaRecepcion">
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group " style="padding-top: 22px;">
+                                    <button class="btn btnradio" style="border-radius: 15px;" data-toggle="modal" data-target="#modalConfirmAgregarTutor">Agregar Tutor <i class="fa fa-plus" style="color:white"></i></button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h5 class="titulo tituloLinea"><b>Antecedentes Personales del Tutor/Apoderado</b></h5>
+                                    </div>
+                                </div>
+                                <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                    <label class="frmLblColor">Tipo Documento</label>
+                                    <select class="form-control" [(ngModel)]="InfoTutor.cod_tipoidentut" name="cod_tipoidentut" (change)="cambiarTipo()">
+                                      <option value="0">Seleccione una opción</option>
+                                        <option *ngFor="let item of this.cmbTipoIdent"  value="{{ item.codigo }}">{{ item.Nombre}}</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                    <label class="frmLblColor">Número de Documento</label>
+                                    <input type="text" maxlength="8" [(ngModel)]="InfoTutor.NUM_IDENTUT" oninput="this.value = this.value.toUpperCase()" [maxLength]="this.maxLengthNumDocBen" (keypress)="checkType($event)" name="NUM_IDENTUT" class="form-control">
+                                </div>
+                                <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                    <label class="frmLblColor">Ap. Paterno</label>
+                                    <input type="text" [(ngModel)]="InfoTutor.Apellido_Pat" (keypress)="soloLetras($event)" name="Apellido_Pat" class="form-control">
+                                </div>
+                                <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                    <label class="frmLblColor">Ap. Materno</label>
+                                    <input type="text" [(ngModel)]="InfoTutor.Apellido_Mat" (keypress)="soloLetras($event)" name="Apellido_Mat" class="form-control">
+                                </div>
+                                <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                    <label class="frmLblColor">Primer Nombre</label>
+                                    <input type="text" [(ngModel)]="InfoTutor.Nombre1" (keypress)="soloLetras($event)" name="Nombre1" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="row">
+
+                                <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                    <label class="frmLblColor">Segundo Nombre</label>
+                                    <input type="text" [(ngModel)]="InfoTutor.Nombre2" (keypress)="soloLetras($event)" name="Nombre2" class="form-control">
+                                </div>
+                                <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                    <label class="frmLblColor">Dirección</label>
+                                    <input type="text" [(ngModel)]="InfoTutor.Direccion" name="Direccion" class="form-control">
+                                </div>
+                                <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                    <label class="frmLblColor">Ubigeo Expediente</label><label class="frmLblColor" *ngIf=" inpUbigeoExp.invalid ">: * </label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="inpUbigeoExp" [(ngModel)]="direccionStr" name="CodDireccion" #inpUbigeoExp="ngModel" required disabled>
+                                        <span class="input-group-btn">
+                                        <button class="btn btn-primary btnrad" type="button" data-toggle="modal"  data-target="#modalDireccion" ><i class="fa fa-plus"></i></button>
+                                      </span>
+                                    </div>
+                                </div>
+                                <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                    <label class="frmLblColor">Correo Electrónico</label>
+                                    <div class="input-group">
+                                        <input [(ngModel)]="InfoTutor.Correo1" name="Correo1" type="text" class="form-control" disabled>
+                                        <span class="input-group-btn">
+                                        <button class="btn btn-primary btnrad" type="button" data-toggle="modal"  data-target="#modalCorreos"><i class="fa fa-plus"></i></button>
+                                      </span>
+                                    </div>
+                                </div>
+                                <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                    <label class="frmLblColor">Teléfono</label>
+                                    <div class="input-group">
+                                        <input [(ngModel)]="InfoTutor.Telefono1" name="Telefono1" type="text" class="form-control" disabled>
+                                        <span class="input-group-btn">
+                                        <button class="btn btn-primary btnrad" type="button" data-toggle="modal"  data-target="#modalTelefonos"><i class="fa fa-plus"></i></button>
+                                      </span>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h5 class="titulo tituloLinea"><b>Forma de Pago de Pensión</b></h5>
+                                    </div>
+                                </div>
+                                <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                    <label class="frmLblColor">Vía de Pago</label>
+                                    <select [(ngModel)]="InfoTutor.Cod_ViaPago" name="Cod_ViaPago" (change)="onChangeLlenaSucursal()" class="form-control" [disabled]="isDisabledViaPago">
+                                        <option *ngFor="let item of this.cmbViaPago"  value="{{ item.cod_elemento }}">{{ item.gls_elemento}}</option>
+                                    </select>
+
+                                </div>
+                                <div class="form-group col-lg-2 col-md-2 col-sm-2 column40">
+                                    <label class="frmLblColor">Sucursal</label>
+                                    <select [(ngModel)]="InfoTutor.Cod_Sucursal" name="Cod_Sucursal" class="form-control" [disabled]="isDisabledSucursal">
+                                        <option *ngFor="let item of this.cmbSucursal"  value="{{ item.codigo }}">{{ item.descripcion }}</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                    <label class="frmLblColor">Banco</label>
+                                    <select [(ngModel)]="InfoTutor.Cod_Banco" name="Cod_Banco" class="form-control" [disabled]="isDisabledBanco" (change)="cambiarBanco('elegir')">
+                                        <option *ngFor="let item of this.cmbTBanco"  value="{{ item.cod_elemento }}">{{ item.gls_elemento}}</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                                    <label class="frmLblColor">Tipo Cta.</label>
+                                    <select [(ngModel)]="InfoTutor.Cod_TipCuenta" name="Cod_TipCuenta" class="form-control" [disabled]="isDisabledTipoCuenta" (change)="cambiarTipoCuenta('elegir')">
+                                        <option value="00">Seleccione una opción</option>
+                                        <option *ngFor="let item of this.cmbTipoCuenta"  value="{{ item.COD_CUENTA }}">{{ item.GLS_CUENTA }}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-lg-2 col-md-2 col-sm-2 column40">
+                                    <label class="frmLblColor">N° Cuenta</label>
+                                    <input [(ngModel)]="InfoTutor.Num_Cuenta" name="Num_Cuenta" type="text" class="form-control" [disabled]="isDisabledNumCuenta" [maxLength]="maxLengthNumCuenta" oninput="this.value = this.value.toUpperCase()">
+                                </div>
+                                <div class="form-group col-lg-2 col-md-2 col-sm-2 column40">
+                                    <label class="frmLblColor">N° Cuenta CCI</label>
+                                    <input [(ngModel)]="InfoTutor.Num_Cuenta_CCI" name="Num_Cuenta_CCI" type="text" class="form-control" [disabled]="isDisabledNumCuentaCci" maxlength="20">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="historiaTutorApoderado">
+
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="table-responsive">
+                            <mat-table [dataSource]="dataSourceHistorial" class="table table-hover">
+                                <mat-header-row *matHeaderRowDef="columnas; sticky: true"></mat-header-row>
+                                <mat-row *matRowDef="let row; columns: columnas;"></mat-row>
+                                <ng-container matColumnDef="item">
+                                    <mat-header-cell *matHeaderCellDef>
+                                        <div>Item</div>
+
+                                    </mat-header-cell>
+                                    <mat-cell class="duration-cell" *matCellDef="let lesson; let i=index">{{i+1}}</mat-cell>
+                                </ng-container>
+                                <ng-container matColumnDef="Periodo">
+                                    <mat-header-cell *matHeaderCellDef>
+                                        <div>Periodo</div>
+
+                                    </mat-header-cell>
+                                    <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.Periodo}}</mat-cell>
+                                </ng-container>
+                                <ng-container matColumnDef="Fecha_Pago">
+                                    <mat-header-cell *matHeaderCellDef>
+                                        <div>Fecha Pago</div>
+
+                                    </mat-header-cell>
+                                    <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.Fecha_Pago}}</mat-cell>
+                                </ng-container>
+                                <ng-container matColumnDef="TipoIdent_Tutor">
+                                    <mat-header-cell *matHeaderCellDef>
+                                        <div>Tipo Ident. Tutor</div>
+
+                                    </mat-header-cell>
+                                    <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.TipoIdent_Tutor}}</mat-cell>
+                                </ng-container>
+                                <ng-container matColumnDef="num_idenreceptor">
+                                    <mat-header-cell *matHeaderCellDef>
+                                        <div>N° Ident. Tutor</div>
+
+                                    </mat-header-cell>
+                                    <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.num_idenreceptor}}</mat-cell>
+                                </ng-container>
+                                <ng-container matColumnDef="NombreTutor">
+                                    <mat-header-cell *matHeaderCellDef>
+                                        <div>Nombre Tutor</div>
+
+                                    </mat-header-cell>
+                                    <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.NombreTutor}}</mat-cell>
+                                </ng-container>
+                                <ng-container matColumnDef="acciones">
+                                    <mat-header-cell *matHeaderCellDef>
+                                        <div>Acciones</div>
+
+                                    </mat-header-cell>
+                                    <mat-cell class="duration-cell" data-toggle="modal" data-target="#modalDatosTutorApoderado" *matCellDef="let lesson" (click)="BusquedaHistorial(lesson.num_perpago)"><i style="color:#0090B2" class="fa fa-search exclam"></i></mat-cell>
+                                </ng-container>
+                            </mat-table>
+                            <mat-paginator [length]="100" [pageSize]="10" [pageSizeOptions]="[ 10, 20, 50]" [showFirstLastButtons]="true"></mat-paginator>
+                        </div>
+
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Botones principales -->
+<div class="col-lg-12 col-md-12 col-sm-12">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group spaceM btnAlign btnCenter" style="margin-bottom: 10px;">
+                <!-- <button *ngIf="this.tipoBusqueda === 'C'" type="button" [disabled]="isDisabled1" (click)="crearPrepoliza()" class="btn btn-azul mr"><i class="fa fa-file"></i> Crear Pre-Póliza</button> -->
+                <button type="button" class="btn btn-azul-fix btn-azul mr" (click)="GuardarInfoTutor()" [disabled]="isDisabledBtnGuardar"><i class="fa fa-save"></i> Guardar</button> &nbsp;
+                <!--<button type="button" class="btn btn-azul-fix btn-azul mr"><i class="fa fa-print"></i> Generar Documento</button> &nbsp;-->
+                <button type="button" class="btn btn-azul-fix btn-azul mr" (click)="volver()"> Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Terminan Botones principales
+<div class="col-lg-12 col-md-12 col-sm-12">
+    <div class="row" style="text-align: right; margin-bottom: 10px;">
+        <div class="col-md-2 col-md-offset-2"><button type="button" class="btn btn-azul-fix btn-azul mr" (click)="GuardarInfoTutor()" [disabled]="isDisabledBtnGuardar" ><i class="fa fa-save"></i> Guardar</button></div>
+        <div class="col-md-2"><button type="button" class="btn btn-azul-fix btn-azul mr"><i class="fa fa-print"></i> Generar Documento</button></div>
+        <div class="col-md-2"><button type="button" class="btn btn-azul-fix btn-azul mr" (click)="volver()"> Cancelar</button></div>
+    </div>
+</div>-->
+
+
+<!-- INICIO MODALS -->
+<div class="modal fade" id="modalConfirmAgregarTutor" role="dialog" style="margin-top: 70px;">
+    <div class="modal-dialog modalAddTutor modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title text-center"><b>Datos del Nuevo Tutor-Apoderado</b></h4>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <div class="row" style="margin-right: 0px;margin-left: 0px;">
+                        <div class="form-group col-md-12">
+                            <label class="frmLblColor ltr">Al agregar un nuevo Tutor/Apoderado se inhabilitará a todos los anteriores</label>
+                        </div>
+                    </div>
+                    <div class="row" style="text-align: center; margin-bottom: 10px;">
+                        <button type="button" class="btn btn-azul mr" data-dismiss="modal" data-toggle="modal" data-target="#modalAgregarTutor"> Aceptar</button> &nbsp;
+                        <button type="button" class="btn btn-azul mr" data-dismiss="modal"> Cancelar</button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="display: none;"></div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalAgregarTutor" role="dialog" style="margin-top: 70px;">
+    <div class="modal-tutor modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title text-center"><b>Datos del Nuevo Tutor-Apoderado</b></h4>
+            </div>
+            <div class="modal-body" style="overflow-y:scroll;height: 550px;">
+                <div>
+                    <form>
+                        <div class="row" style="margin-right: 0px;margin-left: 0px;">
+                            <div class="form-group col-md-3">
+                                <label class="frmLblColor">Tipo Documento</label>
+                                <select class="form-control" [(ngModel)]="InfoTutorNuevo.cod_tipoidentut" name="cod_tipoidentut" (change)="cambiarTipoNuevo()">
+                                    <option value="0">Seleccione una opción</option>
+                                    <option *ngFor="let item of this.cmbTipoIdent"  value="{{ item.codigo }}">{{ item.Nombre}}</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label class="frmLblColor">Número de Documento</label>
+                                <input type="text" oninput="this.value = this.value.toUpperCase()" [maxLength]="this.maxLengthNumDocBenNuevo" (keypress)="checkTypeNew($event)" [(ngModel)]="InfoTutorNuevo.NUM_IDENTUT" name="NUM_IDENTUT" class="form-control" (keyup)="$event.keyCode == 13 ? BusquedaTutDni() : 0">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label class="frmLblColor">Ap. Paterno</label>
+                                <input type="text" [(ngModel)]="InfoTutorNuevo.Apellido_Pat" name="Apellido_Pat" (keypress)="soloLetras($event)" class="form-control">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label class="frmLblColor">Ap. Materno</label>
+                                <input type="text" [(ngModel)]="InfoTutorNuevo.Apellido_Mat" name="Apellido_Mat" (keypress)="soloLetras($event)" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="row" style="margin-right: 0px;margin-left: 0px;">
+                            <div class="form-group col-md-3">
+                                <label class="frmLblColor">Primer Nombre</label>
+                                <input type="text" [(ngModel)]="InfoTutorNuevo.Nombre1" name="Nombre1" (keypress)="soloLetras($event)" class="form-control">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label class="frmLblColor">Segundo Nombre</label>
+                                <input type="text" [(ngModel)]="InfoTutorNuevo.Nombre2" name="Nombre2" (keypress)="soloLetras($event)" class="form-control">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="frmLblColor">Dirección</label>
+                                <input type="text" [(ngModel)]="InfoTutorNuevo.Direccion" name="Direccion" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="row" style="margin-right: 0px;margin-left: 0px;">
+                            <div class="form-group col-md-3" id="custom-select">
+                                <label class="frmLblColor">Departamento</label>
+                                <select [(ngModel)]="InfoTutorNuevo.Cod_Region" name="Cod_Region" (change)="onChangeLlenaProvinciaNuevoTutor()" class="form-control">
+                                <option value="">Seleccione una opción</option>
+                                <option *ngFor="let item of this.cmbDepartamentoTutor"  value="{{ item.codigo }}">{{ item.descripcion}}</option>
+                            </select>
+                            </div>
+                            <div class="form-group col-md-3" id="custom-select">
+                                <label class="frmLblColor">Provincia</label>
+                                <select [(ngModel)]="InfoTutorNuevo.Cod_Provincia" name="Cod_Provincia" class="form-control" (change)="onChangeLlenaDistritoNuevoTutor()">
+                                <option value="">Seleccione una opción</option>
+                                <option *ngFor="let item of this.cmbProvinciaN"  value="{{ item.codigo }}">{{ item.descripcion}}</option>
+                            </select>
+                            </div>
+                            <div class="form-group col-md-3" id="custom-select">
+                                <label class="frmLblColor">Distrito</label>
+                                <mat-select [disableOptionCentering]="true" [(ngModel)]="InfoTutorNuevo.codDireccion" name="Cod_Comuna" (valueChange)="getInfoTuto($event)">
+                                    <mat-select-filter [placeholder]="'Filtro'" [displayMember]="'GlsDistrito'" [array]="cmbDistritoTutorAll" (filteredReturn)="comboDistritoTutorResp =$event"></mat-select-filter>
+                                    <mat-option [value]="0">Seleccione una opción</mat-option>
+                                    <mat-option *ngFor="let item of comboDistritoTutorResp" [value]="item.CodDireccion">
+                                        {{item.GlsDistrito}}
+                                    </mat-option>
+                                </mat-select>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label class="frmLblColor">Teléfono 1</label>
+                                <input type="text" [(ngModel)]="InfoTutorNuevo.Telefono1" name="Telefono1" (keypress)="onlyNumberKey($event)" class="form-control" minlength="7" maxlength="9">
+                            </div>
+                        </div>
+                        <div class="row" style="margin-right: 0px;margin-left: 0px;">
+                            <div class="form-group col-md-3">
+                                <label class="frmLblColor">Teléfono 2</label>
+                                <input type="text" [(ngModel)]="InfoTutorNuevo.GLS_FONO2" name="GLS_FONO2" (keypress)="onlyNumberKey($event)" class="form-control" minlength="7" maxlength="9">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label class="frmLblColor">Teléfono 3</label>
+                                <input type="text" [(ngModel)]="InfoTutorNuevo.GLS_FONO3" name="GLS_FONO3" (keypress)="onlyNumberKey($event)" class="form-control" minlength="7" maxlength="9">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label class="frmLblColor">Email 1</label>
+                                <input type="text" [(ngModel)]="InfoTutorNuevo.Correo1" name="Correo1" class="form-control">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label class="frmLblColor">Email 2</label>
+                                <input type="text" [(ngModel)]="InfoTutorNuevo.GLS_Correo2" name="GLS_Correo2" class="form-control">
+                            </div>
+                        </div>
+                        <div class="row" style="margin-right: 0px;margin-left: 0px;">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h5 class="titulo tituloLinea"><b>Forma de Pago de Pensión</b></h5>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-3 ">
+                                <label class="frmLblColor">Vía de Pago</label>
+                                <select [(ngModel)]="InfoTutorNuevo.Cod_ViaPago" name="Cod_ViaPago" (change)="onChangeLlenaSucursalNuevoTutor()" class="form-control" [disabled]="isDisabledViaPagoN">
+                                <option *ngFor="let item of this.cmbViaPago"  value="{{ item.cod_elemento }}">{{ item.gls_elemento}}</option>
+                            </select>
+                            </div>
+                            <div class="form-group col-md-6 ">
+                                <label class="frmLblColor">Sucursal</label>
+                                <select [(ngModel)]="InfoTutorNuevo.Cod_Sucursal" name="Cod_Sucursal" class="form-control" [disabled]="isDisabledSucursalN">
+                                <option *ngFor="let item of this.cmbSucursalN"  value="{{ item.codigo }}">{{ item.descripcion }}</option>
+                            </select>
+                            </div>
+                            <div class="form-group col-md-3 ">
+                                <label class="frmLblColor">Banco</label>
+                                <select [(ngModel)]="InfoTutorNuevo.Cod_Banco" name="Cod_Banco" class="form-control" [disabled]="isDisabledBancoN" (change)="cambiarBancoN('elegir')">
+                                <option *ngFor="let item of this.cmbTBanco"  value="{{ item.cod_elemento }}">{{ item.gls_elemento}}</option>
+                            </select>
+                            </div>
+
+
+                        </div>
+                        <div class="row" style="margin-right: 0px;margin-left: 0px;">
+
+                            <div class="form-group col-md-3 ">
+                                <label class="frmLblColor">Tipo Cta.</label>
+                                <select [(ngModel)]="InfoTutorNuevo.Cod_TipCuenta" name="Cod_TipCuenta" class="form-control" [disabled]="isDisabledTipoCuentaN" (change)="cambiarTipoCuentaN('elegir')">
+                                    <option value="00">Seleccione una opción</option>
+                                    <option *ngFor="let item of this.cmbTipoCuenta"  value="{{ item.COD_CUENTA }}">{{ item.GLS_CUENTA }}</option>
+                            </select>
+                            </div>
+                            <div class="form-group col-md-6 ">
+                                <label class="frmLblColor">N° Cuenta</label>
+                                <input type="text" [(ngModel)]="InfoTutorNuevo.Num_Cuenta" name="Num_Cuenta" class="form-control" [disabled]="isDisabledNumCuentaN" [maxLength]="maxLengthNumCuenta" oninput="this.value = this.value.toUpperCase()">
+                            </div>
+                            <div class="form-group col-md-3 ">
+                                <label class="frmLblColor">N° Cuenta CCI</label>
+                                <input type="text" [(ngModel)]="InfoTutorNuevo.Num_Cuenta_CCI" name="Num_Cuenta_CCI" class="form-control" [disabled]="isDisabledNumCuentaCciN" maxlength="20">
+                            </div>
+
+
+                        </div>
+
+
+                    </form>
+                    <div class="row" style="text-align: center; margin-bottom: 10px;">
+                        <button type="button" class="btn btn-azul mr" (click)="GuardarInfoTutorN()" [disabled]="isDisabledBtnGuardarN"> Guardar</button> &nbsp;
+                        <button type="button" class="btn btn-azul mr" data-dismiss="modal"> Cancelar</button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="display: none;"></div>
+        </div>
+    </div>
+</div>
+
+<!--Modal de Acciones Historia de Tutores/Apoderados-->
+<div class="modal fade" id="modalDatosTutorApoderado" role="dialog" style="margin-top: 70px;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title text-center"><b>Datos de Tutor-Apoderado</b></h4>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <form>
+                        <div class="row" style="margin-right: 0px;margin-left: 0px;">
+                            <div class="form-group col-md-3">
+                                <label class="frmLblColor">Tipo Documento</label>
+                                <select class="form-control" [(ngModel)]="InfoTutorHistorial.cod_tipoidentut" name="cod_tipoidentut" disabled>
+                                <option *ngFor="let item of this.cmbTipoIdent"  value="{{ item.codigo }}">{{ item.Nombre}}</option>
+                            </select>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label class="frmLblColor">Número de Documento</label>
+                                <input type="text" [(ngModel)]="InfoTutorHistorial.NUM_IDENTUT" name="NUM_IDENTUT" class="form-control" disabled>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label class="frmLblColor">Ap. Paterno</label>
+                                <input type="text" [(ngModel)]="InfoTutorHistorial.Apellido_Pat" name="Apellido_Pat" class="form-control" disabled>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label class="frmLblColor">Ap. Materno</label>
+                                <input type="text" [(ngModel)]="InfoTutorHistorial.Apellido_Mat" name="Apellido_Mat" class="form-control" disabled>
+                            </div>
+                        </div>
+
+                        <div class="row" style="margin-right: 0px;margin-left: 0px;">
+                            <div class="form-group col-md-3">
+                                <label class="frmLblColor">Primer Nombre</label>
+                                <input type="text" [(ngModel)]="InfoTutorHistorial.Nombre1" name="Nombre1" class="form-control" disabled>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label class="frmLblColor">Segundo Nombre</label>
+                                <input type="text" [(ngModel)]="InfoTutorHistorial.Nombre2" name="Nombre2" class="form-control" disabled>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="frmLblColor">Dirección</label>
+                                <input type="text" [(ngModel)]="InfoTutorHistorial.Direccion" name="Direccion" class="form-control" disabled>
+                            </div>
+                        </div>
+
+                        <div class="row" style="margin-right: 0px;margin-left: 0px;">
+                            <div class="form-group col-md-3">
+                                <label class="frmLblColor">Departamento</label>
+                                <select [(ngModel)]="InfoTutorHistorial.Cod_Region" name="Cod_Region" class="form-control" disabled>
+                                <option *ngFor="let item of this.cmbDepartamento"  value="{{ item.codigo }}">{{ item.descripcion}}</option>
+                            </select>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label class="frmLblColor">Provincia</label>
+                                <select [(ngModel)]="InfoTutorHistorial.Cod_Provincia" name="Cod_Provincia" class="form-control" disabled>
+                                <option *ngFor="let item of this.cmbProvinciaHistorial"  value="{{ item.codigo }}">{{ item.descripcion}}</option>
+                            </select>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label class="frmLblColor">Distrito</label>
+                                <select [(ngModel)]="InfoTutorHistorial.Cod_Comuna" name="Cod_Comuna" class="form-control" disabled>
+                                <option *ngFor="let item of this.cmbDistritoHistorial"  value="{{ item.codigo }}">{{ item.descripcion}}</option>
+                            </select>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label class="frmLblColor">Teléfono 1</label>
+                                <input type="text" [(ngModel)]="InfoTutorHistorial.Telefono1" name="Telefono1" class="form-control" disabled>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-right: 0px;margin-left: 0px;">
+                            <div class="form-group col-md-3">
+                                <label class="frmLblColor">Teléfono 2</label>
+                                <input type="text" [(ngModel)]="InfoTutorHistorial.GLS_FONO2" name="GLS_FONO2" class="form-control" disabled>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label class="frmLblColor">Teléfono 3</label>
+                                <input type="text" [(ngModel)]="InfoTutorHistorial.GLS_FONO3" name="GLS_FONO3" class="form-control" disabled>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label class="frmLblColor">Email 1</label>
+                                <input type="text" [(ngModel)]="InfoTutorHistorial.Correo1" name="Correo1" class="form-control" disabled>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label class="frmLblColor">Email 2</label>
+                                <input type="text" [(ngModel)]="InfoTutorHistorial.GLS_Correo2" name="GLS_Correo2" class="form-control" disabled>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-right: 0px;margin-left: 0px;">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h5 class="titulo tituloLinea"><b>Forma de Pago de Pensión</b></h5>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-3 ">
+                                <label class="frmLblColor">Vía de Pago</label>
+                                <select [(ngModel)]="InfoTutorHistorial.Cod_ViaPago" name="Cod_ViaPago" class="form-control" disabled>
+                                <option *ngFor="let item of this.cmbViaPago"  value="{{ item.cod_elemento }}">{{ item.gls_elemento}}</option>
+                            </select>
+                            </div>
+                            <div class="form-group col-md-6 ">
+                                <label class="frmLblColor">Sucursal</label>
+                                <select [(ngModel)]="InfoTutorHistorial.Cod_Sucursal" name="Cod_Sucursal" class="form-control" disabled>
+                                <option *ngFor="let item of this.cmbSucursalHistorial"  value="{{ item.codigo }}">{{ item.descripcion }}</option>
+                            </select>
+                            </div>
+                            <div class="form-group col-md-3 ">
+                                <label class="frmLblColor">Banco</label>
+                                <select [(ngModel)]="InfoTutorHistorial.Cod_Banco" name="Cod_Banco" class="form-control" disabled>
+                                <option *ngFor="let item of this.cmbTBanco"  value="{{ item.cod_elemento }}">{{ item.gls_elemento}}</option>
+                            </select>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-right: 0px;margin-left: 0px;">
+
+                            <div class="form-group col-md-3 ">
+                                <label class="frmLblColor">Tipo Cta.</label>
+                                <select [(ngModel)]="InfoTutorHistorial.Cod_TipCuenta" name="Cod_TipCuenta" class="form-control" disabled>
+                                <option *ngFor="let item of this.cmbTipoCuenta"  value="{{ item.cod_elemento }}">{{ item.gls_elemento}}</option>
+                            </select>
+                            </div>
+                            <div class="form-group col-md-6 ">
+                                <label class="frmLblColor">N° Cuenta</label>
+                                <input type="text" [(ngModel)]="InfoTutorHistorial.Num_Cuenta" name="Num_Cuenta" class="form-control" disabled>
+                            </div>
+                            <div class="form-group col-md-3 ">
+                                <label class="frmLblColor">N° Cuenta CCI</label>
+                                <input type="text" [(ngModel)]="InfoTutorHistorial.Num_Cuenta_CCI" name="Num_Cuenta_CCI" class="form-control" disabled>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="row" style="text-align: center; margin-bottom: 10px;">
+                        <button type="button" class="btn btn-azul mr" data-dismiss="modal"> Cancelar</button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="display: none;"></div>
+        </div>
+    </div>
+</div>
+<!-- Fin Modal de Acciones Historia de Tutores/Apoderados-->
+
+<div class="modal fade" id="modalTelefonos" role="dialog" data-backdrop="static" data-keyboard="false" style="margin-top: 70px;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" (click)="cerrarModalTel()">&times;</button>
+                <h4 class="modal-title text-center"><b>Teléfonos</b></h4>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <form>
+                        <div class="col-md-12" style="margin-right: 0px;margin-left: 0px;">
+                            <div class="form-group col-md-7 col-md-offset-2">
+                                <label class="frmLblColor">Teléfono 1</label>
+                                <input [(ngModel)]="InfoTutor.Telefono1" (keypress)="onlyNumberKey($event)" name="Telefono1" type="text" class="form-control" minlength="7" maxlength="9">
+                            </div>
+                            <div class="form-group col-md-7 col-md-offset-2">
+                                <label class="frmLblColor">Teléfono 2</label>
+                                <input [(ngModel)]="InfoTutor.GLS_FONO2" (keypress)="onlyNumberKey($event)" name="GLS_FONO2" type="text" class="form-control" minlength="7" maxlength="9">
+                            </div>
+                            <div class="form-group col-md-7 col-md-offset-2">
+                                <label class="frmLblColor">Teléfono 3</label>
+                                <input [(ngModel)]="InfoTutor.GLS_FONO3" (keypress)="onlyNumberKey($event)" name="GLS_FONO3" type="text" class="form-control" minlength="7" maxlength="9">
+                            </div>
+
+                        </div>
+                    </form>
+                    <div class="row" style="text-align: center; margin-bottom: 10px;">
+                        <button type="button" class="btn btn-azul mr" (click)="aceptarModalTel()"> Aceptar</button>
+                        <!-- &nbsp;
+                    <button type="button" class="btn btn-azul mr" (click)="cerrarModalTel()"> Cancelar</button> -->
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="display: none;"></div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalCorreos" role="dialog" data-backdrop="static" data-keyboard="false" style="margin-top: 70px;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" (click)="cerrarModalCorreos()">&times;</button>
+                <h4 class="modal-title text-center"><b>Correos Electrónicos</b></h4>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <form>
+                        <div class="col-md-12" style="margin-right: 0px;margin-left: 0px;">
+                            <div class="form-group col-md-7 col-md-offset-2">
+                                <label class="frmLblColor">Correo Electrónico 1</label>
+                                <input [(ngModel)]="InfoTutor.Correo1" name="Correo1" type="email" class="form-control">
+                            </div>
+                            <div class="form-group col-md-7 col-md-offset-2">
+                                <label class="frmLblColor">Correo Electrónico 2</label>
+                                <input [(ngModel)]="InfoTutor.GLS_Correo2" name="GLS_Correo2" type="email" class="form-control">
+                            </div>
+                            <div class="form-group col-md-7 col-md-offset-2">
+                                <label class="frmLblColor">Correo Electrónico 3</label>
+                                <input [(ngModel)]="InfoTutor.GLS_Correo3" name="GLS_Correo3" type="text" class="form-control">
+                            </div>
+
+                        </div>
+                    </form>
+                    <div class="row" style="text-align: center; margin-bottom: 10px;">
+                        <button type="button" class="btn btn-azul mr" (click)="aceptarModalCorreos()"> Aceptar</button>
+                        <!-- <button type="button" class="btn btn-azul mr" data-dismiss="modal"> Cancelar</button> -->
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="display: none;"></div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalDirecciones" role="dialog" style="margin-top: 70px;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title text-center"><b>Direcciones</b></h4>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <form>
+                        <div class="col-md-12" style="margin-right: 0px;margin-left: 0px;">
+                            <div class="form-group col-md-7 col-md-offset-2">
+                                <label class="frmLblColor">Dirección 1</label>
+                                <input type="text" [(ngModel)]="InfoTutor.Direccion" name="Direccion" class="form-control">
+                            </div>
+                            <div class="form-group col-md-7 col-md-offset-2">
+                                <label class="frmLblColor">Dirección 2</label>
+                                <input type="text" [(ngModel)]="InfoTutor.Direccion" name="Direccion" class="form-control">
+                            </div>
+                            <div class="form-group col-md-7 col-md-offset-2">
+                                <label class="frmLblColor">Dirección 3</label>
+                                <input type="text" [(ngModel)]="InfoTutor.Direccion" name="Direccion" class="form-control">
+                            </div>
+
+                        </div>
+                    </form>
+                    <div class="row" style="text-align: center; margin-bottom: 10px;">
+                        <button type="button" class="btn btn-azul mr" data-dismiss="modal"> Aceptar</button> &nbsp;
+                        <button type="button" class="btn btn-azul mr" data-dismiss="modal"> Cancelar</button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="display: none;"></div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="modalDireccion" role="dialog" style="margin-top: 70px;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title text-center"><b>Dirección</b></h4>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <form>
+                        <div class="row">
+                            <!-- Dirección Expediente -->
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3 col-md-offset-1" id="custom-select">
+                                <label class="frmLblColor">Departamento</label>
+                                <select [(ngModel)]="InfoTutor.Cod_Region" name="Cod_Region" (change)="onChangeLlenaProvincia()" class="form-control">
+                                <option value="">Seleccione una opción</option>
+                                <option *ngFor="let item of this.cmbDepartamento"  value="{{ item.codigo }}">{{ item.descripcion}}</option>
+                            </select>
+                            </div>
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3" id="custom-select">
+                                <label class="frmLblColor">Provincia</label>
+                                <select [(ngModel)]="InfoTutor.Cod_Provincia" name="Cod_Provincia" (change)="onChangeLlenaDistrito()" class="form-control">
+                                <option value="">Seleccione una opción</option>
+                                <option *ngFor="let item of this.cmbProvincia"  value="{{ item.codigo }}">{{ item.descripcion}}</option>
+                            </select>
+                            </div>
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3" id="custom-select">
+                                <label class="frmLblColor">Distrito</label>
+                                <mat-select [disableOptionCentering]="true" [(ngModel)]="InfoTutor.codDireccion" name="Cod_Comuna" (valueChange)="getInfo($event)">
+                                    <mat-select-filter [placeholder]="'Filtro'" [displayMember]="'GlsDistrito'" [array]="cmbDistritoAll" (filteredReturn)="comboDistritoResp =$event"></mat-select-filter>
+                                    <mat-option [value]="0">Seleccione una opción</mat-option>
+                                    <mat-option *ngFor="let item of comboDistritoResp" [value]="item.CodDireccion">
+                                        {{item.GlsDistrito}}
+                                    </mat-option>
+                                </mat-select>
+                            </div>
+                        </div>
+                    </form>
+
+                    <div class="row" style="text-align: center; margin-bottom: 10px;">
+                        <button type="button" class="btn btn-azul btn-azul-fix mr" data-dismiss="modal"> Aceptar</button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="display: none;"></div>
+        </div>
+    </div>
+</div>
+<!-- FIN MODALS -->

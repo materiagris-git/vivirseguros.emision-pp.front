@@ -1,0 +1,136 @@
+<div class="col-lg-12 col-md-12 col-sm-12 ">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h5 class="titulo" style="margin: 0px;"><b>Especificación de Periodos de Pago</b></h5>
+        </div>
+        <div class="panel-body camposForm">
+            <form>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="form-group col-lg-2 col-md-2 col-xs-12">
+                                <label class="frmLblColor">Periodo de Cálculo</label>
+                                <input type="month" [(ngModel)]="info.Periodo" name="Periodo" class="form-control form-control-sm" disabled>
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-xs-12">
+                                <label class="frmLblColor">Fecha de Cálculo</label>
+                                <input type="date" [(ngModel)]="info.vlFecPago" name="vlFecPago" class="form-control form-control-sm" disabled>
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-xs-12">
+                                <label class="frmLblColor">Fecha de Pago</label>
+                                <input type="date" [(ngModel)]="info.FechaPago" name="FechaPago" class="form-control form-control-sm">
+                            </div>
+
+                            <div class="form-group col-lg-2 col-md-2 col-xs-12" style="padding-top: 22px;">
+                                <button type="button " class="btn btn-azul btn-azul-fix col-md-12 col-xs-12" (click)="guardaFecha()"><i class="fa fa-save  " ></i>  Guardar</button>
+                            </div>
+                        </div>
+                        <div class=" row ">
+
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column40 ">
+                                <label class="frmLblColor ">Cargar Documento</label>
+                                <input type="text" class="form-control" [(ngModel)]="fileName" name="fileName" disabled>
+                                <input type="file" (change)="detectFiles($event)" class="form-control hidden" #fileInput id="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" [(ngModel)]="fileNameArch" name="fileNameArch">
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 column5 ">
+                                <div style="margin-top: 22px; ">
+                                    <button type="button" (click)="fileInput.click()" class="btn btn-azul btn-azul-fix col-md-12 col-xs-12"> <i class="glyphicon glyphicon-cloud-upload"></i>&nbsp;Cargar</button>
+                                </div>
+                            </div>
+                            <div class="form-group col-lg-2 col-md-4 col-xs-12" style="padding-top: 22px;">
+                                <button type="button" class="btn btn-azul btn-azul-fix col-md-12 col-xs-12" (click)="creaArchivoCotejo()">
+                                  <i class="fa fa-download"></i> Descargar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div [ngClass]="{'hidden': busqueda==false}">
+
+    <div class="col-lg-12 col-md-12 col-sm-12 marg-prim">
+        <!--div de la tabla -->
+        <div class="panel panel-default">
+            <div class="panel-heading" style="height: 45px;">
+                <h3 class="titulo col-lg-4 col-md-4 col-sm-4" style="margin-top: 10px; margin-left: 10px;">
+                    Resultados
+                </h3>
+                <div class="col-lg-4 col-md-4 col-sm-4">
+                    <label class="frmLblColor col-lg-4 col-md-4 col-sm-4" style="height: 15px; padding-top: 10px; text-align: right;">Filtro </label>
+                    <div class="col-lg-8 col-md-8 col-sm-8" style="padding-top: 3px;">
+                        <input type="text" class="form-control filtroTabla" style="height: 25px;" [ngModel]="txtFiltrarDetalle" name="txtFiltrarDetalle" id="txtFiltroDetalle" (keyup)="applyFilter($event)">
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-3 col-sm-3">
+                    <label class="frmLblColor col-lg-10 col-md-10 col-sm-10" style="height: 15px; padding-top: 10px; text-align: right;">Seleccionar Todo</label>
+                    <div class="col-lg-2 col-md-2 col-sm-2" style="padding-top: 3px;">
+                        <input type="checkbox" [checked]=banderaSelect (click)="CambiaSelect()">
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body camposForm">
+
+                <div class="table-responsive">
+                    <mat-table matSort [dataSource]="dataSourceCalculo" class="table table-hover">
+                        <mat-header-row *matHeaderRowDef="columnas; sticky: true"></mat-header-row>
+                        <mat-row *matRowDef="let row; columns: columnas;"></mat-row>
+                        <ng-container matColumnDef="noPoliza">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                <div>N° Póliza</div>
+
+                            </mat-header-cell>
+                            <mat-cell class="duration-cell" *matCellDef="let lesson; let i=index">{{lesson.Num_Poliza}}</mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="numIden">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                <div>Número Iden</div>
+
+                            </mat-header-cell>
+                            <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.Num_Iden}}</mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="montoBruto">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                <div>Monto Bruto</div>
+
+                            </mat-header-cell>
+                            <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.Monto_Bruto}}</mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="montoEsSalud">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                <div>Monto EsSalud</div>
+
+                            </mat-header-cell>
+                            <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.Monto_EsSalud}}</mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="montoTotal">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                <div>Monto Total a Pagar</div>
+
+                            </mat-header-cell>
+                            <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.Monto_Total}}</mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="Fecha">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                <div>Fecha Pago</div>
+
+                            </mat-header-cell>
+                            <mat-cell class="duration-cell" *matCellDef="let lesson">
+                                {{lesson.Fecha}}
+                                <div> </div>
+                                <input type="checkbox" [disabled]=lesson.Bandera [checked]=lesson.Bandera2 (click)="CambiaEstatus(lesson.Bandera2, lesson.identificador)">
+                            </mat-cell>
+                        </ng-container>
+                    </mat-table>
+                    <mat-paginator [length]="0" [pageSize]="10" [pageSizeOptions]="[ 10, 20, 50]" [showFirstLastButtons]="true"></mat-paginator>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>

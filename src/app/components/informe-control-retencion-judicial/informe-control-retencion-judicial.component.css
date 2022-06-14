@@ -1,0 +1,165 @@
+table tr th,
+td {
+    text-align: center;
+}
+
+.iconTbl {
+    color: #0090B2;
+}
+
+.column5 {
+    width: 20%;
+}
+
+.column40 {
+    width: 40%;
+}
+
+.btn-azul-fix {
+    font-size: 11px;
+}
+
+.grid {
+    border: 1px solid #e3e3e3;
+}
+
+input,
+select {
+    background-color: #f5f5f5;
+    font-size: 11px;
+}
+
+.btnrad {
+    border-radius: 3px;
+    background-color: #0090B2;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+    .column5 {
+        width: 100%;
+    }
+    .column40 {
+        width: 100%;
+    }
+    .mat-cell,
+    .mat-footer-cell,
+    .mat-header-cell {
+        flex: none;
+        width: 20% !important;
+        /*Aqui pon lo que quieras width: 20&*/
+        overflow-x: auto;
+        color: black;
+        background-color: #ffffff;
+        text-align: center;
+    }
+}
+
+
+/* Landscape phones and portrait tablets */
+
+@media (max-width: 767px) {
+    .column5 {
+        width: 100%;
+    }
+    .column40 {
+        width: 100%;
+    }
+    .mat-cell,
+    .mat-footer-cell,
+    .mat-header-cell {
+        flex: none;
+        width: 30% !important;
+        /*Aqui pon lo que quieras width: 20&*/
+        overflow-x: auto;
+        color: black;
+        background-color: #ffffff;
+        text-align: center;
+    }
+}
+
+
+/* Portrait phones and smaller */
+
+@media (max-width: 480px) {
+    .column5 {
+        width: 100%;
+    }
+    .column40 {
+        width: 100%;
+    }
+    .mat-table {
+        width: 100%;
+        overflow-x: scroll!important;
+        background-color: #ffffff;
+    }
+    .mat-cell,
+    .mat-footer-cell,
+    .mat-header-cell {
+        flex: none;
+        width: 40% !important;
+        /*Aqui pon lo que quieras width: 20&*/
+        overflow-x: auto;
+        color: black;
+        background-color: #ffffff;
+        text-align: center;
+    }
+}
+
+.panel-heading .nav-tabs>.open>a,
+.panel-heading .nav-tabs>.open>a:hover,
+.panel-heading .nav-tabs>.open>a:focus,
+.panel-heading .nav-tabs>li>a:hover,
+.panel-heading .nav-tabs>li>a:focus {
+    color: rgb(189, 182, 182);
+    background-color: #ddd;
+    border-color: transparent;
+    font-size: 12px;
+}
+
+.panel-heading .nav-tabs>li.active>a,
+.panel-heading .nav-tabs>li.active>a:hover,
+.panel-heading .nav-tabs>li.active>a:focus {
+    color: #0090b2;
+    background-color: #f5f5f5;
+    border-color: #ddd;
+    border-radius: 1px !important;
+    border-top: none;
+    border-bottom: none;
+    font-size: 12px;
+}
+
+.mat-table {
+    height: auto;
+    overflow: auto;
+    background-color: #ffffff;
+}
+
+.mat-cell {
+    height: 60px;
+    border-bottom: 1px solid lightgray;
+}
+
+.mat-header-row,
+.mat-row,
+.mat-footer-row {
+    display: inline-flex;
+    align-items: center;
+    width: 100%;
+}
+
+.mat-cell,
+.mat-header-cell {
+    color: black;
+    display: block;
+    background-color: #ffffff;
+    text-align: center;
+    font-size: 11px;
+    padding: 15px 0px;
+}
+
+.mat-header-cell {
+    color: black;
+    background-color: #ffffff;
+    display: block;
+    font-size: 12px;
+}

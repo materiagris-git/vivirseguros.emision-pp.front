@@ -1,0 +1,327 @@
+<div class="col-lg-12 col-md-12 col-sm-12 ">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h5 class="titulo" style="margin: 0px;"><b>Búsqueda de Póliza</b></h5>
+        </div>
+        <div class="panel-body camposForm">
+            <form>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                <label class="frmLblColor">N° Póliza</label>
+                                <input type="text" class="form-control form-control-sm" [(ngModel)]="dataBusqueda.NumPoliza" name="NumPoliza" maxlength="10" (keypress)="numberOnly($event)">
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-sm-3 col-xs-12" style="padding-top: 22px;">
+                                <button type="button" class="btn btn-azul btn-azul-fix col-md-12 col-xs-12" (click)="buscarData()"><i class="glyphicon glyphicon-search "></i> Buscar</button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                <input type="checkbox" id="checkPolizas" class="form-check" value="checkIngresoPrima=!checkIngresoPrima" [(ngModel)]="checkIngresoPrima" name="checkIngresoPrima">
+                                <label class="frmLblColor" for="checkPolizas"> Mostrar todas las pólizas</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div>
+
+    <div class="col-lg-12 col-md-12 col-sm-12 marg-prim">
+        <!--div de la tabla -->
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h5 class="titulo" style="margin: 0px;"><b>Resultados</b></h5>
+            </div>
+            <div class="panel-body camposForm">
+                <div class="table-responsive">
+                    <mat-table [dataSource]="dataSource" class="table table-hover">
+                        <mat-header-row *matHeaderRowDef="columnas; sticky: true"></mat-header-row>
+                        <mat-row *matRowDef="let row; columns: columnas;"></mat-row>
+                        <ng-container matColumnDef="item">
+                            <mat-header-cell *matHeaderCellDef>
+                                <div>Item</div>
+
+                            </mat-header-cell>
+                            <mat-cell class="duration-cell" *matCellDef="let lesson; let i=index">{{i+1}}</mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="numPol">
+                            <mat-header-cell *matHeaderCellDef>
+                                <div>N° Póliza</div>
+
+                            </mat-header-cell>
+                            <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.NumPoliza}}</mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="nomAfiliado">
+                            <mat-header-cell *matHeaderCellDef>
+                                <div>Nombre del Afiliado</div>
+
+                            </mat-header-cell>
+                            <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.NombreCompleto}}</mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="fecha">
+                            <mat-header-cell *matHeaderCellDef>
+                                <div>Fecha</div>
+
+                            </mat-header-cell>
+                            <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.FecEmision}}</mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="acciones">
+                            <mat-header-cell *matHeaderCellDef>
+                                <div>Acciones</div>
+
+                            </mat-header-cell>
+                            <mat-cell class="duration-cell" *matCellDef="let lesson">
+                                <!-- <i style="color:#0090B2" class="fa fa-search exclam" (click)="polizaSeleccionada(lesson)" title="Visualizar"></i> -->
+                                <i *ngIf="lesson.EstadoCalculo === 'N'" style="color:#0090B2" class="fa fa-search exclam" (click)="polizaSeleccionada(lesson)" title="Visualizar"></i>
+                                <i *ngIf="lesson.EstadoCalculo === 'S'" style="color:#0090B2" class="fa fa-calendar exclam" title="Fechas Efectivas" data-toggle="modal" data-target="#modalFecEfectivas" (click)="consultarFechasEfectivas(lesson.NumPoliza)"></i>
+                                <i style="color:#0090B2; margin-left: 2px;" class="fas fa-map-marker-alt" (click)="ubigeoCorrespondenciaModal(lesson.NumPoliza)" title="Ubigeo Correspondencia" data-toggle="modal" data-target="#modalDirCorr"></i>&nbsp;
+                            </mat-cell>
+                        </ng-container>
+                    </mat-table>
+                    <mat-paginator #PaginadorConsulta [length]="0" [pageSize]="20" [pageSizeOptions]="[5, 10, 20, 50]" [showFirstLastButtons]="true"></mat-paginator>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<!-- Inician Modales -->
+
+<!-- Modal para Fechas Efectivas -->
+<div class="modal fade" id="modalFecEfectivas" role="dialog" style="margin-top: 70px;" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="width: 1185px;">
+            <div class="modal-header">
+                <button type="button" class="close" (click)="salirModalFecEfectivas()">&times;</button>
+                <h4 class="modal-title text-center"><b>Asignación de Fechas Efectivas</b></h4>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <!-- Tabla Resumen Primeros Pagos -->
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="row">
+                            <div class="panel panel-default">
+                                <div class="panel-heading" style="padding: 10px;">
+                                    <h3 class="titulo" style="margin: 0px;">
+                                        Fechas Efectivas
+                                    </h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="table-responsive">
+                                            <mat-table [dataSource]="dataSourceFecEfectiva" class="table table-hover">
+                                                <mat-header-row *matHeaderRowDef="columnasFecEfectiva; sticky: true"></mat-header-row>
+                                                <mat-row *matRowDef="let row; columns: columnasFecEfectiva;"></mat-row>
+                                                <ng-container matColumnDef="item2">
+                                                    <mat-header-cell *matHeaderCellDef>
+                                                        <div>Item</div>
+
+                                                    </mat-header-cell>
+                                                    <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.NumOrden}}</mat-cell>
+                                                </ng-container>
+                                                <ng-container matColumnDef="numPol2">
+                                                    <mat-header-cell *matHeaderCellDef>
+                                                        <div>N° Póliza</div>
+
+                                                    </mat-header-cell>
+                                                    <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.NumPoliza}}</mat-cell>
+                                                </ng-container>
+                                                <ng-container matColumnDef="tipoDoc">
+                                                    <mat-header-cell *matHeaderCellDef>
+                                                        <div>Tipo Ident.</div>
+
+                                                    </mat-header-cell>
+                                                    <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.GlsTipoIden}}</mat-cell>
+                                                </ng-container>
+                                                <ng-container matColumnDef="numDoc">
+                                                    <mat-header-cell *matHeaderCellDef>
+                                                        <div>N° Ident.</div>
+
+                                                    </mat-header-cell>
+                                                    <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.NumIdentificacion}}</mat-cell>
+                                                </ng-container>
+                                                <ng-container matColumnDef="nomAfiliado2">
+                                                    <mat-header-cell *matHeaderCellDef>
+                                                        <div>Nombre</div>
+
+                                                    </mat-header-cell>
+                                                    <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.NombreCompleto}}</mat-cell>
+                                                </ng-container>
+                                                <ng-container matColumnDef="parentesco">
+                                                    <mat-header-cell *matHeaderCellDef>
+                                                        <div>Parentesco</div>
+
+                                                    </mat-header-cell>
+                                                    <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.CodParentesco}}</mat-cell>
+                                                </ng-container>
+                                                <ng-container matColumnDef="fecNac">
+                                                    <mat-header-cell *matHeaderCellDef>
+                                                        <div>Fecha Nacimiento</div>
+
+                                                    </mat-header-cell>
+                                                    <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.FechaNacimiento}}</mat-cell>
+                                                </ng-container>
+                                                <ng-container matColumnDef="fecEfectiva">
+                                                    <mat-header-cell *matHeaderCellDef>
+                                                        <div>Fecha Efectiva</div>
+
+                                                    </mat-header-cell>
+                                                    <mat-cell class="duration-cell" *matCellDef="let lesson">
+                                                        <div *ngIf="lesson.FecEfectivaActive === 'TRUE'" class="col-lg-12 col-md-12 col-sm-12">
+                                                            <input type="date" id="txtFecEfectiva" class="form-control" value="{{lesson.FechaEfectiva}}" [(ngModel)]="lesson.FechaEfectiva" name="FechaEfectiva">
+                                                        </div>
+                                                        <!-- <button *ngIf="lesson.FecEfectivaActive === 'TRUE'" type="button" class="btn btn-azul mr" style="width: 65px;" (click)="guardaFecEfectiva(lesson)">Guardar</button> -->
+                                                        <div *ngIf="lesson.FecEfectivaActive !== 'TRUE'" class="col-lg-12 col-md-12 col-sm-12">
+                                                            <input type="date" id="txtFecEfectiva" class="form-control" value="{{lesson.FechaEfectiva}}" disabled>
+                                                        </div>
+                                                        <!-- <button *ngIf="lesson.FecEfectivaActive !== 'TRUE'" type="button" class="btn btn-azul mr" style="width: 65px;" disabled>Guardar</button> -->
+                                                    </mat-cell>
+                                                </ng-container>
+                                            </mat-table>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Termina Tabla Resumen Primeros Pagos -->
+
+                    <div class="row" style="text-align: center; margin-bottom: 10px;">
+                        <button type="button" class="btn btn-azul-fix btn-azul mr" (click)="confirmacionGrabarFecEfectivas()"> Grabar</button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="display: none;"></div>
+        </div>
+    </div>
+</div>
+<!-- Termina Modal para Fechas Efectivas -->
+
+<!-- Inicia Modal para Ubigeo Correspondencia -->
+<div class="modal fade" id="modalDirCorr" role="dialog" data-backdrop="static" data-keyboard="false" style="margin-top: 70px;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" (click)="cerrarModalUbigeo()">&times;</button>
+                <h4 class="modal-title text-center"><b>Actualización de Datos</b></h4>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <form>
+                        <div class="row">
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3 col-md-offset-1" id="custom-select">
+                                <label class="frmLblColor">Departamento</label>
+                                <select id="slcDepartamento2" class="form-control" [(ngModel)]="Departamento2" name="Departamento2" (change)="onChangeLlenaProvinciaCorresp()">
+                                  <option value="" selected>Seleccionar</option>
+                                  <option *ngFor="let item of this.cmbDepartamento2" value="{{ item.codigo }}">{{ item.descripcion }}</option>
+                              </select>
+                            </div>
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3" id="custom-select">
+                                <label class="frmLblColor">Provincia</label>
+                                <select id="slcProvincia2" class="form-control" [(ngModel)]="Provincia2" name="Provincia2" (change)="onChangeLlenaDistritoCorresp()">
+                                  <option value="" selected>Seleccionar</option>
+                                  <option *ngFor="let item of this.cmbProvincia2" value="{{ item.codigo }}">{{ item.descripcion }}</option>
+                              </select>
+                            </div>
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3" id="custom-select">
+                                <label class="frmLblColor">Distrito</label>
+                                <br>
+                                <mat-select [disableOptionCentering]="true" id="slcDistrito2" [(ngModel)]="dataUbigeo.COD_UBIGEOCORRESP" name="Distrito2" (valueChange)="getInfo2($event)">
+                                    <mat-select-filter [placeholder]="'Filtro'" [displayMember]="'GlsDistrito'" [array]="cmbDistritoAll2" (filteredReturn)="comboDistrito2Resp =$event"></mat-select-filter>
+                                    <mat-option [value]="0">Seleccionar</mat-option>
+                                    <mat-option *ngFor="let item of comboDistrito2Resp" [value]="item.CodDireccion">
+                                        {{item.GlsDistrito}}
+                                    </mat-option>
+                                </mat-select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-lg-6 col-md-6 col-sm-6 col-md-offset-1">
+                                <label class="frmLblColor">Dirección Correspondencia</label>
+                                <input type="text" class="form-control" [(ngModel)]="dataUbigeo.GLS_DIRECCIONCORRESP" style="text-transform: uppercase;" name="DireccionCorresp">
+                            </div>
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                <label class="frmLblColor">Ubigeo Correspondencia</label>
+                                <input type="text" class="form-control" id="inpUbigeoCorresp" [(ngModel)]="direccionStr2" name="CodUbigeoCorresp" disabled>
+                            </div>
+
+                            <div class="form-group col-md-3 col-md-offset-1">
+                                <label class="frmLblColor">Correo Electrónico 1</label>
+                                <input type="text" class="form-control" id="inpCorreo1" [(ngModel)]="dataUbigeo.GlsCorreo" name="GlsCorreo" oninput="this.value = this.value.toUpperCase()">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label class="frmLblColor">Correo Electrónico 2</label>
+                                <input type="text" class="form-control" id="inpCorreo2Afi" [(ngModel)]="dataUbigeo.GlsCorreo2" name="GlsCorreo2" oninput="this.value = this.value.toUpperCase()">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label class="frmLblColor">Correo Electrónico 3</label>
+                                <input type="text" class="form-control" id="inpCorreo3Afi" [(ngModel)]="dataUbigeo.GlsCorreo3" name="GlsCorreo3" oninput="this.value = this.value.toUpperCase()">
+                            </div>
+                            <div class="form-group col-md-3 col-md-offset-1">
+                                <label class="frmLblColor">Teléfono 1</label>
+                                <input type="text" class="form-control" id="inpTelefono1Afi" [(ngModel)]="dataUbigeo.GlsFono" name="GlsFono" (keypress)="numberOnly($event)" minlength="7" maxlength="9">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label class="frmLblColor">Teléfono 2</label>
+                                <input type="text" class="form-control" id="inpTelefono2Afi" [(ngModel)]="dataUbigeo.GlsFono2" name="GlsFono2" (keypress)="numberOnly($event)" minlength="7" maxlength="9">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label class="frmLblColor">Teléfono 3</label>
+                                <input type="text" class="form-control" id="inpTelefono3Afi" [(ngModel)]="dataUbigeo.GlsFono3" name="GlsFono3" (keypress)="numberOnly($event)" minlength="7" maxlength="9">
+                            </div>
+
+
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3 col-lg-offset-1">
+                                <label class="frmLblColor">Protección de Datos:</label>
+
+
+                                <div class="custom-control custom-radio">
+                                    <input style="margin-right: 6px;" type="radio" id="radioProteccionS" name="radioProteccion" class="custom-control-input" value="S" [(ngModel)]="this.dataUbigeo.Proteccion">
+
+                                    <label class="frmLblColor" for="radioProteccionS">SÍ</label>
+                                </div>
+                                <div class="custom-control custom-radio">
+                                    <input style="margin-right: 6px;" type="radio" id="radioProteccionN" name="radioProteccion" class="custom-control-input" value="N" [(ngModel)]="this.dataUbigeo.Proteccion">
+                                    <label class="frmLblColor" for="radioProteccionN">NO</label>
+                                </div>
+                            </div>
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                <label class="frmLblColor">Boleta de Pago:</label>
+
+
+                                <div class="custom-control custom-radio">
+                                    <input style="margin-right: 6px;" type="radio" id="radioBoletaS" name="radioBoleta" class="custom-control-input" value="S" [(ngModel)]="this.dataUbigeo.Boleta">
+
+                                    <label class="frmLblColor" for="radioBoletaS">SÍ</label>
+                                </div>
+                                <div class="custom-control custom-radio">
+                                    <input style="margin-right: 6px;" type="radio" id="radioBoletaN" name="radioBoleta" class="custom-control-input" value="N" [(ngModel)]="this.dataUbigeo.Boleta">
+                                    <label class="frmLblColor" for="radioBoletaN">NO</label>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                    <div class="row" style="text-align: center; margin-bottom: 10px;">
+                        <button type="button" class="btn btn-azul btn-azul-fix mr" (click)="actualizarUbigeo()"> Guardar</button>
+                        <button type="button" class="btn btn-azul btn-azul-fix mr" data-dismiss="modal"> Cancelar</button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="display: none;"></div>
+        </div>
+    </div>
+</div>
+<!-- Fin de Modal para Ubigeo Correspondencia -->
+
+<!-- Inician Modales -->

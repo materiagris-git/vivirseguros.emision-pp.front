@@ -1,0 +1,128 @@
+.marginBottom {
+    margin-bottom: 10px;
+}
+
+.btn-azul-fix {
+  font-size: 11px;
+}
+
+table tr th,
+td {
+    text-align: center;
+}
+.column5 {
+    width: 20%;
+}
+.btn-primary {
+  background-color: #0090B2 ;
+}
+.separado{
+  text-align: center;
+}
+
+
+/* Large desktops and laptops */
+
+@media (min-width: 1200px) {
+    .inpLg {
+        width: 200px;
+    }
+    .spaceM {
+        margin-top: 10px;
+        margin-bottom: 35px;
+    }
+    .mr {
+        margin-right: 10px;
+    }
+    .btnAlign {
+        text-align: end;
+        margin-bottom: 30px;
+    }
+}
+
+
+/* Landscape tablets and medium desktops */
+
+@media (min-width: 992px) and (max-width: 1199px) {
+    .btn-sm {
+        width: 140px;
+    }
+    .inpLg {
+        width: 200px;
+    }
+    .mr {
+        margin-right: 12px;
+    }
+    .btnAlign {
+        text-align: end;
+        margin-bottom: 30px;
+    }
+}
+
+
+/* Portrait tablets and small desktops */
+
+@media (min-width: 768px) and (max-width: 991px) {
+    .mr {
+        margin-right: 12px;
+    }
+    .btnAlign {
+        text-align: end;
+        margin-bottom: 30px;
+    }
+    .btnCenter2 {
+        margin-top: 15px;
+        text-align: center;
+    }
+    .column5 {
+        width: 100%;
+    }
+    .inpLg {
+      width: 200px;
+  }
+
+}
+
+
+/* Landscape phones and portrait tablets */
+
+@media (max-width: 767px) {
+    .btnCenter {
+        text-align: center;
+    }
+    .btnCenter2 {
+        margin-top: 15px;
+        text-align: center;
+    }
+    .mr {
+        margin-right: 12px;
+    }
+    .column5 {
+        width: 100%;
+    }
+}
+
+
+/* Portrait phones and smaller */
+
+@media (max-width: 480px) {
+    button {
+        width: 60%;
+    }
+    .mr {
+        margin-right: 0px;
+        margin-bottom: 12px;
+    }
+    .btnCenter {
+        text-align: center;
+    }
+    .btnCenter2 {
+        margin-top: 15px;
+        text-align: center;
+    }
+    .column5 {
+        width: 100%;
+    }
+}
+
+

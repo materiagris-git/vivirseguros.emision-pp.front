@@ -1,0 +1,103 @@
+<div class="col-lg-12 col-md-12 col-sm-12 ">
+    <div class="panel panel-default">
+        <div class="panel-heading" style="padding-top: 0px; padding-bottom: 0px;">
+            <h5 class="titulo"><b>Generación Archivo Datos Beneficiarios</b></h5>
+        </div>
+        <div class="panel-body camposForm">
+            <form>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                <label class="frmLblColor">Fecha Actual</label>
+                                <input type="text" class="form-control form-control-sm" [(ngModel)]="FechaActual" name="FechaActual" disabled>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <form class="form-inline">
+                                <div class="col-md-12">
+                                    <h4><b>Tipo de Pensión</b></h4>
+
+                                    <div class="form-group col-md-2">
+                                        <label class="frmLblColor">
+                                            <input type="checkbox" name="jubilacion" (change)="valor($event)" value ="04,05" [(ngModel)]="jubilacion"><span class="label-text">Jubilación</span></label>
+                                        </div>
+
+                                    <div class="form-group col-md-2">
+                                        <label class="frmLblColor">
+                                          <input type="checkbox" name="invalidesP" value='07' (change)="valor($event)" [(ngModel)]="invalidesP"> <span class="label-text">Invalidez Parcial</span></label>
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label class="frmLblColor">
+                                          <input type="checkbox" name="invalidesT" value='06' (change)="valor($event)" [(ngModel)]="invalidesT"> <span class="label-text">Invalidez Total</span></label>
+
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label class="frmLblColor">
+                                          <input type="checkbox" name="sobrevivencia" value='08,09,10,11,12' (change)="valor($event)" [(ngModel)]="sobrevivencia"> <span class="label-text">Sobrevivencia</span></label>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="row">
+                            <form class="form-inline">
+                                <div class="col-md-12">
+                                    <h4><b>Tipo de Moneda</b></h4>
+
+                                    <div class="form-group col-md-2">
+                                        <label class="frmLblColor"><input type="checkbox" name="solesIn" value='01' (change)="valor($event)" [(ngModel)]="solesIn"> <span class="label-text">Soles Indexados</span></label>
+                                    </div>
+
+                                    <div class="form-group col-md-2">
+                                        <label class="frmLblColor"><input type="checkbox" name="solesAj" value='02' (change)="valor($event)" [(ngModel)]="solesAj"> <span class="label-text">Soles Ajustados</span></label>
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label class="frmLblColor"><input type="checkbox" name="dolares" value='03' (change)="valor($event)" [(ngModel)]="dolares"> <span class="label-text">Dólares</span></label>
+
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label class="frmLblColor"><input type="checkbox" name="dolaresAj" value='04' (change)="valor($event)" [(ngModel)]="dolaresAj"> <span class="label-text">Dólares Ajustados</span></label>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="row">
+                            <form class="form-inline">
+                                <div class="col-md-12">
+                                    <h4><b>Tipo de Modalidad</b></h4>
+
+                                    <div class="form-group col-md-2">
+                                        <label class="frmLblColor"><input type="checkbox" name="simple" value='1' (change)="valor($event)" [(ngModel)]="simple"> <span class="label-text">Simple</span></label>
+                                    </div>
+
+                                    <div class="form-group col-md-2">
+                                        <label class="frmLblColor"><input type="checkbox" name="garantizada" value='3' (change)="valor($event)" [(ngModel)]="garantizada"> <span class="label-text">Garantizada</span></label>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="row">
+                            <form class="form-inline">
+                                <div class="col-md-12">
+                                    <h4><b>Años Diferidos</b></h4>
+                                    <div class="form-group col-md-2">
+                                        <label class="frmLblColor"><input type="checkbox" name="si" value='02' (change)="valor($event)" [(ngModel)]="si"> <span class="label-text">Si</span></label>
+                                    </div>
+
+                                    <div class="form-group col-md-2">
+                                        <label class="frmLblColor"><input type="checkbox" name="no" value='01' (change)="valor($event)" [(ngModel)]="no"> <span class="label-text">No</span></label>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="row" style="text-align: center;">
+                            <button type="button" class="btn btn-azul btn-azul-fix" (click)="calcular()"><i class="fa fa-file-alt"></i> Archivo</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>

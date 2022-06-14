@@ -1,0 +1,90 @@
+<div class="col-lg-12 col-md-12 col-sm-12">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h5 class="tittle">Búsqueda</h5>
+        </div>
+        <div class="panel-body">
+            <form>
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="row">
+                            <!--<div class="form-group col-lg-2 col-md-2 col-sm-12 mr" id="custom-select">
+                                <label class="frmLblColor"></label>
+                                <select id="slcTipoIdentificacion" class="form-control">
+                                    <option disabled selected>Tipo de Generación</option>
+                                    <option>Pagos Recurrentes</option>
+                                    <option>Gasto de Sepelio</option>
+                                    <option>Periodo Garantizado</option>
+                                </select>
+                            </div>-->
+                            <div class="form-group col-lg-2 col-md-2 col-sm-12">
+                                <label class="frmLblColor">Fecha Desde</label>
+                                <input [(ngModel)]="FechaIni" type="date" class="form-control" id="FecDesde" name="FecDesde">
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-sm-12 mr">
+                                <label class="frmLblColor">Fecha Hasta</label>
+                                <input [(ngModel)]="FechaFin" type="date" class="form-control" id="FecHasta" name="FecHasta">
+                            </div>
+                            <div class="form-group pt col-lg-3 col-md-3 col-sm-3">
+                                <!--<button type="button" class="btn btn-azul"><i class="glyphicon glyphicon-search"></i><b> Buscar</b></button>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--Tabla-->
+<!--<div>
+    <div class="col-lg-12 col-md-12 col-sm-12 marg-prim">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h5 class="titulo" style="margin: 0px;"><b>Resultados</b></h5>
+            </div>
+            <div class="panel-body camposForm">
+                <div class="table-responsive-sm">
+                    <mat-table [dataSource]="dataSource" class="table table-hover">
+                        <mat-header-row *matHeaderRowDef="columnas; sticky: true"></mat-header-row>
+                        <mat-row *matRowDef="let row; columns: columnas;"></mat-row>
+                        <ng-container matColumnDef="item">
+                            <mat-header-cell *matHeaderCellDef>
+                                <div>Item</div>
+                            </mat-header-cell>
+                            <mat-cell class="duration-cell" *matCellDef="let lesson; let i=index">{{ i + 1 }}</mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="fecha">
+                            <mat-header-cell *matHeaderCellDef>
+                                <div>Fecha Emisión</div>
+                            </mat-header-cell>
+                            <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.FEC_DESDE}}</mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="casosPension">
+                            <mat-header-cell *matHeaderCellDef>
+                                <div>N° Casos Pensión</div>
+                            </mat-header-cell>
+                            <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.NUM_CASOS_PENSION}}</mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="casosSalud">
+                            <mat-header-cell *matHeaderCellDef>
+                                <div>N° Casos Salud</div>
+                            </mat-header-cell>
+                            <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.NUM_CASOS_SALUD}}</mat-cell>
+                        </ng-container>
+                    </mat-table>
+                    <mat-paginator [length]="0" [pageSize]="20" [pageSizeOptions]="[5, 10, 20, 50]" [showFirstLastButtons]="true"></mat-paginator>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>-->
+
+
+
+<div class="col-lg-12 col-md-12 col-sm-12">
+    <div style="text-align: center; margin-bottom: 10px;">
+        <div style="text-align: center;"><button type="button" class="btn btn-azul btn-azul-fix mr" (click)="calcular()"><i class="fa fa-upload"></i> Generar</button></div>
+    </div>
+</div>

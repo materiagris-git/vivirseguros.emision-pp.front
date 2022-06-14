@@ -1,0 +1,240 @@
+.camposForm {
+  background-color: lightgray;
+}
+
+.form-control{
+  background-color: white;
+}
+.form-control:disabled{
+  background-color: #e6e6e6;
+}
+table tr th,
+td {
+  text-align: center;
+}
+.iconTbl {
+
+  color: #0090B2;
+}.column5 {
+  width: 20%;
+}
+.column40 {
+  width: 40%;
+}
+.grid {
+  border: 1px solid #e3e3e3;
+}
+input, select {
+  background-color: #f5f5f5;
+  font-size: 11px;
+}
+
+.btnrad {
+  border-radius: 3px;
+  background-color: #0090B2;
+}
+@media (min-width: 768px) and (max-width: 991px) {
+  .column5 {
+      width: 100%;
+  }
+  .column40 {
+      width: 100%;
+  }
+
+}
+
+
+/* Landscape phones and portrait tablets */
+
+@media (max-width: 767px) {
+  .column5 {
+      width: 100%;
+  }
+  .column40 {
+      width: 100%;
+  }
+
+}
+
+
+/* Portrait phones and smaller */
+
+@media (max-width: 480px) {
+  .column5 {
+      width: 100%;
+  }
+  .column40 {
+      width: 100%;
+  }
+
+}
+
+.panel-heading {
+  color: #0090b2;
+  background-color: #f5f5f5;
+  border-color: #ddd;
+  border-radius: 1px !important;
+  padding: 0;
+  font-size: 12px;
+}
+
+.panel-heading .nav-tabs > .open > a,
+.panel-heading .nav-tabs > .open > a:hover,
+.panel-heading .nav-tabs > .open > a:focus,
+.panel-heading .nav-tabs > li > a:hover,
+.panel-heading .nav-tabs > li > a:focus {
+  color: rgb(189, 182, 182);
+  background-color: #ddd;
+  border-color: transparent;
+  font-size: 12px;
+}
+.panel-heading .nav-tabs > li.active > a,
+.panel-heading .nav-tabs > li.active > a:hover,
+.panel-heading .nav-tabs > li.active > a:focus {
+  color: #0090b2;
+  background-color: #f5f5f5;
+  border-color: #ddd;
+  border-radius: 1px !important;
+  border-top: none;
+  border-bottom: none;
+  font-size: 12px;
+}
+
+.mat-table {
+  height: 410px;
+  overflow: auto;
+  background-color: #ffffff;
+}
+
+.mat-row {
+  border-bottom: 1px solid lightgray;
+}
+
+.mat-cell,
+.mat-header-cell {
+  color: black;
+  display: block;
+  background-color: #ffffff;
+  text-align: center;
+  font-size: 11px;
+  padding: 15px 0px;
+}
+
+.mat-header-cell {
+  color: black;
+  background-color: #ffffff;
+  display: block;
+  font-size: 12px;
+}
+
+
+.btn-azul-fix {
+  font-size: 11px;
+}
+
+
+
+
+.mat-header-cell,
+.mat-header-row {
+    padding: 0px !important;
+    min-height: 20px !important;
+}
+
+@media (min-width: 1200px) {
+  .spaceM {
+      margin-top: 10px;
+      margin-bottom: 35px;
+  }
+  .mr {
+      margin-right: 10px;
+  }
+  .btnAlign {
+      text-align: end;
+      margin-bottom: 30px;
+  }
+}
+
+
+/* Landscape tablets and medium desktops */
+
+@media (min-width: 992px) and (max-width: 1199px) {
+  .inpLg {
+      width: 300px;
+  }
+  .mr {
+      margin-right: 12px;
+  }
+  .btnAlign {
+      text-align: end;
+      margin-bottom: 30px;
+  }
+}
+
+
+/* Portrait tablets and small desktops */
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .mr {
+      margin-right: 12px;
+  }
+  .btnAlign {
+      text-align: end;
+      margin-bottom: 30px;
+  }
+}
+
+
+/* Landscape phones and portrait tablets */
+
+@media (max-width: 767px) {
+  .btnCenter {
+      text-align: center;
+  }
+  .mr {
+      margin-right: 12px;
+  }
+}
+
+
+/* Portrait phones and smaller */
+
+@media (max-width: 480px) {
+  button {
+      width: 60%;
+  }
+  .mr {
+      margin-right: 0px;
+      margin-bottom: 12px;
+  }
+  .btnCenter {
+      text-align: center;
+  }
+}
+.cdk-global-overlay-wrapper, .cdk-overlay-container, .cdk-overlay-pane {
+  z-index: 99999 !important;
+}
+
+.mat-select-trigger {
+padding-top: 4px;
+}
+
+::ng-deep .cdk-overlay-container {
+  position: fixed!important;
+  z-index: 999999999999999999!important;
+}
+mat-select {
+font-size: 11px;
+width: 100%;
+border: 1px solid #CCCCCC;
+height: 35px;
+padding-top: 6px;
+padding-right: 12px;
+padding-bottom: 6px;
+padding-left: 12px;
+border-radius: 3px;
+}
+
+mat-option {
+background-color: white;
+}

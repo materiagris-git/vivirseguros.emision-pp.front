@@ -1,0 +1,247 @@
+.mat-table {
+    height: auto;
+    overflow: auto;
+    background-color: #ffffff;
+}
+
+.mr {
+    margin-right: 10px;
+}
+
+.cdk-global-overlay-wrapper,
+.cdk-overlay-container,
+.cdk-overlay-pane {
+    z-index: 99999 !important;
+}
+
+.mat-select-trigger {
+    padding-top: 4px;
+}
+
+::ng-deep .cdk-overlay-container {
+    position: fixed!important;
+    z-index: 999999999999999999!important;
+}
+
+mat-select {
+    font-size: 11px;
+    width: 100%;
+    border: 1px solid #CCCCCC;
+    height: 35px;
+    padding-top: 6px;
+    padding-right: 12px;
+    padding-bottom: 6px;
+    padding-left: 12px;
+    border-radius: 3px;
+}
+
+mat-option {
+    background-color: white;
+}
+
+.btn-azul-fix {
+    font-size: 11px;
+}
+
+.mat-cell {
+    height: 60px;
+    border-bottom: 1px solid lightgray;
+}
+
+.mat-header-row,
+.mat-row,
+.mat-footer-row {
+    display: inline-flex;
+    align-items: center;
+    width: 100%;
+}
+
+.mat-cell,
+.mat-header-cell {
+    color: black;
+    display: block;
+    background-color: #ffffff;
+    text-align: center;
+    font-size: 11px;
+    padding: 15px 0px;
+}
+
+.mat-header-cell {
+    color: black;
+    background-color: #ffffff;
+    display: block;
+    font-size: 12px;
+}
+
+.mat-column-numPol,
+.mat-column-acciones {
+    word-wrap: break-word !important;
+    white-space: unset !important;
+    flex: 0 0 13% !important;
+    width: 13% !important;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word;
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+}
+
+.mat-column-item {
+    word-wrap: break-word !important;
+    white-space: unset !important;
+    flex: 0 0 9% !important;
+    width: 9% !important;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word;
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+}
+
+.mat-column-fecha {
+    word-wrap: break-word !important;
+    white-space: unset !important;
+    flex: 0 0 15% !important;
+    width: 15% !important;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word;
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+}
+
+.mat-header-cell,
+.mat-header-row {
+    padding: 0px !important;
+    min-height: 20px !important;
+}
+
+
+/* Landscape phones and portrait tablets */
+
+@media (max-width: 767px) {
+    .mat-table {
+        width: 100%;
+        overflow-x: scroll!important;
+        background-color: #ffffff;
+    }
+    .mat-cell,
+    .mat-footer-cell,
+    .mat-header-cell {
+        flex: none;
+        width: 30% !important;
+        /*Aqui pon lo que quieras width: 20&*/
+        overflow-x: auto;
+        color: black;
+        background-color: #ffffff;
+        text-align: center;
+    }
+    .mat-column-numPol,
+    .mat-column-acciones {
+        word-wrap: break-word !important;
+        white-space: unset !important;
+        flex: 0 0 20% !important;
+        width: 20% !important;
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+        word-break: break-word;
+        -ms-hyphens: auto;
+        -moz-hyphens: auto;
+        -webkit-hyphens: auto;
+        hyphens: auto;
+    }
+    .mat-column-item {
+        word-wrap: break-word !important;
+        white-space: unset !important;
+        flex: 0 0 20% !important;
+        width: 20% !important;
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+        word-break: break-word;
+        -ms-hyphens: auto;
+        -moz-hyphens: auto;
+        -webkit-hyphens: auto;
+        hyphens: auto;
+    }
+    .mat-column-fecha {
+        word-wrap: break-word !important;
+        white-space: unset !important;
+        flex: 0 0 20% !important;
+        width: 20% !important;
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+        word-break: break-word;
+        -ms-hyphens: auto;
+        -moz-hyphens: auto;
+        -webkit-hyphens: auto;
+        hyphens: auto;
+    }
+}
+
+
+/* Portrait phones and smaller */
+
+@media (max-width: 480px) {
+    .mat-table {
+        width: 100%;
+        overflow-x: scroll!important;
+        background-color: #ffffff;
+    }
+    .mat-cell,
+    .mat-footer-cell,
+    .mat-header-cell {
+        flex: none;
+        width: 40% !important;
+        /*Aqui pon lo que quieras width: 20&*/
+        overflow-x: auto;
+        color: black;
+        background-color: #ffffff;
+        text-align: center;
+    }
+    .mat-column-numPol,
+    .mat-column-acciones {
+        word-wrap: break-word !important;
+        white-space: unset !important;
+        flex: 0 0 40% !important;
+        width: 40% !important;
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+        word-break: break-word;
+        -ms-hyphens: auto;
+        -moz-hyphens: auto;
+        -webkit-hyphens: auto;
+        hyphens: auto;
+    }
+    .mat-column-item {
+        word-wrap: break-word !important;
+        white-space: unset !important;
+        flex: 0 0 40% !important;
+        width: 40% !important;
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+        word-break: break-word;
+        -ms-hyphens: auto;
+        -moz-hyphens: auto;
+        -webkit-hyphens: auto;
+        hyphens: auto;
+    }
+    .mat-column-fecha {
+        word-wrap: break-word !important;
+        white-space: unset !important;
+        flex: 0 0 40% !important;
+        width: 40% !important;
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+        word-break: break-word;
+        -ms-hyphens: auto;
+        -moz-hyphens: auto;
+        -webkit-hyphens: auto;
+        hyphens: auto;
+    }
+}

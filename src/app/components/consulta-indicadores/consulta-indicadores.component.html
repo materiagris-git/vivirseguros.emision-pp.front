@@ -1,0 +1,375 @@
+<form #formIngresoPrimas="ngForm">
+
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+
+            <div class="form-group col-lg-2 col-md-2 col-sm-12">
+                <label class="frmLblColor">Fecha Desde</label>
+                <input [(ngModel)]="FechaIni" type="date" class="form-control" id="FecDesde" name="FecDesde">
+            </div>
+            <div class="form-group col-lg-2 col-md-2 col-sm-12 mr">
+                <label class="frmLblColor">Fecha Hasta</label>
+                <input [(ngModel)]="FechaFin" type="date" class="form-control" id="FecHasta" name="FecHasta">
+            </div>
+            <div class="form-group col-lg-2 col-md-2 col-sm-12 mr" style="margin-top: 24px;">
+                <button type="button" class="btn btn-azul btn-azul-fix mr" (click)="calcular()">
+                        <i class="fa fa-search" aria-hidden="true"></i> Buscar Información
+                    </button>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="panel with-nav-tabs panel-default">
+            <div class="panel-heading">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#polizas" data-toggle="tab">Pólizas</a></li>
+                    <li><a href="#primas" data-toggle="tab">Primas</a></li>
+                    <li><a href="#pagos" data-toggle="tab">Pagos</a></li>
+                </ul>
+            </div>
+
+            <div class="panel-body">
+                <div class="tab-content">
+                    <div class="tab-pane fade in active" id="polizas">
+
+                        <!-- Tabla Resumen Primeros Pagos -->
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="row">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h3 class="titulo" style="margin-top: 10px; margin-left: 10px;">
+                                            Por Emitir
+                                        </h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <div class="table-responsive">
+                                                <mat-table [dataSource]="dataSourcePorEmitir" class="table table-hover">
+                                                    <mat-header-row *matHeaderRowDef="columnasPorEmitir; sticky: true"></mat-header-row>
+                                                    <mat-row *matRowDef="let row; columns: columnasPorEmitir;"></mat-row>
+                                                    <ng-container matColumnDef="numCot">
+                                                        <mat-header-cell *matHeaderCellDef>
+                                                            <div>No. Cotizacion</div>
+
+                                                        </mat-header-cell>
+                                                        <mat-cell class="duration-cell" *matCellDef="let lesson; let i=index">{{lesson.NumCot}}</mat-cell>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="fecAcepta">
+                                                        <mat-header-cell *matHeaderCellDef>
+                                                            <div>Fecha Aceptación</div>
+
+                                                        </mat-header-cell>
+                                                        <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.FecAcepta}}</mat-cell>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="diasTranscurridos">
+                                                        <mat-header-cell *matHeaderCellDef>
+                                                            <div>Días Transcurridos</div>
+
+                                                        </mat-header-cell>
+                                                        <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.DiasTranscurridos}}</mat-cell>
+                                                    </ng-container>
+                                                </mat-table>
+                                                <mat-paginator #PaginadorPorEmitir [length]="0" [pageSize]="20" [pageSizeOptions]="[5, 10, 20, 50]" [showFirstLastButtons]="true"></mat-paginator>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Termina Tabla Resumen Primeros Pagos -->
+
+                        <!-- Tabla Detalle Primeros Pagos -->
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="row">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading" style="height: 35px;">
+                                        <h3 class="titulo col-lg-7 col-md-7 col-sm-7" style="margin-top: 10px; margin-left: 10px;">
+                                            Emitidas
+                                        </h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <div class="table-responsive">
+                                                <mat-table [dataSource]="dataSourceEmitida" class="table table-hover">
+                                                    <mat-header-row *matHeaderRowDef="columnasEmitida; sticky: true"></mat-header-row>
+                                                    <mat-row *matRowDef="let row; columns: columnasEmitida;"></mat-row>
+                                                    <ng-container matColumnDef="numPoliza">
+                                                        <mat-header-cell *matHeaderCellDef>
+                                                            <div>No. Póliza</div>
+
+                                                        </mat-header-cell>
+                                                        <mat-cell class="duration-cell" *matCellDef="let lesson; let i=index">{{lesson.Num_Poliza}}</mat-cell>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="fecAcepta">
+                                                        <mat-header-cell *matHeaderCellDef>
+                                                            <div>Fecha Aceptación</div>
+
+                                                        </mat-header-cell>
+                                                        <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.FecAcepta}}</mat-cell>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="fecEmision">
+                                                        <mat-header-cell *matHeaderCellDef>
+                                                            <div>Fecha Emisión</div>
+
+                                                        </mat-header-cell>
+                                                        <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.FecEmision}}</mat-cell>
+                                                    </ng-container>
+
+                                                    <ng-container matColumnDef="diasTranscurridos">
+                                                        <mat-header-cell *matHeaderCellDef>
+                                                            <div>Días Transcurridos</div>
+
+                                                        </mat-header-cell>
+                                                        <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.DiasTranscurridos}}</mat-cell>
+                                                    </ng-container>
+
+                                                </mat-table>
+                                                <mat-paginator #PaginadorEmitida [length]="0" [pageSize]="20" [pageSizeOptions]="[5, 10, 20, 50]" [showFirstLastButtons]="true"></mat-paginator>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Termina Tabla Detalle Primeros Pagos -->
+
+                    </div>
+
+                    <div class="tab-pane fade" id="primas">
+                        <!-- Tabla Resumen Primeros Pagos -->
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="row">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h3 class="titulo" style="margin-top: 10px; margin-left: 10px;">
+                                            Por Recibir
+                                        </h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <div class="table-responsive">
+                                                <mat-table [dataSource]="dataSourcePorRecibir" class="table table-hover">
+                                                    <mat-header-row *matHeaderRowDef="columnasPorRecibir; sticky: true"></mat-header-row>
+                                                    <mat-row *matRowDef="let row; columns: columnasPorRecibir;"></mat-row>
+                                                    <ng-container matColumnDef="numPoliza">
+                                                        <mat-header-cell *matHeaderCellDef>
+                                                            <div>No. Póliza</div>
+
+                                                        </mat-header-cell>
+                                                        <mat-cell class="duration-cell" *matCellDef="let lesson; let i=index">{{lesson.Num_Poliza}}</mat-cell>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="fecAfp">
+                                                        <mat-header-cell *matHeaderCellDef>
+                                                            <div>Fecha Inf. AFP</div>
+
+                                                        </mat-header-cell>
+                                                        <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.FecAfp}}</mat-cell>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="diasTranscurridos">
+                                                        <mat-header-cell *matHeaderCellDef>
+                                                            <div>Días Transcurridos</div>
+
+                                                        </mat-header-cell>
+                                                        <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.DiasTranscurridos}}</mat-cell>
+                                                    </ng-container>
+                                                </mat-table>
+                                                <mat-paginator #PaginadorPorRecibir [length]="0" [pageSize]="20" [pageSizeOptions]="[5, 10, 20, 50]" [showFirstLastButtons]="true"></mat-paginator>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Termina Tabla Resumen Primeros Pagos -->
+
+                        <!-- Tabla Detalle Primeros Pagos -->
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="row">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading" style="height: 35px;">
+                                        <h3 class="titulo col-lg-7 col-md-7 col-sm-7" style="margin-top: 10px; margin-left: 10px;">
+                                            Recibidas
+                                        </h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <div class="table-responsive">
+                                                <mat-table [dataSource]="dataSourceRecibida" class="table table-hover">
+                                                    <mat-header-row *matHeaderRowDef="columnasRecibida; sticky: true"></mat-header-row>
+                                                    <mat-row *matRowDef="let row; columns: columnasRecibida;"></mat-row>
+                                                    <ng-container matColumnDef="numPoliza">
+                                                        <mat-header-cell *matHeaderCellDef>
+                                                            <div>No. Póliza</div>
+
+                                                        </mat-header-cell>
+                                                        <mat-cell class="duration-cell" *matCellDef="let lesson; let i=index">{{lesson.Num_Poliza}}</mat-cell>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="fecTraspaso">
+                                                        <mat-header-cell *matHeaderCellDef>
+                                                            <div>Fecha Traspaso</div>
+
+                                                        </mat-header-cell>
+                                                        <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.FecTraspaso}}</mat-cell>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="fecAfp">
+                                                        <mat-header-cell *matHeaderCellDef>
+                                                            <div>Fecha Inf. AFP</div>
+
+                                                        </mat-header-cell>
+                                                        <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.FecAfp}}</mat-cell>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="diasTranscurridos">
+                                                        <mat-header-cell *matHeaderCellDef>
+                                                            <div>Días Transcurridos</div>
+
+                                                        </mat-header-cell>
+                                                        <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.DiasTranscurridos}}</mat-cell>
+                                                    </ng-container>
+                                                </mat-table>
+                                                <mat-paginator #PaginadorRecibida [length]="0" [pageSize]="20" [pageSizeOptions]="[5, 10, 20, 50]" [showFirstLastButtons]="true"></mat-paginator>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Termina Tabla Detalle Primeros Pagos -->
+
+                    </div>
+
+                    <div class="tab-pane fade" id="pagos">
+                        <!-- Tabla Resumen Primeros Pagos -->
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="row">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h3 class="titulo" style="margin-top: 10px; margin-left: 10px;">
+                                            Por Realizar
+                                        </h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <div class="table-responsive">
+                                                <mat-table [dataSource]="dataSourcePorRealizar" class="table table-hover">
+                                                    <mat-header-row *matHeaderRowDef="columnasPorRealizar; sticky: true"></mat-header-row>
+                                                    <mat-row *matRowDef="let row; columns: columnasPorRealizar;"></mat-row>
+                                                    <ng-container matColumnDef="numPoliza">
+                                                        <mat-header-cell *matHeaderCellDef>
+                                                            <div>No. Póliza</div>
+
+                                                        </mat-header-cell>
+                                                        <mat-cell class="duration-cell" *matCellDef="let lesson; let i=index">{{lesson.Num_Poliza}}</mat-cell>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="fecTraspaso">
+                                                        <mat-header-cell *matHeaderCellDef>
+                                                            <div>Fecha Traspaso</div>
+
+                                                        </mat-header-cell>
+                                                        <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.FecTraspaso}}</mat-cell>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="nombreBen">
+                                                        <mat-header-cell *matHeaderCellDef>
+                                                            <div>Nombre Beneficiario</div>
+
+                                                        </mat-header-cell>
+                                                        <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.NombreBen}}</mat-cell>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="diasTranscurridos">
+                                                        <mat-header-cell *matHeaderCellDef>
+                                                            <div>Días Transcurridos</div>
+
+                                                        </mat-header-cell>
+                                                        <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.DiasTranscurridos}}</mat-cell>
+                                                    </ng-container>
+                                                </mat-table>
+                                                <mat-paginator #PaginadorPorRealizar [length]="0" [pageSize]="20" [pageSizeOptions]="[5, 10, 20, 50]" [showFirstLastButtons]="true"></mat-paginator>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Termina Tabla Resumen Primeros Pagos -->
+
+                        <!-- Tabla Detalle Primeros Pagos -->
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="row">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading" style="height: 35px;">
+                                        <h3 class="titulo col-lg-7 col-md-7 col-sm-7" style="margin-top: 10px; margin-left: 10px;">
+                                            Realizadas
+                                        </h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <div class="table-responsive">
+                                                <mat-table [dataSource]="dataSourceRealizado" class="table table-hover">
+                                                    <mat-header-row *matHeaderRowDef="columnasRealizado; sticky: true"></mat-header-row>
+                                                    <mat-row *matRowDef="let row; columns: columnasRealizado;"></mat-row>
+                                                    <ng-container matColumnDef="numPoliza">
+                                                        <mat-header-cell *matHeaderCellDef>
+                                                            <div>No. Póliza</div>
+
+                                                        </mat-header-cell>
+                                                        <mat-cell class="duration-cell" *matCellDef="let lesson; let i=index">{{lesson.Num_Poliza}}</mat-cell>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="fecTraspaso">
+                                                        <mat-header-cell *matHeaderCellDef>
+                                                            <div>Fecha Traspaso</div>
+
+                                                        </mat-header-cell>
+                                                        <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.FecTraspaso}}</mat-cell>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="fecPagoReal">
+                                                        <mat-header-cell *matHeaderCellDef>
+                                                            <div>Fecha Pago Real</div>
+
+                                                        </mat-header-cell>
+                                                        <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.FecPagoReal}}</mat-cell>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="nombreBen">
+                                                        <mat-header-cell *matHeaderCellDef>
+                                                            <div>Nombre Beneficiario</div>
+
+                                                        </mat-header-cell>
+                                                        <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.NombreBen}}</mat-cell>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="diasTranscurridos">
+                                                        <mat-header-cell *matHeaderCellDef>
+                                                            <div>Días Transcurridos</div>
+
+                                                        </mat-header-cell>
+                                                        <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.DiasTranscurridos}}</mat-cell>
+                                                    </ng-container>
+
+                                                </mat-table>
+                                                <mat-paginator #PaginadorRealizado [length]="0" [pageSize]="20" [pageSizeOptions]="[5, 10, 20, 50]" [showFirstLastButtons]="true"></mat-paginator>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Termina Tabla Detalle Primeros Pagos -->
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="form-group spaceM btnAlign btnCenter">
+                    <button class="btn btn-azul btn-azul-fix mr" (click)="crearReportes()"><i class="fa fa-download"></i> Generar Archivo</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

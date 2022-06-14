@@ -1,0 +1,122 @@
+<div class="col-lg-12 col-md-12 col-sm-12 ">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h5 class="titulo" style="margin: 0px;"><b>Buscar</b></h5>
+        </div>
+        <div class="panel-body camposForm">
+            <form>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="form-group col-lg-2 col-md-2 col-sm-3 col-xs-12">
+                                <label class="frmLblColor">Número de Póliza</label>
+                                <input type="text" class="form-control form-control-sm" [(ngModel)]="dataBusqueda.NumPoliza" name="NumPoliza" [maxlength]="mlPoliza" (keypress)="numberOnly($event)" (change)="zeroFill()">
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                                <label class="frmLblColor">CUSPP</label>
+                                <input type="text" class="form-control form-control-sm" [(ngModel)]="dataBusqueda.Cuspp" name="Cussp" (keypress)="onlyAlphaNumeric($event)" [maxlength]="mlCuspp">
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-xs-12">
+                                <label class="frmLblColor">Tipo de Documento</label>
+                                <select class="form-control" [(ngModel)]="dataBusqueda.TipoDoc" name="TipoDoc" (change)="enableInput($event.target.value)">
+                                    <option value="">Seleccione una opción</option>
+                                    <option *ngFor="let tIden of cmbTipoDoc" value="{{ tIden.codigo }}">{{ tIden.Nombre }}</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-xs-12">
+                                <label class="frmLblColor">Número de Documento</label>
+                                <input type="text" class="form-control form-control-sm" [(ngModel)]="dataBusqueda.NumDoc" name="NumDoc" [disabled]="isDisabled" [maxlength]="mlNDoc" (keypress)="numberOnly($event)" ngModel>
+                            </div>
+                            <!-- <div class="form-group col-lg-2 col-md-2 col-sm-2 col-xs-12" style="padding-top: 22px;">
+                                <button type="button " class="btn btn-azul btn-azul-fix col-md-12 col-xs-12" (click)="buscarData()"><i class="glyphicon glyphicon-search "></i> Buscar</button>
+                            </div> -->
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-lg-2 col-md-2 col-sm-3 col-xs-12">
+                                <label class="frmLblColor">Apellido Paterno</label>
+                                <input type="text" class="form-control form-control-sm" [(ngModel)]="dataBusqueda.ApePaterno" name="ApePaterno" (keypress)="lettersOnly($event)" [maxlength]="mlApNom">
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-sm-3 col-xs-12">
+                                <label class="frmLblColor">Apellido Materno</label>
+                                <input type="text" class="form-control form-control-sm" [(ngModel)]="dataBusqueda.ApeMaterno" name="ApeMaterno" (keypress)="lettersOnly($event)" [maxlength]="mlApNom">
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-sm-3 col-xs-12">
+                                <label class="frmLblColor">Primer Nombre</label>
+                                <input type="text" class="form-control form-control-sm" [(ngModel)]="dataBusqueda.Nombre" name="Nombre" (keypress)="lettersOnly($event)" [maxlength]="mlApNom">
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-sm-3 col-xs-12">
+                                <label class="frmLblColor">Segundo Nombre</label>
+                                <input type="text" class="form-control form-control-sm" [(ngModel)]="dataBusqueda.SegNombre" name="SegNombre" (keypress)="lettersOnly($event)" [maxlength]="mlApNom">
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-xs-12" style="padding-top: 22px;">
+                                <button type="button " class="btn btn-azul btn-azul-fix col-md-12 col-xs-12" (click)="buscarData()"><i class="glyphicon glyphicon-search "></i> Buscar</button>
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-xs-12" style="padding-top: 22px;">
+                                <button type="button " class="btn btn-azul btn-azul-fix col-md-12 col-xs-12" (click)="limpiar()" ><i class="fa fa-file"></i> Limpiar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="col-lg-12 col-md-12 col-sm-12 marg-prim">
+    <!--div de la tabla -->
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h5 class="titulo" style="margin: 0px;"><b>Resultados</b></h5>
+        </div>
+        <div class="panel-body camposForm">
+            <div class="table-responsive">
+                <mat-table [dataSource]="dataSource" class="table table-hover">
+                    <mat-header-row *matHeaderRowDef="columnas; sticky: true"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: columnas;"></mat-row>
+                    <ng-container matColumnDef="item">
+                        <mat-header-cell *matHeaderCellDef>
+                            <div>Item</div>
+                        </mat-header-cell>
+                        <mat-cell class="duration-cell" *matCellDef="let lesson; let i=index">{{i+1}}</mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="numeroPoliza">
+                        <mat-header-cell *matHeaderCellDef>
+                            <div>N° Póliza</div>
+                        </mat-header-cell>
+                        <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.NumPoliza}}</mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="endoso">
+                        <mat-header-cell *matHeaderCellDef>
+                            <div>Endoso</div>
+                        </mat-header-cell>
+                        <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.NumEndoso}}</mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="nomAfiliado">
+                        <mat-header-cell *matHeaderCellDef>
+                            <div>Nombre del Afiliado</div>
+                        </mat-header-cell>
+                        <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.NombreCompleto}}</mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="fecha">
+                        <mat-header-cell *matHeaderCellDef>
+                            <div>Fecha Emisión</div>
+                        </mat-header-cell>
+                        <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.Fecha}}</mat-cell>
+                    </ng-container>
+                    
+                    <ng-container matColumnDef="acciones">
+                        <mat-header-cell *matHeaderCellDef>
+                            <div>Acciones</div>
+
+                        </mat-header-cell>
+                        <mat-cell class="duration-cell" *matCellDef="let lesson"><i style="color:#0090B2" class="fa fa-search exclam" (click)="datoGlobal(lesson.NumPoliza, lesson.NumEndoso, lesson.NumOrden)" [routerLink]="['/PagoTerceros']"></i>
+                          &nbsp;&nbsp;
+                         <i style="color:#0090B2" class="fa fa-download" (click)="exportar(lesson.NumPoliza)"></i>
+                        </mat-cell>
+                    </ng-container>
+                </mat-table>
+                <mat-paginator [length]="0" [pageSize]="10" [pageSizeOptions]="[ 10, 20, 50]" [showFirstLastButtons]="true"></mat-paginator>
+            </div>
+        </div>
+    </div>
+</div>

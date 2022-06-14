@@ -1,0 +1,234 @@
+.mat-table {
+    height: 260px;
+    overflow: auto;
+    background-color: #ffffff;
+}
+
+.btn-azul-fix {
+    font-size: 11px;
+}
+
+.mat-cell {
+    height: 60px;
+    border-bottom: 1px solid lightgray;
+}
+
+.mat-header-row,
+.mat-row,
+.mat-footer-row {
+    display: inline-flex;
+    align-items: center;
+    width: 100%;
+}
+
+.mat-cell,
+.mat-header-cell {
+    color: black;
+    display: block;
+    background-color: #ffffff;
+    text-align: center;
+    font-size: 11px;
+    padding: 15px 0px;
+}
+
+.mat-select,
+.mat-select-trigger {
+    font-size: 11px;
+}
+
+.mat-header-cell {
+    color: black;
+    background-color: #ffffff;
+    display: block;
+    font-size: 12px;
+}
+
+.inline-label {
+    white-space: nowrap;
+    max-width: 70%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    float: left;
+}
+
+table tr th,
+td {
+    text-align: center;
+}
+
+.iconSpan {
+    border-radius: 2px;
+    background-color: lightgray;
+}
+
+.camposForm {
+    background-color: lightgray;
+}
+
+.btnCircle {
+    border-radius: 20px;
+    background-color: #0090B2;
+}
+
+.btnrad {
+    border-radius: 3px;
+    background-color: #0090B2;
+}
+
+.column5 {
+    width: 20%;
+}
+
+.column40 {
+    width: 40%;
+}
+
+.fsText {
+    padding: 8px 0px;
+    font-weight: 100;
+    font-size: 12px;
+}
+
+.mr {
+    margin-right: 10px;
+}
+
+.pb {
+    margin-bottom: 20px;
+}
+
+.align {
+    text-align: right;
+}
+
+@media screen and (max-width: 1366px) {
+    .paddRL {
+        padding-right: 10px;
+        padding-left: 10px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+    .column5 {
+        width: 100%;
+    }
+    .column40 {
+        width: 100%;
+    }
+    .column100 {
+        width: 100%;
+    }
+    .pb {
+        margin-bottom: 20px;
+    }
+}
+
+
+/* Landscape phones and portrait tablets */
+
+@media (max-width: 767px) {
+    .column5 {
+        width: 100%;
+    }
+    .column40 {
+        width: 100%;
+    }
+    .column100 {
+        width: 100%;
+    }
+    .mr {
+        margin-right: 10px;
+    }
+    .pb {
+        margin-bottom: 20px;
+    }
+}
+
+
+/* Portrait phones and smaller */
+
+@media (max-width: 480px) {
+    .column5 {
+        width: 100%;
+    }
+    .column40 {
+        width: 100%;
+    }
+    .mat-table {
+        width: 100%;
+        overflow-x: scroll!important;
+        background-color: #ffffff;
+    }
+    .mat-cell,
+    .mat-footer-cell,
+    .mat-header-cell {
+        flex: none;
+        width: 40% !important;
+        /*Aqui pon lo que quieras width: 20&*/
+        overflow-x: auto;
+        color: black;
+        background-color: #ffffff;
+        text-align: center;
+    }
+    .align {
+        text-align: center;
+    }
+    .mr {
+        margin-right: 0px;
+        margin-bottom: 12px;
+    }
+}
+
+::ng-deep .mat-form-field-appearance-legacy .mat-form-field-underline {
+    background-color: transparent
+}
+
+::ng-deep .mat-form-field-infix input {
+    color: black;
+}
+
+::ng-deep .mat-form-field-hide-placeholder .mat-form-field-wrapper .mat-form-field-underline .mat-form-field-ripple {
+    background-color: black;
+}
+
+::ng-deep .selectConcepto .mat-select-arrow {
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid;
+    margin: 0 4px;
+    color: black;
+}
+
+::ng-deep .mat-form-field-appearance-legacy .mat-form-field-underline {
+    background-color: transparent;
+}
+
+::ng-deep .mat-form-field-hide-placeholder .mat-form-field-wrapper .mat-form-field-underline .mat-form-field-ripple {
+    background-color: transparent;
+}
+
+::ng-deep .mat-form-field-appearance-legacy .mat-form-field-wrapper {
+    padding-bottom: 0px;
+    border: 1px solid gray;
+    border-radius: 3px;
+}
+
+::ng-deep .selectConcepto .mat-select-value {
+    color: black;
+}
+
+::ng-deep .mat-primary .mat-pseudo-checkbox-checked,
+.mat-primary .mat-pseudo-checkbox-indeterminate {
+    background: #fff;
+}
+
+::ng-deep .mat-form-field-infix {
+    padding: 0px;
+    border-top: 0px solid transparent;
+}
+
+::ng-deep .mat-form-field-appearance-legacy .mat-form-field-infix {
+    padding: 0.6em 0;
+}

@@ -1,0 +1,30 @@
+.mat-table {
+    height: 410px;
+    overflow: auto;
+    background-color: #ffffff;
+}
+
+.mat-row {
+    border-bottom: 1px solid lightgray;
+}
+
+.mat-cell,
+.mat-header-cell {
+    color: black;
+    display: block;
+    background-color: #ffffff;
+    text-align: center;
+    font-size: 11px;
+    padding: 15px 0px;
+}
+
+.mat-header-cell {
+    color: black;
+    background-color: #ffffff;
+    display: block;
+    font-size: 12px;
+}
+
+.btn-azul-fix {
+    font-size: 11px;
+}

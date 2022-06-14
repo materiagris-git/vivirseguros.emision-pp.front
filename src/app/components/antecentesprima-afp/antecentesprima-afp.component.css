@@ -1,0 +1,166 @@
+/* input.ng-touched.ng-invalid {
+    border-color: red;
+} */
+
+.camposForm {
+    background-color: lightgray;
+}
+
+.column5 {
+    width: 20%;
+}
+
+.btn-azul-fix {
+  font-size: 11px;
+}
+
+.btnPad {
+  margin-top: 17px;
+}
+
+/* Large desktops and laptops */
+
+.inpBG {
+    background-color: white;
+}
+
+@media (min-width: 1680px) and (max-width: 1980px) {
+    .inpLg {
+        width: 400px;
+    }
+    .spaceM {
+        margin-top: 10px;
+        margin-bottom: 35px;
+    }
+    .mr {
+        margin-right: 10px;
+    }
+    .btnAlign {
+        text-align: end;
+        margin-bottom: 30px;
+    }
+    .btnEnd {
+        text-align: end;
+    }
+    .panelPol1 {
+        padding-left: 0px;
+    }
+    .panelPol2 {
+        padding-right: 0px;
+    }
+    .btnCenter {
+        text-align: center;
+    }
+}
+
+@media (min-width: 1200px) and (max-width: 1679px) {
+    .inpLg {
+        width: 400px;
+    }
+    .spaceM {
+        margin-top: 10px;
+        margin-bottom: 35px;
+    }
+    .mr {
+        margin-right: 10px;
+    }
+    .btnAlign {
+        text-align: end;
+        margin-bottom: 30px;
+    }
+    .btnEnd {
+        text-align: end;
+    }
+    .panelPol1 {
+        padding-left: 0px;
+    }
+    .panelPol2 {
+        padding-right: 0px;
+    }
+    .btn-azul {
+        width: 140px;
+    }
+}
+
+
+/* Landscape tablets and medium desktops */
+
+@media (min-width: 992px) and (max-width: 1199px) {
+    .inpLg {
+        width: 300px;
+    }
+    .mr {
+        margin-right: 12px;
+    }
+    .btnAlign {
+        text-align: end;
+        margin-bottom: 10px;
+    }
+}
+
+
+/* Portrait tablets and small desktops */
+
+@media (min-width: 768px) and (max-width: 991px) {
+    .mr {
+        margin-right: 12px;
+    }
+    .btnAlign {
+        text-align: end;
+        margin-bottom: 30px;
+    }
+    .btnCenter {
+        text-align: center;
+    }
+    .panelPol1 {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+    .panelPol2 {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+}
+
+
+/* Landscape phones and portrait tablets */
+
+@media (max-width: 767px) {
+    .btnCenter {
+        text-align: center;
+    }
+    .mr {
+        margin-right: 12px;
+    }
+    .panelPol1 {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+    .panelPol2 {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+    .btnCenter {
+        text-align: center;
+    }
+}
+
+
+/* Portrait phones and smaller */
+
+@media (max-width: 480px) {
+    button {
+        width: 60%;
+    }
+    .mr {
+        margin-right: 0px;
+        margin-bottom: 12px;
+    }
+    .btnCenter {
+        text-align: center;
+    }
+    .panelPol {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+}

@@ -1,0 +1,215 @@
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <div class="panel panel-default">
+        <div class="panel-body combosForm">
+            <!--Combos -->
+            <form>
+                <div class="row">
+                    <div class="form-group col-lg-4 col-md-4 col-sm-3 col-xs-12">
+                        <div class="form-group col-lg-2 col-md-2 col-sm-2 col-xs-2"></div>
+                        <label class="col-lg-10 col-md-10 col-sm-10 col-xs-10 LblPrincipal">Departamento</label>
+                        <div class="row col-lg-2 col-md-2 col-sm-3 col-xs-2 rowRadioButton">
+                            <input type="radio" class="form-control form-control-sm" name="categoriaCombos" value="Departamento" [(ngModel)]="opcionCombos">
+                        </div>
+                        <div class="row col-lg-9 col-md-9 col-sm-9 col-xs-9 cmbMargin">
+                            <select class="form-control marginCombos" name="cmbxDepartamento" [(ngModel)]="this.CodDepartamento" name="CodDepartamento" (change)="buscarProvincia('', '')">
+                                <option value="" selected>Seleccione Departamento</option>
+                                <option *ngFor="let item of this.cmbDepartamentos" value="{{ item.COD_REGION }}">{{ item.GLS_REGION }}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-lg-4 col-md-4 col-sm-3 col-xs-12">
+                        <div class="form-group col-lg-2 col-md-2 col-sm-2 col-xs-2"></div>
+                        <label class="col-lg-10 col-md-10 col-sm-10 col-xs-10 LblPrincipal">Provincia</label>
+                        <div class="row col-lg-2 col-md-2 col-sm-3 col-xs-2 rowRadioButton">
+                            <input type="radio" class="form-control form-control-sm" name="categoriaCombos" value="Provincia" [(ngModel)]="opcionCombos">
+                        </div>
+                        <div class="row col-lg-9 col-md-9 col-sm-9 col-xs-9 cmbMargin" style="margin-top: 5px;">
+                            <!--<select class="form-control marginCombos" name="cmbxProvincia" [(ngModel)]="this.CodProvincia" name="CodProvincia" (change)="buscarDistrito('')">
+                                <option value="" selected>Seleccione Provincia</option>
+                                <option *ngFor="let item of this.cmbProvincias" value="{{ item.COD_PROVINCIA }}">{{ item.GLS_PROVINCIA }}</option>
+                            </select>-->
+                            <mat-select [disableOptionCentering]="true" [(ngModel)]="this.CodProvincia" name="CodProvincia" (valueChange)="llenarCombosProv($event)">
+                                <mat-select-filter [placeholder]="'Filtro'" [displayMember]="'GLS_PROVINCIA'" [array]="cmbProvinciasAll" (filteredReturn)="comboProvinciasResp =$event"></mat-select-filter>
+                                <mat-option [value]="''">Seleccione Provincia</mat-option>
+                                <mat-option *ngFor="let item of comboProvinciasResp" [value]="item.COD_PROVINCIA">
+                                    {{item.GLS_PROVINCIA}}
+                                </mat-option>
+                            </mat-select>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-lg-4 col-md-4 col-sm-3 col-xs-12">
+                        <div class="form-group col-lg-2 col-md-2 col-sm-2 col-xs-2"></div>
+                        <label class="col-lg-10 col-md-10 col-sm-10 col-xs-10 LblPrincipal">Distrito</label>
+                        <div class="row col-lg-2 col-md-2 col-sm-3 col-xs-2 rowRadioButton">
+                            <input type="radio" class="form-control form-control-sm" name="categoriaCombos" value="Distrito" [(ngModel)]="opcionCombos">
+                        </div>
+                        <div class="row col-lg-9 col-md-9 col-sm-9 col-xs-9 cmbMargin" style="margin-top: 5px;">
+                            <!--<select class="form-control marginCombos" name="cmbxDistrito" [(ngModel)]="this.CodDistrito" name="CodDistrito">
+                                <option value="" selected>Seleccione Distrito</option>
+                                <option *ngFor="let item of this.cmbDistritosAll" value="{{ item.COD_DIRECCION }}">{{ item.GLS_COMUNA }}</option>
+                            </select>-->
+                            <mat-select [disableOptionCentering]="true" [(ngModel)]="this.CodDistrito" name="CodDistrito" (valueChange)="llenarCombosDist($event)">
+                                <mat-select-filter [placeholder]="'Filtro'" [displayMember]="'GLS_COMUNA'" [array]="cmbDistritosAll" (filteredReturn)="comboDistritoResp =$event"></mat-select-filter>
+                                <mat-option [value]="''">Seleccione Distrito</mat-option>
+                                <mat-option *ngFor="let item of comboDistritoResp" [value]="item.COD_DIRECCION">
+                                    {{item.GLS_COMUNA}}
+                                </mat-option>
+                            </mat-select>
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+            <!--Terminan Combos -->
+        </div>
+    </div>
+</div>
+
+<!-- Botones principales -->
+<div class="col-lg-12 col-md-12 col-sm-12">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group btnAlign">
+                <button class="btn btn-azul btn-azul-fix mr" (click)="mostrarModalRegistroNuevo()"><i class="fa fa-plus-square" ></i> Registrar Nuevo</button>
+                <button class="btn btn-azul btn-azul-fix mr" (click)="mostrarModalActualizar()"><i class="fa fa-edit"></i> Modificar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Terminan Botones principales -->
+
+
+<!-- Modales -->
+
+<!-- Modal para Registros Nuevos -->
+<div class="modal fade" id="modalNuevosRegistros" role="dialog" style="margin-top: 70px;" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title text-center"><b>Registrar Nuevo {{ this.opcionCombos }} </b></h4>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <form>
+
+                        <div class="row">
+
+                            <div class="row rowCamposModal">
+                                <div class="form-group col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                                    <label class="col-lg-12 col-md-12 col-sm-12 col-xs-12 LblModal">Código</label>
+                                    <input type="text" class="form-control" id="txtCodNuevoRegistro" [(ngModel)]="this.CodigoNuevoRegistro" name="CodigoNuevoRegistro" disabled>
+                                </div>
+
+                                <div *ngIf="this.opcionCombos === 'Provincia' || this.opcionCombos === 'Distrito'" class="form-group col-lg-3 col-md-3 col-sm-2 col-xs-12">
+                                    <label class="col-lg-12 col-md-12 col-sm-12 col-xs-12 LblModal">Departamento</label>
+                                    <select class="form-control marginCombos" name="cmbxDeptoNuevoReg" [(ngModel)]="this.CodDeptoNuevoReg" name="CodDeptoNuevoReg" (change)="buscarProvincia('Nuevo', 'Provincia')">
+                                        <option value="" selected>Seleccione Departamento</option>
+                                        <option *ngFor="let item of this.cmbDeptoNuevoReg" value="{{ item.COD_REGION }}">{{ item.GLS_REGION }}</option>
+                                    </select>
+                                </div>
+
+                                <div *ngIf="this.opcionCombos === 'Distrito'" class="form-group col-lg-3 col-md-3 col-sm-2 col-xs-12">
+                                    <label class="col-lg-12 col-md-12 col-sm-12 col-xs-12 LblModal">Provincia</label>
+                                    <select class="form-control marginCombos" name="cmbxProviNuevoReg" [(ngModel)]="this.CodProviNuevoReg" name="CodProviNuevoReg" (change)="buscarDistrito('Nuevo')">
+                                        <option value="" selected>Seleccione Provincia</option>
+                                        <option *ngFor="let item of this.cmbProviNuevoReg" value="{{ item.COD_PROVINCIA }}">{{ item.GLS_PROVINCIA }}</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group col-lg-3 col-md-3 col-sm-2 col-xs-12">
+                                    <label class="col-lg-12 col-md-12 col-sm-12 col-xs-12 LblModal">{{ this.opcionCombos }}</label>
+                                    <input type="text" class="form-control" id="txtNomNuevoRegistro" [(ngModel)]="this.NombreNuevoRegistro" name="NombreNuevoRegistro" (keypress)="soloLetras($event)" oninput="this.value = this.value.toUpperCase()">
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12 col-md-12 col-sm-12" style="padding-top: 15px;">
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="form-group col-lg-6 col-md-6 col-sm-6" style="text-align: end;">
+                                            <button class="btn btn-azul btn-azul-fix mr" (click)="GuardarNuevoRegistro()"><i class="fa fa-plus-square"></i> Guardar</button>
+                                        </div>
+                                        <div class="form-group col-lg-6 col-md-6 col-sm-6" style="text-align: start;">
+                                            <button class="btn btn-azul btn-azul-fix mr" (click)="cerrarModalRegistroNuevo()"><i class="fa fa-window-close"></i> Cancelar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer" style="display: none;"></div>
+        </div>
+    </div>
+</div>
+<!-- Termina Modal para Registros Nuevos -->
+
+<!-- Modal para Actualización de Elementos -->
+<div class="modal fade" id="modalActualizar" role="dialog" style="margin-top: 70px;" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title text-center"><b>Modificar {{ this.opcionCombos }} </b></h4>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <form>
+
+                        <div class="row">
+
+                            <div class="row rowCamposModal">
+                                <div class="form-group col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                                    <label class="col-lg-12 col-md-12 col-sm-12 col-xs-12 LblModal">Código</label>
+                                    <input type="text" class="form-control" id="txtCodActualizar" [(ngModel)]="this.CodigoNuevoRegistro" name="CodigoNuevoRegistro" disabled>
+                                </div>
+
+                                <div *ngIf="this.opcionCombos === 'Provincia' || this.opcionCombos === 'Distrito'" class="form-group col-lg-3 col-md-3 col-sm-2 col-xs-12">
+                                    <label class="col-lg-12 col-md-12 col-sm-12 col-xs-12 LblModal">Departamento</label>
+                                    <select class="form-control marginCombos" name="cmbxDeptoActualizar" (change)="buscarProviActualizar()" [(ngModel)]="this.CodDeptoActualizar" name="CodDeptoActualizar">
+                                        <option value="" selected>Seleccione Departamento</option>
+                                        <option *ngFor="let item of this.cmbDeptoActualizar" value="{{ item.COD_REGION }}">{{ item.GLS_REGION }}</option>
+                                    </select>
+                                </div>
+
+                                <div *ngIf="this.opcionCombos === 'Distrito'" class="form-group col-lg-3 col-md-3 col-sm-2 col-xs-12">
+                                    <label class="col-lg-12 col-md-12 col-sm-12 col-xs-12 LblModal">Provincia</label>
+                                    <select class="form-control marginCombos" name="cmbxProviNuevoReg" [(ngModel)]="this.CodProviActualizar" name="CodProviActualizar">
+                                        <option value="" selected>Seleccione Provincia</option>
+                                        <option *ngFor="let item of this.cmbProviActualizar" value="{{ item.COD_PROVINCIA }}">{{ item.GLS_PROVINCIA }}</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group col-lg-3 col-md-3 col-sm-2 col-xs-12">
+                                    <label class="col-lg-12 col-md-12 col-sm-12 col-xs-12 LblModal">{{ this.opcionCombos }}</label>
+                                    <input type="text" class="form-control" id="txtNomActualizar" [(ngModel)]="this.NombreNuevoRegistro" name="NombreNuevoRegistro" (keypress)="soloLetras($event)" oninput="this.value = this.value.toUpperCase()">
+                                </div>
+
+                            </div>
+
+                            <div class="col-lg-12 col-md-12 col-sm-12" style="padding-top: 15px;">
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="form-group col-lg-6 col-md-6 col-sm-6" style="text-align: end;">
+                                            <button class="btn btn-azul btn-azul-fix mr" (click)="ActualizarRegistro()"><i class="fa fa-plus-square"></i> Guardar</button>
+                                        </div>
+                                        <div class="form-group col-lg-6 col-md-6 col-sm-6" style="text-align: start;">
+                                            <button class="btn btn-azul btn-azul-fix mr" (click)="cerrarModalActualizar()"><i class="fa fa-window-close"></i> Cancelar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer" style="display: none;"></div>
+        </div>
+    </div>
+</div>
+<!-- Termina Modal para Actualización de Elementos -->
+
+<!-- Terminan Modales -->

@@ -1,0 +1,154 @@
+<div class="col-lg-12 col-md-12 col-sm-12">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="titulo" style="margin: 0px;">
+                Buscar Primas Recepcionadas
+            </h3>
+        </div>
+
+        <div class="panel-body">
+            <form class="form-inline" #formFechas="ngForm" (ngSubmit)="consultarPolizas(formFechas)">
+                <div class="row">
+                    <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+                        <label class="frmLblColor col-lg-12 col-md-12 col-sm-12 col-xs-12">Rango de fechas</label
+            >
+            <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-6">
+              <input
+                type="date"
+                class="form-control inpLg"
+                [(ngModel)]="dataPrima.FechaDesde"
+                name="FechaDesde"
+                required
+              />
+            </div>
+            <!-- <div class="form-group col-lg-2 col-md-2 col-sm-2 col-xs-2">
+              <hr class="sep" />
+            </div> -->
+            <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-6">
+              <input
+                type="date"
+                class="form-control inpLg"
+                [(ngModel)]="dataPrima.FechaHasta"
+                name="FechaHasta"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+            <label class="frmLblColor col-lg-12 col-md-12 col-sm-12 col-xs-12"
+              >Desea consultar por:
+            </label>
+                        <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <select class="form-control sel-fix" [(ngModel)]="dataPrima.Traspasada" name="Traspasada">
+                <option value="N"
+                  >Prima de Pólizas no Traspasadas a Pago de Pensiones</option
+                >
+                <option value="S"
+                  >Prima de Pólizas Traspasadas a Pago de Pensiones</option
+                >
+                <option value="T">Todas las informadas</option>
+              </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group btnCenter btnAlign col-lg-2 col-md-6 col-sm-6 col-xs-12">
+                        <button type="submit" class="btn btn-azul btn-azul-fix btn-fix">
+              <i class="glyphicon glyphicon-search"></i> Buscar
+            </button>
+                    </div>
+
+                    <div class="form-group btnCenter btnAlign col-lg-2 col-md-6 col-sm-6 col-xs-12">
+                        <button type="button" class="btn btn-azul btn-azul-fix btn-fix" (click)="limpiarFormulario()">
+              <i class="fa fa-file"></i> Limpiar
+            </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-------------------------------------------------------------->
+<div class="col-lg-12 col-md-12 col-sm-12 marg-prim">
+    <!--div de la tabla -->
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="titulo" style="margin: 0px;">
+                Resultado de Búsqueda
+            </h3>
+        </div>
+        <div class="panel-body camposForm">
+
+            <div class="table-responsive">
+                <mat-table [dataSource]="dataSource" class="table table-hover">
+                    <mat-header-row *matHeaderRowDef="columnas; sticky: true"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: columnas;"></mat-row>
+                    <ng-container matColumnDef="numPol">
+                        <mat-header-cell *matHeaderCellDef>
+                            <div>N° Póliza</div>
+
+                        </mat-header-cell>
+                        <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.NumPoliza}}</mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="cuspp">
+                        <mat-header-cell *matHeaderCellDef>
+                            <div>CUSPP</div>
+
+                        </mat-header-cell>
+                        <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.CUSPP}}</mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="afiliado">
+                        <mat-header-cell *matHeaderCellDef>
+                            <div>Afiliado</div>
+
+                        </mat-header-cell>
+                        <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.Afiliado}}</mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="dni">
+                        <mat-header-cell *matHeaderCellDef>
+                            <div>Prima Recibida</div>
+
+                        </mat-header-cell>
+                        <mat-cell class="duration-cell" *matCellDef="let lesson">{{ lesson.MTO_PRIREC | number: '1.2-2'}}</mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="direccion">
+                        <mat-header-cell *matHeaderCellDef>
+                            <div>Fecha de Recepción de Prima</div>
+
+                        </mat-header-cell>
+                        <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.FEC_TRASPASO}}</mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="distrito">
+                        <mat-header-cell *matHeaderCellDef>
+                            <div>Fecha de Traspaso de Prima</div>
+
+                        </mat-header-cell>
+                        <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.FEC_RECPRIMA }}</mat-cell>
+                    </ng-container>
+                </mat-table>
+                <mat-paginator [length]="0" [pageSize]="10" [pageSizeOptions]="[ 10, 20, 50]" [showFirstLastButtons]="true"></mat-paginator>
+            </div>
+        </div>
+
+    </div>
+    <!-------------------------------------------------------------->
+
+
+
+
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-grop spaceM btnAlign">
+                    <div class="form-group btnCenter btnAlign col-lg-offset-8 col-lg-2 col-md-6 col-sm-6 col-xs-12">
+                        <button type="button" class="btn btn-azul btn-azul-fix btn-fix" (click)="exportar()"><i class="fa fa-file"></i> Exportar</button>
+                    </div>
+                    <div class="form-group btnCenter btnAlign col-lg-2 col-md-6 col-sm-6 col-xs-12">
+                        <button type="button" class="btn btn-azul btn-azul-fix btn-fix"><i class="fa fa-print"></i>Imprimir</button>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>

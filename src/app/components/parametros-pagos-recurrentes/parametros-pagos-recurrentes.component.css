@@ -1,0 +1,65 @@
+.title {
+  color: #0096b7;
+  font-size: 12px;
+}
+
+.title-pad {
+  padding-top: 5px;
+}
+
+.grid {
+  border: 1px solid #e3e3e3;
+}
+
+.text {
+  color: #9c9c9c;
+  word-wrap: normal;
+  font-size: 11px;
+}
+
+.marg-prim {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+
+table.dataTable thead .sorting:after {
+  font-family: "Font Awesome 5 Free";
+  opacity: 0.2;
+  content: "\f0dc";
+}
+table.dataTable thead .sorting_asc:after {
+  font-family: "Font Awesome 5 Free";
+  content: "\f0de";
+}
+table.dataTable thead .sorting_desc:after {
+  font-family: "Font Awesome 5 Free";
+  content: "\f0dd";
+}
+
+
+
+
+
+ .select select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+.select {
+  position: relative;
+  overflow: hidden;
+  font-size: 11px;
+}
+
+.select:after {
+  content: "\25bc";
+  color: #515151;
+  padding-top: 7px;
+  position: absolute;
+  right: 10px;
+  top: 0;
+  text-align: center;
+  pointer-events: none;
+}

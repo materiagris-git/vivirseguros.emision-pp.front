@@ -1,0 +1,193 @@
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-calendar-picker-indicator {
+    display: none;
+
+}
+input[type="date"]:hover::-webkit-calendar-picker-indicator{
+    display: block;
+}
+
+.resumen{
+    padding: 5px 0px;
+}
+.btn-rad {
+  border-radius: 15px;
+  background-color: #0090B2;
+  color: white !important;
+  font-size: 11px;
+}
+.bordeEditado{
+    background-color:orange!important;
+}
+
+.mat-table{
+    height: 250px;
+    overflow: auto;
+    background-color: #ffffff;
+    width: 100%;
+}
+.mat-row{
+    border-bottom: 1px solid lightgray;
+}
+.mat-cell, .mat-header-cell {
+    color: black;
+    display: block;
+    background-color: #ffffff;
+    text-align: center;
+    font-size: 11px;
+    padding: 15px 0px;
+    height: 60px;
+}
+
+.mat-header-cell {
+    color: black;
+    background-color: #ffffff;
+
+    display:block;
+    font-size: 12px;
+}
+
+.inline-label {
+    white-space: nowrap;
+    max-width: 70%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    float:left;
+    }
+
+table tr th,
+td {
+    text-align: center;
+}
+.iconSpan{
+  border-radius: 2px;
+  background-color: lightgray;
+}
+
+.camposForm {
+    background-color: lightgray;
+}
+.btnCircle{
+    border-radius: 20px;
+    background-color: #0090B2;
+}
+.btnrad {
+    border-radius: 3px;
+    background-color: #0090B2;
+}
+.column5 {
+    width: 20%;
+}
+.column40 {
+    width: 40%;
+}
+
+.column6 {
+  width: 18%;
+}
+.btnRigth {
+  text-align: right;
+}
+
+.cen{
+  text-align: center;
+}
+@media (min-width: 992px) and (max-width: 1412px) {
+.column2{
+  width: 100%;
+}
+
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+    .column5 {
+        width: 100%;
+    }
+    .column40 {
+        width: 100%;
+    }
+
+}
+
+
+/* Landscape phones and portrait tablets */
+
+@media (max-width: 767px) {
+    .column5 {
+        width: 100%;
+    }
+    .column40 {
+        width: 100%;
+    }
+
+}
+
+
+/* Portrait phones and smaller */
+
+@media (max-width: 480px) {
+    .column5 {
+        width: 100%;
+    }
+    .column40 {
+        width: 100%;
+    }
+
+}
+.table-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    overflow-x: auto; /*<-*/
+
+  }
+
+  .tabla-beneficiarios {
+    flex: 1 1 auto;
+    /* overflow: auto; */ /*<-*/
+    max-height: 500px;
+    display: table; /*<-*/
+  }
+
+  .mat-row, .mat-header-row{
+      width: 100%;
+  }
+
+  .cdk-global-overlay-wrapper,
+.cdk-overlay-container,
+.cdk-overlay-pane {
+    z-index: 99999 !important;
+}
+
+.mat-select-trigger {
+    padding-top: 4px;
+}
+
+ ::ng-deep .cdk-overlay-container {
+    position: fixed!important;
+    z-index: 999999999999999999!important;
+}
+mat-select {
+    font-size: 11px;
+    width: 100%;
+    border: 1px solid #CCCCCC;
+    height: 35px;
+    padding-top: 6px;
+    padding-right: 12px;
+    padding-bottom: 6px;
+    padding-left: 12px;
+    border-radius: 3px;
+}
+
+mat-option {
+    background-color: white;
+}
+.form-control.ng-untouched.ng-pristine.ng-valid {
+    padding-right: 22px!important;
+}
+
+.form-control.ng-untouched.ng-pristine {
+    padding-right: 22px!important;
+}
+
+

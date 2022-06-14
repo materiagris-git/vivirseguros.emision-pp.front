@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>ProduccionPagoPensiones</title>
+    <base href="/">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+    <link rel="stylesheet" href="assets/bootstrap-3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/DataTables-1.10.20/css/dataTables.bootstrap.min.css"/>
+
+    <script src="assets/js/jquery-3.4.1.min.js"></script>
+    <script src="assets/js/multiselect.js"></script>
+    <script src="assets/bootstrap-3.4.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="assets/DataTables-1.10.20/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="assets/DataTables-1.10.20/js/dataTables.bootstrap.min.js"></script>
+
+    <!-- Awesome Fonts version 5 -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/v4-shims.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+
+<body>
+    <script>
+      $(document).ready(function() {
+        $(".multiselect").multiselect();
+      });
+
+      function getHighlightRow() {
+        return $('table > tbody > tr.active');
+      }
+
+      function getDataTable(obj) {
+        $("#traspasotablaNeg tbody tr").removeClass('active');
+        $("#traspasotabla tbody tr").removeClass('active');
+        var idTr = obj.id;
+        var poliza = obj.cells[0].innerHTML;
+        var fechTras = obj.cells[1].innerHTML;
+        var monTras = obj.cells[2].innerHTML;
+        $(obj).addClass('active').siblings().removeClass('active');
+        var rows = getHighlightRow();
+        if (rows != undefined) {
+            var idTr = rows.attr('id');
+        } else {
+            idTr = "";
+        }
+        document.getElementById("idTr").value = idTr;
+        document.getElementById("polizaId").value = poliza;
+        document.getElementById("fecTras").value = fechTras;
+        document.getElementById("monTras").value = monTras;
+      }
+
+    </script>
+    <app-root></app-root>
+</body>
+
+</html>

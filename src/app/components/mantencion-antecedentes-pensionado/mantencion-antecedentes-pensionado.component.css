@@ -1,0 +1,202 @@
+.camposForm {
+    background-color: lightgray;
+}
+
+.btn-azul-fix {
+    font-size: 11px;
+}
+
+.modal-fix {
+    height: 280px;
+}
+
+table tr th,
+td {
+    text-align: center;
+}
+
+.iconTbl {
+    background-color: #0090B2;
+}
+
+.iconSpan {
+    border-radius: 2px;
+    background-color: lightgray;
+}
+
+.column5 {
+    width: 20%;
+}
+
+.alignBtns {
+    text-align: right;
+}
+
+.mr {
+    margin-right: 10px;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+    .column5 {
+        width: 100%;
+    }
+    .column40 {
+        width: 100%;
+    }
+    .alignBtns {
+        text-align: center;
+    }
+    .mr {
+        margin-right: 0px;
+        margin-bottom: 12px;
+    }
+}
+
+
+/* Landscape phones and portrait tablets */
+
+@media (max-width: 767px) {
+    .column5 {
+        width: 100%;
+    }
+    .column40 {
+        width: 100%;
+    }
+    .alignBtns {
+        text-align: center;
+    }
+    .mr {
+        margin-right: 0px;
+        margin-bottom: 12px;
+    }
+}
+
+
+/* Portrait phones and smaller */
+
+@media (max-width: 480px) {
+    .column5 {
+        width: 100%;
+    }
+    .column40 {
+        width: 100%;
+    }
+    .alignBtns {
+        text-align: center;
+    }
+    .mr {
+        margin-right: 0px;
+        margin-bottom: 12px;
+        width: 100%;
+    }
+}
+
+.column40 {
+    width: 40%;
+}
+
+.btnrad {
+    border-radius: 3px;
+    background-color: #0090B2;
+}
+
+.exclam {
+    color: #0090B2;
+}
+
+table tr th,
+td {
+    text-align: center;
+}
+
+table tr th,
+td {
+    text-align: center;
+}
+
+::ng-deep td.t-m {
+    text-align: center;
+}
+
+table tr th,
+td {
+    text-align: center;
+}
+
+tbody {
+    display: block;
+    height: 390px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+thead,
+tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+    /* even columns width , fix width of table too*/
+}
+
+thead {
+    font-size: 12px;
+    width: calc( 100%-1.2em)/*calc( 100% - 1.2em ) scrollbar is average 1em/16px width, remove it from thead width */
+}
+
+.mat-table {
+    height: 250px;
+    overflow: auto;
+    background-color: #ffffff;
+}
+
+.mat-row {
+    border-bottom: 1px solid lightgray;
+}
+
+.mat-cell,
+.mat-header-cell {
+    color: black;
+    display: block;
+    background-color: #ffffff;
+    text-align: center;
+    font-size: 11px;
+    padding: 15px 0px;
+}
+
+.mat-header-cell {
+    color: black;
+    background-color: #ffffff;
+    display: block;
+    font-size: 12px;
+}
+
+.cdk-global-overlay-wrapper,
+.cdk-overlay-container,
+.cdk-overlay-pane {
+    z-index: 99999 !important;
+}
+
+.mat-select-trigger {
+    padding-top: 4px;
+}
+
+::ng-deep .cdk-overlay-container {
+    position: fixed!important;
+    z-index: 999999999999999999!important;
+}
+
+mat-select {
+    font-size: 11px;
+    width: 100%;
+    border: 1px solid #CCCCCC;
+    height: 35px;
+    padding-top: 6px;
+    padding-right: 12px;
+    padding-bottom: 6px;
+    padding-left: 12px;
+    border-radius: 3px;
+}
+
+mat-option {
+    background-color: white;
+}

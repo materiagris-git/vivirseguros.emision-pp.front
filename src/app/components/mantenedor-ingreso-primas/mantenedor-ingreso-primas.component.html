@@ -1,0 +1,392 @@
+<form #formIngresoPrimas="ngForm">
+    <div class="col-lg-12 col-md-12 col-sm-12 ">
+        <div class="panel panel-default">
+            <div class="panel-body camposForm">
+                <form>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                    <label>N° PÓLIZA:</label>&nbsp;
+                                    <label class="frmLblColor">{{dataPrima.NumPoliza}}</label>
+                                </div>
+                                <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                    <label>FECHA SOLICITUD:</label>&nbsp;
+                                    <label class="frmLblColor">{{dataPrima.FecSolicitud}}</label>
+                                </div>
+                                <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                    <label>N° COTIZACIÓN:</label>&nbsp;
+                                    <label class="frmLblColor">{{dataPrima.NumCotizacion}}</label>
+                                </div>
+                                <div class="form-group col-lg-3 col-md-3 col-sm-4">
+                                    <label>CUSPP:</label>&nbsp;
+                                    <label class="frmLblColor">{{dataPrima.CUSPP}}</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                                    <label>Titular:</label>&nbsp;
+                                    <label class="frmLblColor">{{dataPrima.NombreCompleto}}</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="panel with-nav-tabs panel-default">
+            <div class="panel-heading">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#antecedentesGenerales" data-toggle="tab">Antecedentes generales</a></li>
+                    <li><a href="#primerPago" data-toggle="tab">Primer pago</a></li>
+                </ul>
+            </div>
+            <div class="panel-body">
+                <div class="tab-content">
+                    <div class="tab-pane fade in active" id="antecedentesGenerales">
+
+                        <div class="col-lg-12 col-md-12 col-sm-12 m-3">
+                            <div class="row">
+                                <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                    <label class="frmLblColor">Tipo de Pensión</label>
+                                    <input type="text" class="form-control" id="txtTipoPension" [(ngModel)]="dataPrima.TipoPension" name="TipoPension" disabled>
+                                </div>
+                                <div class="form-group col-lg-3 col-md-3 col-sm-6">
+                                    <label class="frmLblColor">Tipo de Renta</label>
+                                    <input type="text" class="form-control" id="txtTipoRenta" [(ngModel)]="dataPrima.TipoRenta" name="TipoRenta" disabled>
+                                </div>
+                                <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                    <label class="frmLblColor">Modalidad</label>
+                                    <input type="text" class="form-control" id="txtModalidad" [(ngModel)]="dataPrima.Modalidad" name="Modalidad" disabled>
+                                </div>
+                                <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                    <label class="frmLblColor">Moneda</label>
+                                    <input type="text" class="form-control" id="txtMoneda" [(ngModel)]="dataPrima.GlsMonTipoReajuste" name="GlsMonTipoReajuste" disabled>
+                                </div>
+                                <div class="form-group col-lg-2 col-md-3 col-sm-3">
+                                    <label class="frmLblColor">Tipo de Cambio</label>
+                                    <input type="text" class="form-control" id="txtTipoCambio" [ngModel]="dataPrima.MontoValMonedaRecPrima | number: '1.2-3'" name="MontoValMonedaRecPrima" disabled>
+                                </div>
+                                <div class="form-group col-lg-2 col-md-3 col-sm-3">
+                                    <label class="frmLblColor">Años Diferidos</label>
+                                    <input type="text" class="form-control" id="txtAniosDiferidos" [(ngModel)]="dataPrima.AniosDiferidos" name="AniosDiferidos" disabled>
+                                </div>
+                                <div class="form-group col-lg-2 col-md-3 col-sm-3">
+                                    <label class="frmLblColor">Meses Garantizados</label>
+                                    <input type="text" class="form-control" id="txtMesesGarantizados" [(ngModel)]="dataPrima.MesesGarantizados" name="MesesGarantizados" disabled>
+                                </div>
+                                <div class="form-group col-lg-2 col-md-3 col-sm-3">
+                                    <label class="frmLblColor">Meses Escalonados</label>
+                                    <input type="text" class="form-control" id="txtMesesEscalonada" [(ngModel)]="dataPrima.MesesEscalonados" name="MesesEscalonados" disabled>
+                                </div>
+                                <div class="form-group col-lg-2 col-md-3 col-sm-3">
+                                    <label class="frmLblColor">Reajuste trim</label>
+                                    <input type="text" class="form-control" id="txtReajusteTrim" [ngModel]="dataPrima.ReajusteTrim | number: '1.2-8'" name="ReajusteTrim" disabled>
+                                </div>
+                                <div class="form-group col-lg-2 col-md-3 col-sm-3">
+                                    <label class="frmLblColor">% Rta. Escalonada</label>
+                                    <input type="text" class="form-control" id="txtPrcRentaEscalonada" [ngModel]="dataPrima.PrcRentaEsc | number: '1.2-2'" name="PrcRentaEsc" disabled>
+                                </div>
+                                <div class="form-group col-lg-2 col-md-3 col-sm-3">
+                                    <label class="frmLblColor">Fecha Devengue</label>
+                                    <input type="date" class="form-control" id="txtFechaDevengue" [(ngModel)]="dataPrima.FechaDevengue" name="FechaDevengue" disabled>
+                                </div>
+                                <div class="form-group col-lg-2 col-md-3 col-sm-3">
+                                    <label class="frmLblColor">Fecha Aceptación</label>
+                                    <input type="date" class="form-control" id="txtFechaAceptacion" [(ngModel)]="dataPrima.FechaAceptacion" name="FechaAceptacion" disabled>
+                                </div>
+                                <div class="form-group col-lg-2 col-md-3 col-sm-3">
+                                    <label class="frmLblColor">Prima Cotizada ({{ monedaNS.SimboloMoneda }})</label>
+                                    <input type="text" class="form-control" id="txtPrimaCotizadaNS" [ngModel]="dataPrima.MontoPriUni | number: '1.2-2'" name="MontoPriUni" disabled>
+                                </div>
+                                <div class="form-group col-lg-2 col-md-3 col-sm-3">
+                                    <label class="frmLblColor">Pensión Cotizada ({{ monedaSolDolar.SimboloMoneda }})</label>
+                                    <input type="text" class="form-control" id="txtPensionCotizadaTM" [ngModel]="dataPrima.MontoSumPension | number: '1.2-2'" name="MontoSumPension" disabled>
+                                </div>
+                                <div class="form-group col-lg-2 col-md-3 col-sm-3">
+                                    <label class="frmLblColor">Fecha Información</label>
+                                    <input type="date" class="form-control" id="txtFechaInformacion" [(ngModel)]="dataPrima.FechaInfoAFP" name="FechaInfoAFP" disabled>
+                                </div>
+                                <div class="form-group col-lg-2 col-md-3 col-sm-3">
+                                    <label class="frmLblColor">Prima Traspasada ({{ monedaNS.SimboloMoneda }})</label>
+                                    <input type="text" class="form-control" id="txtPrimaTraspasadaNS" [ngModel]="dataPrima.MontoPriRecPrima | number: '1.2-2'" name="MontoPriRecPrima" disabled>
+                                </div>
+                                <div class="form-group col-lg-2 col-md-3 col-sm-3">
+                                    <label class="frmLblColor">Factor Variación Rta.</label>
+                                    <input type="text" class="form-control" id="txtFactorVariacionRenta" [ngModel]="dataPrima.PrcFacVarPrima | number: '1.2-8'" name="PrcFacVarPrima" disabled>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-lg-12 col-md-12 col-sm-12" style="margin-top: 40px;">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="titulo" style="margin-top: 10px; margin-left: 10px;">
+                                        Antecedentes Recepcionados
+                                    </h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                            <label class="frmLblColor">Fecha Tope Primer Pago</label>
+                                            <input type="date" class="form-control" id="txtFechaTopePrimerPago" [(ngModel)]="dataPrima.FechaTopePrimerPago" name="FechaTopePrimerPago" disabled>
+                                        </div>
+                                        <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                            <label class="frmLblColor" style="padding: 0px;">Fecha Traspaso Prima</label>
+                                            <input type="date" class="form-control" id="txtFechaTraspasoPrima" [(ngModel)]="dataPrima.FechaTraspasoPrima" name="FechaTraspasoPrima" (blur)="FechaPrimerPagoEst()" required>
+                                        </div>
+                                        <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                            <label class="frmLblColor">Fecha Primer Pago</label>
+                                            <input type="date" class="form-control" id="txtFechaPrimerPago" [(ngModel)]="dataPrima.FechaPrimerPago" name="FechaPrimerPago" required>
+                                        </div>
+                                        <div class="form-group col-lg-3 col-md-3 col-sm-3" style="margin-top: 23px;">
+                                            <button class="btn btn-azul btn-azul-fix btnCalcular mr" (click)="calcular()">Calcular</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12 col-md-12 col-sm-12" style="margin-top: 40px;">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="titulo" style="margin-top: 10px; margin-left: 10px;">
+                                        Resultados del Cálculo
+                                    </h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="form-group col-lg-2 col-md-3 col-sm-3 colum5">
+                                            <label class="frmLblColor col-lg-12 col-md-12 col-sm-12" style="padding: 0px;" [style.visibility]="'hidden'"><b>Hidden</b></label>
+                                            <label class="frmLblColor col-lg-12 col-md-12 col-sm-12" style="padding: 0px;">Fecha vigencia póliza</label>
+                                            <!--<label class="frmLblColor" style="padding: 0px; margin-top: 20px;">Fecha vigencia póliza</label>-->
+                                            <input type="date" class="form-control " id="txtFechaVigenciaPoliza" [(ngModel)]="dataPrima.FechaVigenciaPoliza" name="FechaVigenciaPoliza" disabled>
+                                        </div>
+                                        <div class="form-group col-lg-2 col-md-3 col-sm-3 colum5">
+                                            <label class="frmLblColor col-lg-12 col-md-12 col-sm-12" style="padding: 0px;"><b>Compañía</b></label>
+                                            <label class="frmLblColor col-lg-12 col-md-12 col-sm-12" style="padding: 0px;">Pensión definitiva ({{ monedaSolDolar.SimboloMoneda }})</label>
+                                            <input *ngIf="dataPrima.CodTipoPension!='08'" type="text" class="form-control" id="txtPensionDefinitivaTM" [ngModel]="dataPrima.MontoPensionPrima | number: '1.2-2'" name="MontoPensionPrima" disabled>
+                                            <input *ngIf="dataPrima.CodTipoPension==='08'" type="text" class="form-control" id="txtPensionDefinitivaTM" [ngModel]="dataPrima.MontoSumPensionPrima | number: '1.2-2'" name="MontoSumPensionPrima" disabled>
+                                        </div>
+                                        <div class="form-group col-lg-2 col-md-3 col-sm-3 colum5">
+                                            <label class="frmLblColor col-lg-12 col-md-12 col-sm-12" style="padding: 0px;"><b>Compañía</b></label>
+                                            <label class="frmLblColor col-lg-12 col-md-12 col-sm-12" style="padding: 0px;">Prima definitiva ({{ monedaNS.SimboloMoneda }})</label>
+                                            <!--<label class="frmLblColor" style="margin-top: 20px;">Prima definitiva NS</label>-->
+                                            <input type="text" class="form-control" id="txtPrimaDefinitivaNS" [ngModel]="dataPrima.MontoPriCiaPrima | number: '1.2-2'" name="MontoPriCiaPrima" disabled>
+                                        </div>
+
+                                        <div class="form-group col-lg-2 col-md-3 col-sm-3 colum5">
+                                            <label class="frmLblColor col-lg-12 col-md-12 col-sm-12" style="padding: 0px;"><b>AFP</b></label>
+                                            <label class="frmLblColor col-lg-12 col-md-12 col-sm-12" style="padding: 0px;">Pensión definitiva ({{ monedaNS.SimboloMoneda }})</label>
+                                            <input *ngIf="dataPrima.CodTipoPension!='08'" type="text" class="form-control" id="txtPensionDefinitivaNS" [ngModel]="dataPrima.MontoPensionAfpPrima | number: '1.2-2'" name="MontoPensionAfpPrima" disabled>
+                                            <input *ngIf="dataPrima.CodTipoPension==='08'" type="text" class="form-control" id="txtPensionDefinitivaNS" [ngModel]="dataPrima.MontoSumPensionAfpPrima | number: '1.2-2'" name="MontoSumPensionAfpPrima" disabled>
+                                        </div>
+                                        <div class="form-group col-lg-2 col-md-3 col-sm-3 colum5">
+                                            <label class="frmLblColor col-lg-12 col-md-12 col-sm-12" style="padding: 0px;"><b>AFP</b></label>
+                                            <label class="frmLblColor col-lg-12 col-md-12 col-sm-12" style="padding: 0px;">Prima definitiva ({{ monedaNS.SimboloMoneda }})</label>
+                                            <!--<label class="frmLblColor" style="margin-top: 20px;">Prima definitiva</label>-->
+                                            <input type="text" class="form-control" id="txtPrimaDefinitiva" [ngModel]="dataPrima.MontoPriAfpPrima | number: '1.2-2'" name="MontoPriAfpPrima" disabled>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="primerPago">
+                        <!-- Tabla Resumen Primeros Pagos -->
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="row">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h3 class="titulo" style="margin-top: 10px; margin-left: 10px;">
+                                            Resumen primer pago
+                                        </h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <div class="table-responsive">
+                                                <mat-table [dataSource]="dataSourceResumen" class="table table-hover">
+                                                    <mat-header-row *matHeaderRowDef="columnasResumen; sticky: true"></mat-header-row>
+                                                    <mat-row *matRowDef="let row; columns: columnasResumen;"></mat-row>
+                                                    <ng-container matColumnDef="tipoIden">
+                                                        <mat-header-cell *matHeaderCellDef>
+                                                            <div>Tipo Ident.</div>
+
+                                                        </mat-header-cell>
+                                                        <mat-cell class="duration-cell" *matCellDef="let lesson; let i=index">{{lesson.GlsTipoIdentCor}}</mat-cell>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="numIden">
+                                                        <mat-header-cell *matHeaderCellDef>
+                                                            <div>Núm. Ident.</div>
+
+                                                        </mat-header-cell>
+                                                        <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.NumIdenPensionado}}</mat-cell>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="parentesco">
+                                                        <mat-header-cell *matHeaderCellDef>
+                                                            <div>Parentesco</div>
+
+                                                        </mat-header-cell>
+                                                        <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.GlsParentesco}}</mat-cell>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="fechaIni">
+                                                        <mat-header-cell *matHeaderCellDef>
+                                                            <div>Fecha Inicio</div>
+
+                                                        </mat-header-cell>
+                                                        <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.FecIniPago}}</mat-cell>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="fechaTer">
+                                                        <mat-header-cell *matHeaderCellDef>
+                                                            <div>Fecha Término</div>
+
+                                                        </mat-header-cell>
+                                                        <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.FecTerPagoFinal}}</mat-cell>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="mtoPension">
+                                                        <mat-header-cell *matHeaderCellDef>
+                                                            <div>Monto Pensión</div>
+
+                                                        </mat-header-cell>
+                                                        <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.SumaPensionPagos | number: '1.2-2'}}</mat-cell>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="desctoSalud">
+                                                        <mat-header-cell *matHeaderCellDef>
+                                                            <div>Descuento Salud</div>
+
+                                                        </mat-header-cell>
+                                                        <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.SumaMontoSalud}}</mat-cell>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="mtoLiquidacion">
+                                                        <mat-header-cell *matHeaderCellDef>
+                                                            <div>Liquidación a Pagar</div>
+
+                                                        </mat-header-cell>
+                                                        <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.SumaMontoLiquidacion | number: '1.2-2'}}</mat-cell>
+                                                    </ng-container>
+                                                </mat-table>
+                                                <mat-paginator #PaginadorResumen [length]="0" [pageSize]="20" [pageSizeOptions]="[5, 10, 20, 50]" [showFirstLastButtons]="true"></mat-paginator>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Termina Tabla Resumen Primeros Pagos -->
+
+                        <!-- Tabla Detalle Primeros Pagos -->
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="row">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading" style="height: 35px;">
+                                        <h3 class="titulo col-lg-7 col-md-7 col-sm-7" style="margin-top: 10px; margin-left: 10px;">
+                                            Detalle primer pago
+                                        </h3>
+                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                            <label class="frmLblColor col-lg-4 col-md-4 col-sm-4" style="height: 25px; padding-top: 10px; text-align: right;">Filtro </label>
+                                            <div class="col-lg-8 col-md-8 col-sm-8" style="padding-top: 3px;">
+                                                <input type="text" class="form-control filtroTabla" [ngModel]="txtFiltrarDetalle" name="txtFiltrarDetalle" id="txtFiltroDetalle" (keyup)="applyFilter($event)">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <div class="table-responsive">
+                                                <mat-table [dataSource]="dataSourceDetalle" class="table table-hover">
+                                                    <mat-header-row *matHeaderRowDef="columnasDetalle; sticky: true"></mat-header-row>
+                                                    <mat-row *matRowDef="let row; columns: columnasDetalle;"></mat-row>
+                                                    <ng-container matColumnDef="tipoIden">
+                                                        <mat-header-cell *matHeaderCellDef>
+                                                            <div>Tipo Ident.</div>
+
+                                                        </mat-header-cell>
+                                                        <mat-cell class="duration-cell" *matCellDef="let lesson; let i=index">{{lesson.GlsTipoIdentCor}}</mat-cell>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="numIden">
+                                                        <mat-header-cell *matHeaderCellDef>
+                                                            <div>Núm. Ident.</div>
+
+                                                        </mat-header-cell>
+                                                        <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.NumIdenPensionado}}</mat-cell>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="parentesco">
+                                                        <mat-header-cell *matHeaderCellDef>
+                                                            <div>Parentesco</div>
+
+                                                        </mat-header-cell>
+                                                        <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.GlsParentesco}}</mat-cell>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="fechaIni">
+                                                        <mat-header-cell *matHeaderCellDef>
+                                                            <div>Fecha Inicio</div>
+
+                                                        </mat-header-cell>
+                                                        <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.FecIniPago}}</mat-cell>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="fechaTer">
+                                                        <mat-header-cell *matHeaderCellDef>
+                                                            <div>Fecha Término</div>
+
+                                                        </mat-header-cell>
+                                                        <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.FecTerPago}}</mat-cell>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="mtoPension">
+                                                        <mat-header-cell *matHeaderCellDef>
+                                                            <div>Monto Pensión</div>
+
+                                                        </mat-header-cell>
+                                                        <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.MtoPension | number: '1.2-2'}}</mat-cell>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="desctoSalud">
+                                                        <mat-header-cell *matHeaderCellDef>
+                                                            <div>Descuento Salud</div>
+
+                                                        </mat-header-cell>
+                                                        <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.MtoSalud | number: '1.2-2'}}</mat-cell>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="mtoLiquidacion">
+                                                        <mat-header-cell *matHeaderCellDef>
+                                                            <div>Liquidación a Pagar</div>
+
+                                                        </mat-header-cell>
+                                                        <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.MtoLiqPagar | number: '1.2-2'}}</mat-cell>
+                                                    </ng-container>
+                                                </mat-table>
+                                                <mat-paginator #PaginadorDetalle [length]="0" [pageSize]="20" [pageSizeOptions]="[5, 10, 20, 50]" [showFirstLastButtons]="true"></mat-paginator>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Termina Tabla Detalle Primeros Pagos -->
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="form-group spaceM btnAlign btnCenter">
+                    <button class="btn btn-azul btn-azul-fix mr" (click)="exportar()">AFP</button>
+                    <button type="button" class="btn btn-azul btn-azul-fix mr" *ngIf="!this.vlBotonGrabar" (click)="validacionForm( dataPrima.NumPoliza, dataPrima.FechaVigenciaPoliza, dataPrima.FechaTraspasoPrima, dataPrima.FechaPrimerPago );" [disabled]="btnGuardar">Guardar</button>
+                    <button class="btn btn-azul btn-azul-fix mr" (click)="enviarPoliza()" [disabled]="btnEnvioPoliza">Envio de Poliza</button>
+                    <button type="button" class="btn btn-azul btn-azul-fix mr" *ngIf="!this.vlBotonGrabar" [routerLink]="['/consultaIngresoPrimas/']"> Cancelar</button>
+                    <button type="button" class="btn btn-azul btn-azul-fix mr" *ngIf="this.vlBotonGrabar" [routerLink]="['/consultaIngresoPrimas/']"> Regresar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

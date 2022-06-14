@@ -1,0 +1,201 @@
+<div class="col-lg-12 col-md-12 col-sm-12 ">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h5 class="titulo" style="margin: 0px;"><b>Buscar Póliza</b></h5>
+        </div>
+        <div class="panel-body camposForm">
+            <form>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="form-group col-lg-2 col-md-2 col-xs-12">
+                                <label class="frmLblColor">N° Póliza</label>
+                                <input type="text" class="form-control form-control-sm" [(ngModel)]="filtros.NumeroPoliza" name="numPoliza" [maxlength]="mlPoliza" (keypress)="numberOnly($event)">
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-xs-12">
+                                <label class="frmLblColor">CUSPP</label>
+                                <input type="text" class="form-control form-control-sm" [(ngModel)]="filtros.CUSPP" name="cussp" oninput="this.value = this.value.toUpperCase()" (keypress)="onlyAlphaNumeric($event)" [maxlength]="mlCuspp">
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-xs-12">
+                                <label class="frmLblColor">N° Endoso</label>
+                                <input type="text" class="form-control form-control-sm" [(ngModel)]="filtros.NoEndoso" (ngModelChange)="cambioEndoso($event)" name="numEndoso" (keypress)="numberOnly($event)" [maxlength]="10">
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-xs-12">
+                                <label class="frmLblColor">Tipo de Documento</label>
+                                <select class="form-control" [(ngModel)]="filtros.IdTipoDoc" name="tipoDoc" (change)="cambiarTipoDoc()">
+                                    <option  value="-1">Seleccionar</option>
+                                    <option *ngFor="let item of comboTipoDoc"  value="{{ item.Codigo }}">{{item.Nombre}}</option>
+                                </select>
+                            </div>
+                            <div *ngIf="filtros.IdTipoDoc == -1" class="form-group col-lg-2 col-md-2 col-xs-12">
+                                <label class="frmLblColor">Número de Documento</label>
+                                <input type="text" class="form-control form-control-sm" disabled>
+                            </div>
+                            <div *ngIf="filtros.IdTipoDoc != -1" class="form-group col-lg-2 col-md-2 col-xs-12">
+                                <label class="frmLblColor">Número de Documento</label>
+                                <input type="text" class="form-control form-control-sm" [(ngModel)]="filtros.NoDocumetnto" name="numDoc" oninput="this.value = this.value.toUpperCase()" [maxlength]="mlNDoc" (keypress)="onlyAlphaNumeric($event)" ngModel>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-lg-2 col-md-2 col-xs-12">
+                                <label class="frmLblColor">Apellido Paterno</label>
+                                <input type="text" class="form-control form-control-sm" [(ngModel)]="filtros.Paterno" name="apPaterno" oninput="this.value = this.value.toUpperCase()" (keypress)="soloLetras($event)" [maxlength]="mlApNom">
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-xs-12">
+                                <label class="frmLblColor">Apellido Materno</label>
+                                <input type="text" class="form-control form-control-sm" [(ngModel)]="filtros.Materno" name="apMaterno" oninput="this.value = this.value.toUpperCase()" (keypress)="soloLetras($event)" [maxlength]="mlApNom">
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-xs-12">
+                                <label class="frmLblColor">1er. Nombre</label>
+                                <input type="text" class="form-control form-control-sm" [(ngModel)]="filtros.Nombre" name="nombre" oninput="this.value = this.value.toUpperCase()" (keypress)="soloLetras($event)" [maxlength]="mlApNom">
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-xs-12">
+                                <label class="frmLblColor">2do. Nombre</label>
+                                <input type="text" class="form-control form-control-sm" [(ngModel)]="filtros.SegundoNombre" name="segNombre" oninput="this.value = this.value.toUpperCase()" (keypress)="soloLetras($event)" [maxlength]="mlApNom">
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-xs-12" style="padding-top: 22px;">
+                                <button type="button " class="btn btn-azul btn-azul-fix col-md-12 col-xs-12" (click)="buscarPolizas()"><i class="glyphicon glyphicon-search "></i> Buscar</button>
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-xs-12" style="padding-top: 22px;">
+                                <button type="button " class="btn btn-azul btn-azul-fix col-md-12 col-xs-12" (click)="limpiar()"><i class="fa fa-file"></i> Limpiar</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div>
+
+    <div class="col-lg-12 col-md-12 col-sm-12 marg-prim">
+        <!--div de la tabla -->
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h5 class="titulo" style="margin: 0px;"><b>Resultados</b></h5>
+            </div>
+            <div class="panel-body camposForm">
+
+                <div class="table-responsive">
+                    <mat-table [dataSource]="dataSource" class="table table-hover">
+                        <mat-header-row *matHeaderRowDef="columnas; sticky: true"></mat-header-row>
+                        <mat-row *matRowDef="let row; columns: columnas;"></mat-row>
+                        <ng-container matColumnDef="item">
+                            <mat-header-cell *matHeaderCellDef>
+                                <div>Item</div>
+
+                            </mat-header-cell>
+                            <mat-cell class="duration-cell" *matCellDef="let lesson; let i=index">{{i+1}}</mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="numPol">
+                            <mat-header-cell *matHeaderCellDef>
+                                <div>N° Póliza</div>
+
+                            </mat-header-cell>
+                            <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.NumeroPoliza}}</mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="cuspp">
+                            <mat-header-cell *matHeaderCellDef>
+                                <div>CUSPP</div>
+
+                            </mat-header-cell>
+                            <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.CUSPP}}</mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="doc">
+                            <mat-header-cell *matHeaderCellDef>
+                                <div>Documento</div>
+
+                            </mat-header-cell>
+                            <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.TipoDocumento}}-{{lesson.NoDocumetnto}}</mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="endoso">
+                            <mat-header-cell *matHeaderCellDef>
+                                <div>Endoso</div>
+
+                            </mat-header-cell>
+                            <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.NoEndoso}}</mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="nomAfiliado">
+                            <mat-header-cell *matHeaderCellDef>
+                                <div>Nombres de Afiliado</div>
+
+                            </mat-header-cell>
+                            <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.Nombre}} {{lesson.Paterno}} {{lesson.Materno}}</mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="fecha">
+                            <mat-header-cell *matHeaderCellDef>
+                                <div>Fecha Emisión</div>
+
+                            </mat-header-cell>
+                            <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.Fecha}}</mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="acciones">
+                            <mat-header-cell *matHeaderCellDef>
+                                <div>Acciones</div>
+
+                            </mat-header-cell>
+                            <mat-cell class="duration-cell" *matCellDef="let lesson"><i style="color:#0090B2" class="fa fa-search exclam" title="Visualizar" (click)="datosConsulta(lesson)" [routerLink]="['/datosConsultaGeneral']"></i></mat-cell>
+                        </ng-container>
+                    </mat-table>
+                    <mat-paginator [length]="0" [pageSize]="10" [pageSizeOptions]="[ 10, 20, 50]" [showFirstLastButtons]="true"></mat-paginator>
+                </div>
+                <!-- <table class="table table-responsive-sm table-bordered" id="tblTutoresApoderados">
+                <thead>
+                    <tr>
+                        <th scope="col">Item</th>
+                        <th scope="col">N° Póliza</th>
+                        <th scope="col">Nombres de Afiliado</th>
+                        <th scope="col">Fecha</th>
+                        <th scope="col">Acciones</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr >
+                        <td class="t-m">1</td>
+                        <td class="t-m">45456465</td>
+                        <td class="t-m"></td>
+                        <td class="t-m"></td>
+                        <td class="t-m"><i style="color:#0090B2" class="fa fa-search exclam"></i></td>
+
+                    </tr>
+                    <tr >
+                        <td class="t-m">2</td>
+                        <td class="t-m"></td>
+                        <td class="t-m"></td>
+                        <td class="t-m"></td>
+                        <td class="t-m"></td>
+
+                    </tr>
+                    <tr >
+                        <td class="t-m">3</td>
+                        <td class="t-m"></td>
+                        <td class="t-m"></td>
+                        <td class="t-m"></td>
+                        <td class="t-m"></td>
+
+                    </tr>
+                    <tr >
+                        <td class="t-m">4</td>
+                        <td class="t-m"></td>
+                        <td class="t-m"></td>
+                        <td class="t-m"></td>
+                        <td class="t-m"></td>
+
+                    </tr>
+                    <tr >
+                        <td class="t-m">5</td>
+                        <td class="t-m"></td>
+                        <td class="t-m"></td>
+                        <td class="t-m"></td>
+                        <td class="t-m"></td>
+
+                    </tr>
+            </table> -->
+            </div>
+
+        </div>
+
+    </div>
+</div>

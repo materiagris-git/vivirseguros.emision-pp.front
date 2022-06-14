@@ -1,0 +1,803 @@
+<div class="col-lg-12 col-md-12 col-sm-12">
+    <div class="panel panel-default">
+        <div class="panel-body camposForm">
+            <form>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                <label>N° Póliza:</label>&nbsp;
+                                <label class="frmLblColor">{{consulta.NumeroPoliza}}</label>
+                            </div>
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                <label>N° Endoso:</label>&nbsp;
+                                <label class="frmLblColor">{{consulta.NoEndoso}}</label>
+                            </div>
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                <label>CUSPP:</label>&nbsp;
+                                <label class="frmLblColor">{{consulta.CUSPP}}</label>
+                            </div>
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                <label>Fecha de Solicitud</label>&nbsp;
+                                <label class="frmLblColor">{{consulta.Fecha}}</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-lg-9 col-md-9 col-sm-9">
+                                <label>Titular</label>&nbsp;
+                                <label class="frmLblColor">{{consulta.Titular}}</label>
+                            </div>
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                <label>Documento</label>&nbsp;
+                                <label class="frmLblColor">{{ consulta.TipoNumIdent }}</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="col-lg-12 col-md-12 col-sm-12">
+    <div class="panel-heading grid">
+        <ul class="nav nav-tabs">
+            <li class="title active">
+                <a href="#retencionJud" data-toggle="tab" [ngClass]="{ 'active':activeTab==='retencionJud'}" (click)="cambio('retencionJud')">Retención Judicial</a>
+            </li>
+            <li class="title">
+                <a href="#historiaRet" data-toggle="tab" [ngClass]="{ 'active':activeTab==='historiaRet'}" (click)="cambio('historiaRet')">Historia de Retencíon Judicial</a
+        >
+      </li>
+    </ul>
+  </div>
+  <div class="panel-body grid">
+    <div class="tab-content">
+      <div class="tab-pane fade in active" id="retencionJud" [ngClass]="{ 'active':activeTab==='retencionJud'}">
+        <!-- Datos Retencion -->
+        <div>
+          <form #myForm="ngForm">
+          <div class="col-lg-12 col-md-12 col-sm-12 m-3">
+            <div class="row">
+              <div class="col-md-12">
+                <h5 class="titulo tituloLinea">
+                  <b>Antecedentes Retención</b>
+                </h5>
+              </div>
+            </div>
+              <div class="row">
+                <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                  <label class="frmLblColor">Periodo Inicio Vigencia</label>
+                  <input
+                    type="date"
+                    class="form-control"
+                    name="fecIniret"
+                    [(ngModel)]="listaRetenciones.FEC_INIRET"
+                    (focusout)="focusOutFunction()"
+                  />
+                </div>
+                <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                  <label class="frmLblColor"
+                    >Periodo Fin Vigencia</label
+                  >
+                  <input
+                    type="date"
+                    class="form-control"
+                    name="fecTerret"
+                    [(ngModel)]="listaRetenciones.FEC_TERRET"
+                  />
+                </div>
+                <div
+                  class="form-group col-lg-2 col-md-2 col-sm-2 column5"
+                  id="custom-select"
+                >
+                  <label class="frmLblColor">Tipo de Retención</label>
+                  <select
+                    class="form-control"
+                    name="tipRetencion"
+                    [(ngModel)]="vlCodTipRet"
+                    id="tipRetencion"
+
+                  >
+                    <option
+                      *ngFor="let item of comboTipRet"
+                      value="{{ item.CodElemento }}"
+                      >{{ item.NomElemento }}</option
+                    >
+                  </select>
+                </div>
+                <div
+                  class="form-group col-lg-2 col-md-2 col-sm-2 column5"
+                  id="custom-select"
+                >
+                  <label class="frmLblColor">Modalidad Retención</label>
+                  <select
+                    class="form-control"
+                    name="tipModalidad"
+                    [(ngModel)]="vlCodModRet"
+                    id="tipModalidad"
+                    (change)="comboModalidad(vlCodModRet)"                    
+                  >
+
+                    <option
+                      *ngFor="let item of comboModRet"
+                      value="{{ item.CodElemento }}"
+
+                      >{{ item.NomElemento }}</option
+                    >
+                  </select>
+                </div>
+                <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                  <label class="frmLblColor">Porcentaje Retenido</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    (keypress)="numberDecimal($event)"
+                    name="mtoRet"
+                    [(ngModel)]="MTO_RET"
+                    [disabled]="isDisabledPrcje"
+                  />
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                  <label class="frmLblColor">Periodo de Efecto</label>
+                  <input
+                    type="date"
+                    class="form-control"
+                    name="fecEfecto"
+                    [(ngModel)]="listaRetenciones.FEC_EFECTO"
+                    disabled
+                  />
+                </div>
+                <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                  <label class="frmLblColor">Fecha Recepción</label>
+                  <input
+                    type="date"
+                    class="form-control"
+                    name="fecResdoc"
+                    [(ngModel)]="listaRetenciones.FEC_RESDOC"
+                  />
+                </div>
+                <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                  <label class="frmLblColor">Monto Retenido</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    (keypress)="numberDecimal($event)"
+                    name="mtoRetmax"
+                    [(ngModel)]="MTO_RETMAX"
+                    [disabled]="isDisabledMtoFij"
+                  />
+                </div>
+                <div class="form-group col-lg-4 col-md-4 col-sm-4 column40">
+                  <label class="frmLblColor">Entidad Judicial</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="glsNomjuzgado"
+                    [(ngModel)]="listaRetenciones.GLS_NOMJUZGADO"
+                  />
+                </div>
+
+              </div>
+              <div class="row">
+                <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                  <label class="frmLblColor"
+                    >Fecha de Recepción de la Carta</label
+                  >
+                  <input
+                    type="date"
+                    class="form-control"
+                    name="fecCarta"
+                    [(ngModel)]="fecCarta"
+                    (focusout)="cambioRecepcion()"
+                  />
+                </div>
+                <div
+                class="form-group col-lg-2 col-md-2 col-sm-2 column5"
+                id="custom-select"
+              >
+                <label class="frmLblColor">Descuento a Monto</label>
+                <select
+                  class="form-control"
+                  name="tipDctoMto"
+                  [(ngModel)]="vlCodDctoMto"
+                  id="tipDctoMto"
+                >
+
+                  <option
+                    *ngFor="let item of comboDctoMto"
+                    value="{{ item.CodElemento }}"
+
+                    >{{ item.NomElemento }}</option
+                  >
+                </select>
+              </div>
+              </div>
+          </div>
+          <div class="col-lg-12 col-md-12 col-sm-12 m-3">
+            <br />
+            <div class="row">
+              <div class="col-md-12">
+                <h5 class="titulo tituloLinea">
+                  <b>Antecedentes Personales de Receptor</b>
+                </h5>
+              </div>
+            </div>
+              <div class="row">
+                <div
+                  class="form-group col-lg-2 col-md-2 col-sm-2 column5"
+                  id="custom-select"
+                >
+                  <label class="frmLblColor">Tipo Documento</label>
+                  <select
+                    class="form-control"
+                    name="TipoDoc"
+                    [(ngModel)]="listaRetenciones.COD_TIPOIDENRECEPTOR"
+                    (change)="cambiarTipoIden()"
+                  >
+                    <option value="">Seleccionar</option>
+                    <option
+                      *ngFor="let item of this.cmbTipoIdent"
+                      value="{{ item.Codigo }}"
+                      >{{ item.Nombre }}</option
+                    >
+                  </select>
+                </div>
+                <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                  <label class="frmLblColor">N° Documento </label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="NUM_IDENBEN"
+                    [(ngModel)]="listaRetenciones.NUM_IDENRECEPTOR"
+                    [maxLength]="this.maxLengthNumDoc"
+                  />
+                </div>
+                <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                  <label class="frmLblColor">Ap.Paterno</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="ApellidoPat"
+                    (keypress)="soloLetras($event)"
+                    [(ngModel)]="listaRetenciones.GLS_PATRECEPTOR"
+                  />
+                </div>
+                <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                  <label class="frmLblColor">Ap. Materno</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="ApellidoMat"
+                    (keypress)="soloLetras($event)"
+                    [(ngModel)]="listaRetenciones.GLS_MATRECEPTOR"
+                  />
+                </div>
+                <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                  <label class="frmLblColor">Primer Nombre</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="Nombre1"
+                    (keypress)="soloLetras($event)"
+                    [(ngModel)]="listaRetenciones.GLS_NOMRECEPTOR"
+                  />
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                  <label class="frmLblColor">Segundo Nombre</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="Nombre2"
+                    (keypress)="soloLetras($event)"
+                    [(ngModel)]="listaRetenciones.GLS_NOMSEGRECEPTOR"
+                  />
+                </div>
+                <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                  <label class="frmLblColor">Dirección</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="Direccion"
+                    [(ngModel)]="listaRetenciones.GLS_DIRRECEPTOR"
+                  />
+                </div>
+                <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                  <label class="frmLblColor">Ubigeo</label>
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="ubigeo"
+                      [(ngModel)]="direccionStr"
+                      disabled
+                    />
+                    <span class="input-group-btn">
+                      <button
+                        class="btn btn-primary btnrad"
+                        type="button"
+                        data-toggle="modal"
+                        data-target="#modalInfoDireccion"
+                      >
+                        <i class="fas fa-plus"></i>
+                      </button>
+                    </span>
+                  </div>
+                </div>
+                <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                  <label class="frmLblColor">Correo Electrónico</label>
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="Correo1"
+                      [(ngModel)]="listaRetenciones.GLS_EMAILRECEPTOR"
+                      disabled
+                    />
+                    <span class="input-group-btn">
+                      <button
+                        class="btn btn-primary btnrad"
+                        type="button"
+                        data-toggle="modal"
+                        data-target="#modalEmail"
+                      >
+                        <i class="fas fa-plus"></i>
+                      </button>
+                    </span>
+                  </div>
+                </div>
+                <div class="form-group col-lg-2 col-md-2 col-sm-2 column5">
+                  <label class="frmLblColor">Teléfono</label>
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="Telefono1"
+                      (keypress)="numberOnly($event)"
+                      [(ngModel)]="listaRetenciones.GLS_FONORECEPTOR"
+                      disabled
+                    />
+                    <span class="input-group-btn">
+                      <button
+                        class="btn btn-primary btnrad"
+                        type="button"
+                        data-toggle="modal"
+                        data-target="#modalTelefonos"
+                      >
+                        <i class="fas fa-plus"></i>
+                      </button>
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+          </div>
+          <div class="col-lg-12 col-md-12 col-sm-12 m-3">
+            <br />
+            <div class="row">
+              <div class="col-md-12">
+                <h5 class="titulo tituloLinea">
+                  <b>Forma de Pago de Pensión</b>
+                </h5>
+              </div>
+            </div>
+
+              <div class="row">
+                <div class="form-group col-lg-2 col-md-2 col-sm-2 column5" id="custom-select">
+                  <label class="frmLblColor">Via Pago</label>
+                  <select class="form-control" [(ngModel)]="CodViaPago" name="CodViaPago" (change)="onChangeLlenaSucursal()">
+                    <option *ngFor="let item of cmbViaPago" value="{{ item.cod_elemento }}">{{ item.gls_elemento }}</option>
+                  </select>
+                </div>
+                <div class="form-group col-lg-4 col-md-4 col-sm-4 column40" id="custom-select" >
+                  <label class="frmLblColor">Sucursal </label>
+                  <select class="form-control" [(ngModel)]="CodSucursal" name="CodSucursal" [disabled]="isDisabledSucursal">
+                    <option *ngFor="let item of cmbSucursal" value="{{ item.codigo }}">{{ item.descripcion }}</option>
+                  </select>
+                </div>
+                <div class="form-group col-lg-2 col-md-2 col-sm-2 column5" id="custom-select">
+                  <label class="frmLblColor">Banco</label>
+                  <select class="form-control"  [(ngModel)]="CodBanco" name="CodBanco" [disabled]="isDisabledBanco" (change)="cambiarBanco('elegir')">
+                    <option *ngFor="let item of cmbBanco" value="{{ item.cod_elemento }}">{{ item.gls_elemento }}</option>
+                  </select>
+                </div>
+                <div class="form-group col-lg-2 col-md-2 col-sm-2 column5" id="custom-select">
+                  <label class="frmLblColor">Tipo Cta.</label>
+                  <select class="form-control" [(ngModel)]="CodTipoCuenta" name="CodTipoCuenta" [disabled]="isDisabledTipoCuenta" (change)="cambiarTipoCuenta('elegir')">
+                    <option value="00">Seleccione una opción</option>
+                    <option *ngFor="let item of this.cmbTipoCuenta"  value="{{ item.COD_CUENTA }}">{{ item.GLS_CUENTA }}</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="form-group col-lg-4 col-md-4 col-sm-4 column40">
+                  <label class="frmLblColor">N° Cuenta</label>
+                  <input type="text" class="form-control" name="NumCuenta" [(ngModel)]="listaRetenciones.NUM_CUENTA" [disabled]="isDisabledNumCuenta" [maxLength]="maxLengthNumCuenta" oninput="this.value = this.value.toUpperCase()">
+                </div>
+                <div class="form-group col-lg-4 col-md-4 col-sm-4 column5">
+                  <label class="frmLblColor">N° Cuenta CCI</label>
+                  <input type="text" class="form-control" name="CodInter" [(ngModel)]="listaRetenciones.NUM_CUENTACCI" [disabled]="isDisabledNumCuentaCci" maxlength="20">
+                </div>
+              </div>
+          </div>
+        </form>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-grop spaceM btnAlign btnCenter">
+                <button type="button" class="btn btn-azul btn-azul-fix mr" (click)="GuardarInfo()"><i class="fa fa-save"></i> Guardar</button>
+            <!--    <button type="button" class="btn btn-azul btn-azul-fix mr"><i class="fa fa-print"></i> Generar Documento</button> -->
+                <button type="button" class="btn btn-azul btn-azul-fix mr" (click)="cancelar()">Cancelar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Fin Datos Retencion -->
+      </div>
+      <div class="tab-pane fade" id="historiaRet" [ngClass]="{ 'active':activeTab==='historiaRet'}" (click)="cambio('historiaRet')">
+        <!-- Historial retencion -->
+
+        <div class="panel">
+          <div class="row">
+            <div class="col-md-12">
+                <h5 class="titulo tituloLinea">
+                    <b>Resultados</b>
+                </h5>
+            </div>
+        </div>
+
+          <div class="panel-body ">
+            <div class="table-responsive-sm">
+              <mat-table [dataSource]="dataSource" class="table table-hover">
+                <mat-header-row
+                  *matHeaderRowDef="columnas; sticky: true"
+                ></mat-header-row>
+                <mat-row *matRowDef="let row; columns: columnas" (click)="buscarAntecedentesPersonales(row)"></mat-row>
+
+                <ng-container matColumnDef="item">
+                  <mat-header-cell *matHeaderCellDef>
+                    <div>Item</div>
+                  </mat-header-cell>
+                  <mat-cell
+                    class="duration-cell"
+                    *matCellDef="let lesson; let i = index"
+                    >{{ i + 1 }}</mat-cell
+                  >
+                </ng-container>
+
+                <ng-container matColumnDef="vigDesde">
+                  <mat-header-cell *matHeaderCellDef>
+                    <div>Vig. Desde</div>
+                  </mat-header-cell>
+                  <mat-cell class="duration-cell" *matCellDef="let lesson">{{
+                    lesson.fecIniret
+                  }}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="vigHasta">
+                  <mat-header-cell *matHeaderCellDef>
+                    <div>Vig. Hasta</div>
+                  </mat-header-cell>
+                  <mat-cell class="duration-cell" *matCellDef="let lesson"
+                    >{{ lesson.fecTerret }}
+                  </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="tipoRenta">
+                  <mat-header-cell *matHeaderCellDef>
+                    <div>Tipo Rent.</div>
+                  </mat-header-cell>
+                  <mat-cell class="duration-cell" *matCellDef="let lesson">{{
+                    lesson.nomTipret
+                  }}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="modalidad">
+                  <mat-header-cell *matHeaderCellDef>
+                    <div>Modalidad</div>
+                  </mat-header-cell>
+                  <mat-cell class="duration-cell" *matCellDef="let lesson"
+                    >{{ lesson.nomModret }}
+                  </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="monto">
+                  <mat-header-cell *matHeaderCellDef>
+                    <div>Monto</div>
+                  </mat-header-cell>
+                  <mat-cell class="duration-cell" *matCellDef="let lesson"
+                    >{{ lesson.mtoRet }}
+                  </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="porcentaje">
+                  <mat-header-cell *matHeaderCellDef>
+                    <div>Porcentaje</div>
+                  </mat-header-cell>
+                  <mat-cell class="duration-cell" *matCellDef="let lesson"
+                    >{{ lesson.porcentaje }}
+                  </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="tipo">
+                  <mat-header-cell *matHeaderCellDef>
+                    <div>Tipo</div>
+                  </mat-header-cell>
+                  <mat-cell class="duration-cell" *matCellDef="let lesson"
+                    >{{ lesson.nomReceptor }}
+                  </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="numIden">
+                  <mat-header-cell *matHeaderCellDef>
+                    <div>N° Iden</div>
+                  </mat-header-cell>
+                  <mat-cell class="duration-cell" *matCellDef="let lesson">{{
+                    lesson.numIdenreceptor
+                  }}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="nombre">
+                  <mat-header-cell *matHeaderCellDef>
+                    <div>Nombre</div>
+                  </mat-header-cell>
+                  <mat-cell class="duration-cell" *matCellDef="let lesson">{{
+                    lesson.glsNomreceptor
+                  }}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="paterno">
+                  <mat-header-cell *matHeaderCellDef>
+                    <div>Ap. Paterno</div>
+                  </mat-header-cell>
+                  <mat-cell class="duration-cell" *matCellDef="let lesson">{{
+                    lesson.glsPatreceptor
+                  }}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="materno">
+                  <mat-header-cell *matHeaderCellDef>
+                    <div>Ap. Materno</div>
+                  </mat-header-cell>
+                  <mat-cell class="duration-cell" *matCellDef="let lesson">{{
+                    lesson.glsMatreceptor
+                  }}</mat-cell>
+                </ng-container>
+              </mat-table>
+              <mat-paginator
+                [length]="0"
+                [pageSize]="20"
+                [pageSizeOptions]="[5, 10, 20, 50]"
+                [showFirstLastButtons]="true"
+              ></mat-paginator>
+            </div>
+          </div>
+        </div>
+
+        <!-- fin datos de historia retencion -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modales -->
+<div
+  class="modal fade"
+  id="modalInfoDireccion"
+  role="dialog"
+  style="margin-top: 70px;"
+>
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">
+          &times;
+        </button>
+        <h4 class="modal-title text-center"><b>DIRECCIÓN</b></h4>
+      </div>
+      <div class="modal-body">
+        <div>
+          <form>
+            <div class="row" style="margin-right: 0px; margin-left: 0px;">
+              <div
+                class="form-group col-lg-3 col-md-3 col-sm-3"
+                id="custom-select"
+              >
+                <label class="frmLblColor">Departamento</label>
+                <select
+                  class="form-control"
+                  [(ngModel)]="listaRetenciones.Cod_Region"
+                  name="Departamento"
+                  (change)="onChangeLlenaProvincia()"
+                >
+                  <option value="">Seleccione una opción</option>
+                  <option
+                    *ngFor="let item of cmbDepartamento"
+                    value="{{ item.codigo }}"
+                    >{{ item.descripcion }}</option
+                  >
+                </select>
+              </div>
+              <div
+                class="form-group col-lg-3 col-md-3 col-sm-3"
+                id="custom-select"
+              >
+                <label class="frmLblColor">Provincia</label>
+                <select
+                  class="form-control"
+                  [(ngModel)]="listaRetenciones.Cod_Provincia"
+                  name="Provincia"
+                  (change)="onChangeLlenaDistrito()"
+                >
+                  <option value="">Seleccione una opción</option>
+                  <option
+                    *ngFor="let item of cmbProvincia"
+                    value="{{ item.codigo }}"
+                    >{{ item.descripcion }}</option
+                  >
+                </select>
+              </div>
+              <div class="form-group col-lg-3 col-md-3 col-sm-3" id="custom-select">
+                <label class="frmLblColor">Distrito</label>
+                <mat-select [disableOptionCentering]="true" [(ngModel)]="listaRetenciones.COD_DIRECCION" name="Cod_Comuna" (valueChange)="getInfo($event)">
+                  <mat-select-filter [placeholder]="'Filtro'" [displayMember]="'GlsDistrito'" [array]="cmbDistritoAll" (filteredReturn)="comboDistritoResp =$event"></mat-select-filter>
+                  <mat-option [value]="0">Seleccione una opción</mat-option>
+                  <mat-option *ngFor="let item of comboDistritoResp" [value]="item.CodDireccion">
+                      {{item.GlsDistrito}}
+                  </mat-option>
+                </mat-select>
+              </div>
+              <div class="form-group col-md-3">
+                <label class="frmLblColor">Ubigeo</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="Ubigeo"
+                  value="{{listaRetenciones.COD_DIRECCION}}"
+                  (keypress)="onlyNumberKey($event)"
+                  disabled
+                />
+              </div>
+            </div>
+          </form>
+
+          <div class="row" style="text-align: center; margin-bottom: 10px;">
+            <div class="col-md-2 col-md-offset-2">
+              <button
+                type="button"
+                class="btn btn-azul mr"
+                (click)="guardarModal()">
+                <i class="fa fa-save"></i> Guardar
+              </button>
+            </div>
+
+            <div class="col-md-8">
+              <button
+                type="button"
+                class="btn btn-azul mr"
+                data-dismiss="modal"
+                (click)="cancelarModal()"
+              >
+                Cancelar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer" style="display: none;"></div>
+    </div>
+  </div>
+</div>
+
+<!-- TELEFONO -->
+<div
+  class="modal fade"
+  id="modalTelefonos"
+  role="dialog"
+  style="margin-top: 70px;"
+>
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-backdrop="static" data-keyboard="false">
+          &times;
+        </button>
+        <h4 class="modal-title text-center"><b>Teléfonos</b></h4>
+      </div>
+      <div class="modal-body">
+        <div>
+          <form>
+            <div class="col-md-12" style="margin-right: 0px; margin-left: 0px;">
+              <div class="form-group col-md-7 col-md-offset-2">
+                <label class="frmLblColor">Teléfono 1</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="listaRetenciones.GLS_FONORECEPTOR"
+                  name="GlsFono"
+                  (keypress)="numberOnly($event)"
+                  minlength="7" maxlength="9"
+                />
+              </div>
+              <div class="form-group col-md-7 col-md-offset-2">
+                <label class="frmLblColor">Teléfono 2</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="listaRetenciones.GLS_FONORECEPTOR2"
+                  name="GlsFono2"
+                  (keypress)="numberOnly($event)"
+                  minlength="7" maxlength="9"
+                />
+              </div>
+            </div>
+          </form>
+          <div class="row" style="text-align: center; margin-bottom: 10px;">
+            <button type="button" class="btn btn-azul mr" (click)="aceptarModalTel()">
+              Aceptar
+            </button>
+            &nbsp;
+            <!-- <button type="button" class="btn btn-azul mr" data-dismiss="modal">
+              Cancelar
+            </button> -->
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer" style="display: none;"></div>
+    </div>
+  </div>
+</div>
+<!--Modal Email-->
+<div
+  class="modal fade"
+  id="modalEmail"
+  role="dialog"
+  style="margin-top: 70px;"
+>
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-backdrop="static" data-keyboard="false">
+          &times;
+        </button>
+        <h4 class="modal-title text-center"><b>Correo Electrónico</b></h4>
+      </div>
+      <div class="modal-body">
+        <div>
+          <form>
+            <div class="col-md-12" style="margin-right: 0px; margin-left: 0px;">
+              <div class="form-group col-md-7 col-md-offset-2">
+                <label class="frmLblColor">Correo Electrónico</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="listaRetenciones.GLS_EMAILRECEPTOR"
+                  name="GlsFono"
+                />
+              </div>
+            </div>
+          </form>
+          <div class="row" style="text-align: center; margin-bottom: 10px;">
+            <button type="button" class="btn btn-azul mr" (click)="aceptarModalEmail()">
+              Aceptar
+            </button>
+            &nbsp;
+            <!-- <button type="button" class="btn btn-azul mr" data-dismiss="modal">
+              Cancelar
+            </button> -->
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer" style="display: none;"></div>
+    </div>
+  </div>
+</div>
+<!-- Fin Modales -->

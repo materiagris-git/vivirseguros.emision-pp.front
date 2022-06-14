@@ -1,0 +1,1111 @@
+<div class="col-lg-12 col-md-12 col-sm-12 ">
+    <div class="panel panel-default">
+        <div class="panel-body camposForm">
+            <!-- Campos Encabezado -->
+            <form>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                <label class="title">N° PÓLIZA:</label> &nbsp;
+                                <label class="frmLblColor">{{dataConsulta.NumPoliza}}</label>
+                            </div>
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                <label class="title col-lg-5 col-md-5 col-sm-5" style="padding: 2px 0px 0px 0px;">FECHA EMISIÓN:</label>
+                                <!-- <label class="frmLblColor">{{dataConsulta.FecEmision}}</label> -->
+                                <input class="col-lg-6 col-md-6 col-sm-6" style="width: 120px; height: 23px;" type="date" class="form-control" id="txtFecEmision" [(ngModel)]="dataConsulta.FecEmision" name="FecEmision">
+                            </div>
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                <label class="title">CUSPP:</label> &nbsp;
+                                <label class="frmLblColor">{{dataConsulta.CUSPP}}</label>
+                            </div>
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                <label class="title">N° COTIZACIÓN:</label> &nbsp;
+                                <label class="frmLblColor">{{dataConsulta.NumCot}}</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                                <label class="title">TITULAR:</label> &nbsp;
+                                <label class="frmLblColor">{{dataConsulta.NombreCompleto}}</label>
+                            </div>
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                <label class="title">N° OPERACIÓN:</label> &nbsp;
+                                <label class="frmLblColor">{{dataConsulta.NumOperacion}}</label>
+                            </div>
+                            <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                                <label class="title col-lg-5 col-md-6 col-sm-6" style="padding: 0px;">FECHA INGRESO SPP:</label>
+                                <!-- <label class="frmLblColor">{{dataConsulta.FecIngresospp}}</label> -->
+                                <input class="col-lg-6 col-md-6 col-sm-6" style="width: 150px; height: 23px;" maxlength="10" placeholder="dd/MM/YYYY" type="text" class="form-control" id="txtFecSPP" [(ngModel)]="dataConsulta.FecIngresosppText" (keyup)="formateafecha(dataConsulta.FecIngresosppText)"
+                                    name="FecIngresospp">
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <!-- Teerminan Campos Encabezado -->
+        </div>
+    </div>
+</div>
+<div class="col-lg-12 col-md-12 col-sm-12">
+    <div class="panel with-nav-tabs panel-default">
+        <div class="panel-heading">
+            <ul class="nav nav-tabs">
+                <li id="pestanaAfiliadoLi" class="active"><a id="pestanaAfiliado" href="#datosAfiliado" data-toggle="tab">Datos del Afiliado</a></li>
+                <li><a id="pestanaBeneficiario" href="#datosBeneficiario" data-toggle="tab">Datos del Beneficiario</a></li>
+            </ul>
+        </div>
+        <div class="panel-body">
+            <div class="tab-content">
+                <!-- Pestaña Afiliado -->
+                <div class="tab-pane fade in active" id="datosAfiliado">
+
+                    <div class="col-lg-12 col-md-12 col-sm-12 m-3">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h5 class="titulo"><b>Datos Generales</b></h5>
+                            </div>
+                        </div>
+                        <form>
+
+
+                            <div class="row">
+                                <div class="form-group col-lg-3 col-md-3 col-sm-3" id="custom-select">
+                                    <label class="frmLblColor">Tipo de Documento</label><label class="frmLblColor" *ngIf=" slcTipoIdentificacion.invalid ">: * </label>
+                                    <select id="slcTipoIdentificacion" class="form-control" (change)="cambiarTipoIden()" [(ngModel)]="TipoIden" name="TipoIden" #slcTipoIdentificacion="ngModel" required>
+                                        <option value="0">Seleccionar</option>
+                                        <option *ngFor="let item of this.cmbTipoIdent" value="{{ item.codigo }}">{{ item.Nombre}}</option>
+                                            </select>
+                                </div>
+                                <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                    <label class="frmLblColor">Documento</label><label class="frmLblColor" *ngIf=" inpNIdentificacion.invalid ">: * </label>
+                                    <input type="text" class="form-control" id="inpNIdentificacion" [(ngModel)]="dataConsulta.NumIdenafi" name="NumIdenafi" oninput="this.value = this.value.toUpperCase()" [maxLength]="this.maxLengthNumDoc" #inpNIdentificacion="ngModel" required>
+                                </div>
+                                <div class="form-group col-lg-3 col-md-3 col-sm-3" id="custom-select">
+                                    <label class="frmLblColor">Género</label>
+                                    <select id="slcSexoPol" class="form-control" (change)="this.dataConsulta.CodSexo = this.codSexoSelect" [(ngModel)]="codSexoSelect" name="codSexoSelect" disabled>
+                                              <option *ngFor="let item of cmbSexo" value="{{ item.cod_elemento }}">{{ item.gls_elemento }}</option>
+                                          </select>
+                                </div>
+                                <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                    <label class="frmLblColor">Nacionalidad</label>
+                                    <!--<input type="text" class="form-control" id="inpNacionalidad" [(ngModel)]="this.dataConsulta.Nacionalidad = this.Nacionalidad" (keypress)="soloLetras($event)" oninput="this.value = this.value.toUpperCase()">-->
+                                    <select id="Nacionalidad" class="form-control" (change)="this.dataConsulta.GlsNacionalidad = this.dataConsulta.GlsNacionalidad" [(ngModel)]="dataConsulta.GlsNacionalidad" name="Nacionalidad">
+                                      <option *ngFor="let item of CmbNacionalidad" value="{{ item.Nombre }}">{{ item.Nombre }}</option>
+                                  </select>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                    <label class="frmLblColor">Apellido Paterno</label>
+                                    <input type="text" class="form-control" id="GlsPatben" [(ngModel)]="dataConsulta.GlsPatben" name="GlsPatben" (keypress)="soloLetras($event)" oninput="this.value = this.value.toUpperCase()">
+                                </div>
+                                <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                    <label class="frmLblColor">Apellido Materno</label>
+                                    <input type="text" class="form-control" id="GlsMatben" [(ngModel)]="dataConsulta.GlsMatben" name="GlsMatben" (keypress)="soloLetras($event)" oninput="this.value = this.value.toUpperCase()">
+                                </div>
+                                <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                    <label class="frmLblColor">Primer Nombre</label>
+                                    <input type="text" class="form-control" id="GlsNomben" [(ngModel)]="dataConsulta.GlsNomben" name="GlsNomben" (keypress)="soloLetras($event)" oninput="this.value = this.value.toUpperCase()">
+                                </div>
+                                <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                    <label class="frmLblColor">Segundo Nombre</label>
+                                    <input type="text" class="form-control" id="GlsNomsegben" [(ngModel)]="dataConsulta.GlsNomsegben" name="GlsNomsegben" (keypress)="soloLetras($event)" oninput="this.value = this.value.toUpperCase()">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                    <label class="frmLblColor">Fecha de Nacimiento</label>
+                                    <input type="date" class="form-control" id="inpFecNacAfi" [(ngModel)]="dataConsulta.FecNacben" name="FecNacben" disabled>
+                                </div>
+                                <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                    <label class="frmLblColor">Fecha de Fallecimiento</label>
+                                    <input type="date" class="form-control" id="inpFecFallAfi" [(ngModel)]="dataConsulta.FecFallben" name="FecFallben" [disabled]="isDisabledFecFall">
+                                </div>
+                            </div>
+
+
+                        </form>
+                    </div>
+
+                    <div class="col-lg-12 col-md-12 col-sm-12 m-3">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h5 class="titulo"><b>Domicilio</b></h5>
+                            </div>
+                        </div>
+                        <form>
+                            <!-- Se agregan campos de Dirección Correspondencia y Código Ubigeo de Correspondencia -->
+                            <div class="row">
+                                <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                    <label class="frmLblColor">Dirección Expediente</label><label class="frmLblColor" *ngIf=" inpDireccionExp.invalid ">: * </label>
+                                    <input type="text" class="form-control" id="inpDireccionExp" [(ngModel)]="dataConsulta.GlsDireccion" name="GlsDireccion" style="text-transform: uppercase;" #inpDireccionExp="ngModel" required>
+                                </div>
+                                <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                    <label class="frmLblColor">Ubigeo Expediente</label><label class="frmLblColor" *ngIf=" inpUbigeoExp.invalid ">: * </label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="inpUbigeoExp" [(ngModel)]="direccionStr" name="CodDireccion" (keypress)="numberOnly($event)" #inpUbigeoExp="ngModel" required disabled>
+                                        <span class="input-group-btn">
+                                          <button class="btn btn-primary btnrad" type="button" data-toggle="modal"  data-target="#modalDirecciones" (click)="selectDirecciones('Exp')"><i class="fa fa-plus"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                    <label class="frmLblColor">Dirección Correspondencia</label>
+                                    <input type="text" class="form-control" id="inpDireccionCorresp" [(ngModel)]="dataConsulta.GlsDireccionCorresp" name="GlsDireccionCorresp" style="text-transform: uppercase;">
+                                </div>
+                                <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                    <label class="frmLblColor">Ubigeo Correspondencia</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="inpUbigeoCorresp" [(ngModel)]="dirCorrStr" name="CodUbigeoCorresp" (keypress)="numberOnly($event)" disabled>
+                                        <span class="input-group-btn">
+                                          <button class="btn btn-primary btnrad" type="button" data-toggle="modal"  data-target="#modalDirecciones" (click)="selectDirecciones('Corresp')"><i class="fa fa-plus"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Terminan campos de Dirección Correspondencia y Código Ubigeo de Correspondencia -->
+
+                            <div class="row">
+                                <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                    <label class="frmLblColor">Correo Electrónico</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="inpCorreo1Afi" [(ngModel)]="dataConsulta.GlsCorreo" name="GlsCorreo" oninput="this.value = this.value.toUpperCase()">
+                                        <span class="input-group-btn">
+                                          <button class="btn btn-primary btnrad" type="button" data-toggle="modal"  data-target="#modalCorreos" (click)="this.opcionCorreos = 'Afiliado'"><i class="fa fa-plus"></i></button>
+                                        </span>
+
+                                    </div>
+                                </div>
+                                <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                    <label class="frmLblColor">Teléfono</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="inpTelefono1" [(ngModel)]="dataConsulta.GlsFono" name="GlsFono" (keypress)="numberOnly($event)" minlength="7" maxlength="9">
+                                        <span class="input-group-btn">
+                                          <button class="btn btn-primary btnrad" type="button" data-toggle="modal"  data-target="#modalTelefonos" (click)="this.opcionTelefonos = 'Afiliado'"><i class="fa fa-plus"></i></button>
+                                        </span>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="col-lg-12 col-md-12 col-sm-12 m-3">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h5 class="titulo"><b>Datos de la Póliza</b></h5>
+                            </div>
+                        </div>
+                        <form>
+                            <div class="row">
+                                <div class="form-group col-lg-3 col-md-3 col-sm-3" id="custom-select">
+                                    <label class="frmLblColor">Tipo Pensión</label>
+                                    <select id="slcTipoPension" class="form-control" (change)="this.dataConsulta.CodTippension = this.TipoPension" [(ngModel)]="TipoPension" name="TipoPension" disabled>
+                                            <option *ngFor="let item of cmbPension" value="{{ item.cod_elemento }}">{{ item.gls_elemento }}</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                    <label class="frmLblColor">Fec Invalidez</label>
+                                    <input type="date" class="form-control" id="inpFecInvalidezAfi" [(ngModel)]="dataConsulta.FecInvben" name="FecInvben" [disabled]="isDisabledFecInv">
+                                </div>
+                                <div class="form-group col-lg-3 col-md-3 col-sm-3" id="custom-select">
+                                    <label class="frmLblColor">Causa Invalidez</label>
+                                    <select id="slcCausaInvalidezPol" class="form-control" [(ngModel)]="dataConsulta.CodCauinv" name="CodCauinv" [disabled]="isDisabledCauInv">
+                                            <option *ngFor="let item of cmbCausInv" value="{{ item.cod_patologia }}">{{ item.gls_patologia }}</option>
+                                        </select>
+                                </div>
+                                <div class="form-group col-lg-3 col-md-3 col-sm-3" id="custom-select">
+                                    <label class="frmLblColor">Tipo Vejez</label>
+                                    <select [disabled]="tipPen" id="slcTipoVejez" class="form-control" [(ngModel)]="TipoVejez" name="TipoVejez" (change)="this.dataConsulta.CodVejez = this.TipoVejez">
+                                            <option *ngFor="let item of this.cmbVejez" value="{{ item.cod_elemento }}">{{ item.gls_elemento }}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-lg-3 col-md-3 col-sm-3" id="custom-select">
+                                    <label class="frmLblColor">AFP</label>
+                                    <select id="slcAFP" class="form-control" [(ngModel)]="AFP" name="AFP" (change)="this.dataConsulta.CodAfp = this.AFP" disabled>
+                                        <option *ngFor="let item of this.cmbAfp" value="{{ item.cod_elemento }}">{{ item.gls_elemento }}</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-lg-3 col-md-3 col-sm-3" id="custom-select">
+                                    <label class="frmLblColor">Est. Civil</label>
+                                    <select id="slcEstCivil" class="form-control" [(ngModel)]="EstCivil" name="EstCivil" (change)="this.dataConsulta.CodEstcivil = this.EstCivil">
+                                        <option *ngFor="let item of this.cmbCivil" value="{{ item.cod_elemento }}">{{ item.gls_elemento }}</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-lg-3 col-md-3 col-sm-3" id="custom-select">
+                                    <label class="frmLblColor">Ins. Salud</label>
+                                    <select id="slcInsSalud" class="form-control" [(ngModel)]="InsSalud" name="InsSalud" (change)="this.dataConsulta.CodIsapre = this.InsSalud">
+                                        <option *ngFor="let item of this.cmbInsSalud" value="{{ item.cod_elemento }}">{{ item.gls_elemento }}</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                    <label class="frmLblColor">Representante</label>
+                                    <input type="text" class="form-control" id="inpRepresentante" oninput="this.value = this.value.toUpperCase()">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                    <label class="frmLblColor">Fecha de Aceptación</label>
+                                    <input type="date" class="form-control" id="inpFecAcep" [(ngModel)]="dataConsulta.FecAceptacion" name="FecAceptacion" required>
+                                </div>
+                                <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                    <label class="frmLblColor">Protección de Datos:</label>
+
+
+                                    <div class="custom-control custom-radio">
+                                        <input style="margin-right: 6px;" type="radio" id="radioProteccionS" name="radioProteccion" class="custom-control-input" value="S" [(ngModel)]="this.dataConsulta.Proteccion">
+
+                                        <label class="frmLblColor" for="radioProteccionS">SÍ</label>
+                                    </div>
+                                    <div class="custom-control custom-radio">
+                                        <input style="margin-right: 6px;" type="radio" id="radioProteccionN" name="radioProteccion" class="custom-control-input" value="N" [(ngModel)]="this.dataConsulta.Proteccion">
+                                        <label class="frmLblColor" for="radioProteccionN">NO</label>
+                                    </div>
+                                </div>
+                                <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                    <label class="frmLblColor">Boleta de Pago:</label>
+
+
+                                    <div class="custom-control custom-radio">
+                                        <input style="margin-right: 6px;" type="radio" id="radioBoletaS" name="radioBoleta" class="custom-control-input" value="S" [(ngModel)]="this.dataConsulta.Boleta">
+
+                                        <label class="frmLblColor" for="radioBoletaS">SÍ</label>
+                                    </div>
+                                    <div class="custom-control custom-radio">
+                                        <input style="margin-right: 6px;" type="radio" id="radioBoletaN" name="radioBoleta" class="custom-control-input" value="N" [(ngModel)]="this.dataConsulta.Boleta">
+                                        <label class="frmLblColor" for="radioBoletaN">NO</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+
+                    <div class="col-lg-12 col-md-12 col-sm-12 m-3">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h5 class="titulo"><b>Forma de Pago de Pensión</b></h5>
+                            </div>
+                        </div>
+                        <form>
+                            <div class="row">
+                                <div class="form-group col-lg-3 col-md-3 col-sm-3" id="custom-select">
+                                    <label class="frmLblColor">Via Pago</label>
+                                    <select id="slcViaPago" class="form-control" [(ngModel)]="ViaPago" name="ViaPago" (change)="cambiarViaPago()">
+                                        <option *ngFor="let item of this.cmbViaPago" value="{{ item.cod_elemento }}">{{ item.gls_elemento }}</option>
+                                    </select>
+                                </div>
+                                <div *ngIf="this.ViaPago === '01' || this.ViaPago === '04'" class="form-group col-lg-3 col-md-3 col-sm-3" id="custom-select">
+                                    <label class="frmLblColor">Sucursal</label>
+                                    <select id="slcSucursal" class="form-control" [(ngModel)]="Sucursal" name="Sucursal" (change)="this.dataConsulta.CodSucursal = this.Sucursal">
+                                        <option *ngFor="let item of this.cmbSucursal" value="{{ item.cod_elemento }}">{{ item.gls_elemento }}</option>
+                                    </select>
+                                </div>
+                                <div *ngIf="this.ViaPago !== '01' && this.ViaPago !== '04'" class="form-group col-lg-3 col-md-3 col-sm-3" id="custom-select">
+                                    <label class="frmLblColor">Sucursal</label>
+                                    <select id="slcSucursal" class="form-control" [(ngModel)]="Sucursal" name="Sucursal" (change)="this.dataConsulta.CodSucursal = this.Sucursal" disabled>
+                                        <option *ngFor="let item of this.cmbSucursal" value="{{ item.cod_elemento }}">{{ item.gls_elemento }}</option>
+                                    </select>
+                                </div>
+                                <div *ngIf="this.ViaPago === '02' || this.ViaPago === '05'" class="form-group col-lg-3 col-md-3 col-sm-3" id="custom-select">
+                                    <label class="frmLblColor">Banco</label>
+                                    <select id="slcBanco" class="form-control" [(ngModel)]="Banco" name="Banco" (change)="cambiarBanco('afiliado')">
+                                        <option *ngFor="let item of this.cmbBanco" value="{{ item.cod_elemento }}">{{ item.gls_elemento }}</option>
+                                    </select>
+                                </div>
+                                <div *ngIf="this.ViaPago !== '02'  && this.ViaPago !== '05'" class="form-group col-lg-3 col-md-3 col-sm-3" id="custom-select">
+                                    <label class="frmLblColor">Banco</label>
+                                    <select id="slcBanco" class="form-control" [(ngModel)]="Banco" name="Banco" (change)="this.dataConsulta.CodBanco = this.Banco" disabled>
+                                        <option *ngFor="let item of this.cmbBanco" value="{{ item.cod_elemento }}">{{ item.gls_elemento }}</option>
+                                    </select>
+                                </div>
+                                <div *ngIf="this.ViaPago === '02' || this.ViaPago === '03'" class="form-group col-lg-3 col-md-3 col-sm-3" id="custom-select">
+                                    <label class="frmLblColor">Tipo Cuenta</label>
+                                    <select id="slcTipoCuenta" class="form-control" [(ngModel)]="TipoCuenta" name="TipoCuenta" (change)="cambiarTipoCuenta('afiliado')">
+                                        <option value="00">Seleccionar</option>
+                                        <option *ngFor="let item of this.cmbTipoCuenta" value="{{ item.COD_CUENTA }}">{{ item.GLS_CUENTA }}</option>
+                                    </select>
+                                </div>
+                                <div *ngIf="this.ViaPago !== '02' && this.ViaPago !== '03'" class="form-group col-lg-3 col-md-3 col-sm-3" id="custom-select">
+                                    <label class="frmLblColor">Tipo Cuenta</label>
+                                    <select id="slcTipoCuenta" class="form-control" [(ngModel)]="TipoCuenta" name="TipoCuenta" (change)="this.dataConsulta.CodTipcuenta = this.TipoCuenta" disabled>
+                                        <option value="00">Seleccionar</option>
+                                        <option *ngFor="let item of this.cmbTipoCuenta" value="{{ item.COD_CUENTA }}">{{ item.GLS_CUENTA }}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div *ngIf="this.ViaPago === '02' || this.ViaPago === '03'" class="form-group col-lg-3 col-md-3 col-sm-3">
+                                    <label class="frmLblColor">Código Interbancario</label>
+                                    <input type="text" class="form-control" id="nCuentaCci" [(ngModel)]="dataConsulta.NumCuentacci" name="NumCuentacci" maxlength="20">
+                                </div>
+                                <div *ngIf="this.ViaPago !== '02' && this.ViaPago !== '03'" class="form-group col-lg-3 col-md-3 col-sm-3">
+                                    <label class="frmLblColor">Código Interbancario</label>
+                                    <input type="text" class="form-control" id="nCuentaCci" [(ngModel)]="dataConsulta.NumCuentacci" name="NumCuentacci" maxlength="20" disabled>
+                                </div>
+                                <div *ngIf="this.ViaPago === '02' || this.ViaPago === '03'" class="form-group col-lg-3 col-md-3 col-sm-3">
+                                    <label class="frmLblColor">N° de Cuenta</label>
+                                    <input type="text" class="form-control" id="nCuenta" [(ngModel)]="dataConsulta.NumCuenta" name="NumCuenta" [maxlength]="maxLengthNumCuenta" oninput="this.value = this.value.toUpperCase()">
+                                </div>
+                                <div *ngIf="this.ViaPago !== '02' && this.ViaPago !== '03'" class="form-group col-lg-3 col-md-3 col-sm-3">
+                                    <label class="frmLblColor">N° de Cuenta</label>
+                                    <input type="text" class="form-control" id="nCuenta" [(ngModel)]="dataConsulta.NumCuenta" name="NumCuenta" [maxlength]="maxLengthNumCuenta" disabled>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+                <!-- Termina Pestaña Afiliado -->
+
+                <!-- Pestaña Beneficiarios -->
+                <div class="tab-pane fade" id="datosBeneficiario">
+
+                    <!-- Tabla Beneficiarios -->
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="table-responsive">
+                            <mat-table [dataSource]="dataSource" class="table table-hover">
+                                <mat-header-row *matHeaderRowDef="columnasBen; sticky: true"></mat-header-row>
+                                <mat-row *matRowDef="let row; columns: columnasBen; let lesson;" (dblclick)="seleccionaTblBen(lesson)"></mat-row>
+                                <ng-container matColumnDef="item">
+                                    <mat-header-cell *matHeaderCellDef>
+                                        <div>N° Orden</div>
+
+                                    </mat-header-cell>
+                                    <mat-cell class="duration-cell" *matCellDef="let lesson; let i=index">{{lesson.NumOrden}}</mat-cell>
+                                </ng-container>
+                                <ng-container matColumnDef="codPar">
+                                    <mat-header-cell *matHeaderCellDef>
+                                        <div>Cod. Par</div>
+
+                                    </mat-header-cell>
+                                    <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.ParentescoStr}}</mat-cell>
+                                </ng-container>
+                                <ng-container matColumnDef="tipoIden">
+                                    <mat-header-cell *matHeaderCellDef>
+                                        <div>Tipo Ident.</div>
+
+                                    </mat-header-cell>
+                                    <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.TipoidenbenStr}}</mat-cell>
+                                </ng-container>
+                                <ng-container matColumnDef="numIden">
+                                    <mat-header-cell *matHeaderCellDef>
+                                        <div>N° Ident.</div>
+
+                                    </mat-header-cell>
+                                    <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.NumIdenben}}</mat-cell>
+                                </ng-container>
+                                <ng-container matColumnDef="benNombre">
+                                    <mat-header-cell *matHeaderCellDef>
+                                        <div style="text-align: center;">Nombres</div>
+
+                                    </mat-header-cell>
+                                    <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.GlsNomben}} {{lesson.GlsNomsegben}} {{lesson.GlsPatben}} {{lesson.GlsMatben}}</mat-cell>
+                                </ng-container>
+                                <ng-container matColumnDef="acciones">
+                                    <mat-header-cell *matHeaderCellDef>
+                                        <div>Acciones</div>
+
+                                    </mat-header-cell>
+                                    <mat-cell class="duration-cell" *matCellDef="let lesson"><i style="color:#0090B2" class="fa fa-edit exclam" title="Modificar" (click)="seleccionaTblBen(lesson)"></i></mat-cell>
+                                </ng-container>
+                            </mat-table>
+                            <!-- <mat-paginator [length]="0" [pageSize]="20" [pageSizeOptions]="[5, 10, 20, 50]" [showFirstLastButtons]="true"></mat-paginator> -->
+                        </div>
+                        <!-- <div class="col-md-12" style="text-align: end;">
+                            <button type="button" class="btn btn-default mr" ><i class="glyphicon glyphicon-pencil"></i>Guardar</button>
+                            <button type="button" class="btn btn-primary p-0" data-toggle="modal" data-target="#modalEditar"><i class="glyphicon glyphicon-pencil"></i></button>
+                        </div> -->
+                    </div>
+                    <!-- Termina Tabla Beneficiarios -->
+
+                    <div class="col-lg-12 col-md-12 col-sm-12 m-3">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h5 class="titulo"><b>Beneficiario</b></h5>
+                            </div>
+                        </div>
+                        <form>
+                            <div class="row">
+                                <div class="row" style="padding-left: 15px;">
+                                    <div class="form-group col-lg-3 col-md-3 col-sm-3" id="custom-select">
+                                        <label class="frmLblColor">Tipo Ident.</label>
+                                        <select id="slcTipoIdent" class="form-control" (change)="cambiarTipoIdenBen('beneficiario')" [(ngModel)]="codIdenBenSelect" name="codIdenBenSelect">
+                                            <option value="0">Seleccionar</option>
+                                            <option *ngFor="let item of cmbTipoIdenBen" value="{{ item.codigo }}">{{ item.Nombre }}</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                        <label class="frmLblColor">N° Ident.</label>
+                                        <!--<label class="frmLblColor" *ngIf=" inpNIdent.invalid ">: * </label> -->
+                                        <input type="text" class="form-control" id="inpNIdent" [(ngModel)]="polBenSelect.NumIdenben" name="NumIdenben" oninput="this.value = this.value.toUpperCase()" [maxLength]="this.maxLengthNumDocBen">
+                                    </div>
+                                </div>
+                                <div class="row rowleft">
+                                    <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                        <label class="frmLblColor">Ap. Paterno</label>
+                                        <input type="text" class="form-control" id="inpApPaterno" [(ngModel)]="polBenSelect.GlsPatben" name="GlsPatben" (keypress)="soloLetras($event)" oninput="this.value = this.value.toUpperCase()">
+                                    </div>
+                                    <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                        <label class="frmLblColor">Ap. Materno</label>
+                                        <input type="text" class="form-control" id="inpApMaterno" [(ngModel)]="polBenSelect.GlsMatben" name="GlsMatben" (keypress)="soloLetras($event)" oninput="this.value = this.value.toUpperCase()">
+                                    </div>
+                                    <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                        <label class="frmLblColor">Primer Nombre</label>
+                                        <input type="text" class="form-control" id="inp1erNombre" [(ngModel)]="polBenSelect.GlsNomben" name="GlsNomben" (keypress)="soloLetras($event)" oninput="this.value = this.value.toUpperCase()">
+                                    </div>
+                                    <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                        <label class="frmLblColor">Segundo Nombre</label>
+                                        <input type="text" class="form-control" id="inp2doNombre" [(ngModel)]="polBenSelect.GlsNomsegben" name="GlsNomsegben" (keypress)="soloLetras($event)" oninput="this.value = this.value.toUpperCase()">
+                                    </div>
+                                </div>
+                                <div class="row rowleft">
+                                    <div class="form-group col-lg-3 col-md-3 col-sm-3" id="custom-select">
+                                        <label class="frmLblColor">Grupo Familiar</label>
+                                        <select id="slcGrupoFamiliar" class="form-control" (change)="this.polBenSelect.CodGrufam = this.codGruFamBenSelect" [(ngModel)]="codGruFamBenSelect" name="codGruFamBenSelect" disabled>
+                                            <option *ngFor="let item of cmbGruFam" value="{{ item.cod_elemento }}">{{ item.gls_elemento }}</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                        <label class="frmLblColor">Fec. Nac.</label>
+                                        <input type="text" class="form-control" id="inpFecNacBen" [(ngModel)]="polBenSelect.FecNacben" name="FecNacben" disabled>
+                                    </div>
+                                    <div class="form-group col-lg-3 col-md-3 col-sm-3" id="custom-select">
+                                        <label class="frmLblColor">Género</label>
+                                        <select id="slcSexo" class="form-control" (change)="this.polBenSelect.CodSexo = this.codSexoBenSelect" [(ngModel)]="codSexoBenSelect" name="codSexoBenSelect" disabled>
+                                            <option *ngFor="let item of cmbSexo" value="{{ item.cod_elemento }}">{{ item.gls_elemento }}</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                        <label class="frmLblColor">Fec. Fall.</label>
+                                        <input type="date" class="form-control" id="inpFecFallBen" [(ngModel)]="polBenSelect.FecFallben" name="FecFallben">
+                                    </div>
+                                </div>
+                                <div class="row rowleft">
+                                    <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                        <label class="frmLblColor">Teléfono</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" id="inpTelefonoBen" [(ngModel)]="polBenSelect.GlsFono" name="GlsFono" (keypress)="numberOnly($event)" minlength="7" maxlength="9">
+                                            <span class="input-group-btn">
+                                          <button class="btn btn-primary btnrad" type="button" data-toggle="modal"  data-target="#modalTelefonos" (click)="this.opcionTelefonos = 'Ben'"><i class="fa fa-plus"></i></button>
+                                        </span>
+
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                        <label class="frmLblColor">Correo Electrónico</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" id="inpCorreo1Ben" [(ngModel)]="polBenSelect.GlsCorreo" name="GlsCorreo" oninput="this.value = this.value.toUpperCase()">
+                                            <span class="input-group-btn">
+                                          <button class="btn btn-primary btnrad" type="button" data-toggle="modal"  data-target="#modalCorreos" (click)="this.opcionCorreos = 'Ben'"><i class="fa fa-plus"></i></button>
+                                        </span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-lg-3 col-md-3 col-sm-3" id="custom-select">
+                                        <label class="frmLblColor">Sit. Invalidez</label>
+                                        <select id="slcSitInvalidez" class="form-control" (change)="this.polBenSelect.CodStinv = this.codSitInvBenSelect" [(ngModel)]="codSitInvBenSelect" name="codSitInvBenSelect" disabled>
+                                        <option value="S">SI</option>
+                                        <option value="N">NO</option>
+                                    </select>
+                                    </div>
+                                    <div class="form-group col-lg-3 col-md-3 col-sm-3" id="custom-select">
+                                        <label class="frmLblColor">Causa Invalidez <i class="glyphicon glyphicon-question-sign bgIcon"></i></label>
+                                        <select [disabled]="sitInvalidez" id="slcCausaInvalidez" class="form-control" (change)="this.polBenSelect.CodCauinv = this.codCausInvBenSelect" [(ngModel)]="codCausInvBenSelect" name="codCausInvBenSelect">
+                                        <option *ngFor="let item of cmbCausInv" value="{{ item.cod_patologia }}">{{ item.gls_patologia }}</option>
+                                    </select>
+                                    </div>
+                                </div>
+                                <div class="row rowleft">
+                                    <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                        <label class="frmLblColor">Dirección Expediente</label><label class="frmLblColor" *ngIf=" inpDireccionExp.invalid "> </label>
+                                        <input type="text" class="form-control" id="inpDireccionExp" [(ngModel)]="polBenSelect.GlsDireccionBen" name="GlsDireccion" style="text-transform: uppercase;" #inpDireccionExp="ngModel">
+                                    </div>
+                                    <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                        <label class="frmLblColor">Ubigeo Expediente</label><label class="frmLblColor" *ngIf=" inpUbigeoExp.invalid "> </label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" id="inpUbigeoExp" [(ngModel)]="direccionStrBen" name="CodDireccion" (keypress)="numberOnly($event)" #inpUbigeoExpBen="ngModel" disabled>
+                                            <span class="input-group-btn">
+                                                  <button class="btn btn-primary btnrad" type="button" data-toggle="modal"  data-target="#modalDirecciones" (click)="selectDirecciones('ExpBen')"><i class="fa fa-plus"></i></button>
+                                                </span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                        <label class="frmLblColor">Dirección Correspondencia</label>
+                                        <input type="text" class="form-control" id="inpDireccionCorresp" [(ngModel)]="polBenSelect.GlsDireccionCorrespBen" name="GlsDireccionCorresp" style="text-transform: uppercase;">
+                                    </div>
+                                    <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                        <label class="frmLblColor">Ubigeo Correspondencia</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" id="inpUbigeoCorresp" [(ngModel)]="dirCorrStrBen" name="CodUbigeoCorresp" (keypress)="numberOnly($event)" disabled>
+                                            <span class="input-group-btn">
+                                                  <button class="btn btn-primary btnrad" type="button" data-toggle="modal"  data-target="#modalDirecciones" (click)="selectDirecciones('CorrespBen')"><i class="fa fa-plus"></i></button>
+                                                </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row rowleft">
+                                    <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                        <label class="frmLblColor">Fec. Invalidez</label>
+                                        <input [disabled]="sitInvalidez" type="date" class="form-control" id="inpFecInvalidezBen" [(ngModel)]="polBenSelect.FecInvben" name="FecInvben">
+                                    </div>
+                                    <div class="form-group col-lg-3 col-md-3 col-sm-3" id="custom-select">
+                                        <label class="frmLblColor">Parentesco</label>
+                                        <select id="slcParentesco" class="form-control" (change)="this.polBenSelect.CodPar = this.codParBenSelect" [(ngModel)]="codParBenSelect" name="codParBenSelect" disabled>
+                                            <option *ngFor="let item of cmbParentesco" value="{{ item.cod_elemento }}">{{ item.gls_elemento }}</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-lg-3 col-md-3 col-sm-3" id="custom-select">
+                                        <label class="frmLblColor">Estudiante</label>
+                                        <select id="txtEstudiante" class="form-control" [disabled]="isDisabledEst" [(ngModel)]="polBenSelect.IndEstudiante" name="IndEstudiante">
+                                          <option  value="S">SI</option>
+                                          <option  value="N">NO</option>
+                                      </select>
+                                    </div>
+                                    <div class="form-group col-lg-3 col-md-3 col-sm-3" id="custom-select">
+                                        <label class="frmLblColor">D° a Pensión</label>
+                                        <select id="slcDPension" class="form-control" (change)="this.polBenSelect.CodDerpen = this.codDerPenBenSelect" [(ngModel)]="codDerPenBenSelect" name="codDerPenBenSelec" disabled>
+                                            <option *ngFor="let item of cmbDerPen" value="{{ item.cod_elemento }}">{{ item.gls_elemento }}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row rowleft">
+                                    <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                        <label class="frmLblColor">Porcentaje</label>
+                                        <input type="text" class="form-control" id="inpPorcentaje" [(ngModel)]="polBenSelect.PrcPension" name="PrcPension" (keypress)="numberDecimal($event)" disabled>
+                                    </div>
+                                    <div class="form-group col-lg-3 col-md-2 col-sm-2">
+                                        <label class="frmLblColor">Pensión</label>
+                                        <input type="text" class="form-control" id="inpPension" [ngModel]="polBenSelect.MtoPension | number: '1.2-2'" name="MtoPension" (keypress)="numberDecimal($event)" disabled>
+                                    </div>
+                                    <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                        <label class="frmLblColor">Protección de Datos:</label>
+
+
+                                        <div class="custom-control custom-radio">
+                                            <input style="margin-right: 6px;" type="radio" id="radioProteccionBenS" name="radioProteccionBen" class="custom-control-input" value="S" [(ngModel)]="polBenSelect.ProteccionBen">
+
+                                            <label class="frmLblColor" for="radioProteccionBenS">SÍ</label>
+                                        </div>
+                                        <div class="custom-control custom-radio">
+                                            <input style="margin-right: 6px;" type="radio" id="radioProteccionBenN" name="radioProteccionBen" class="custom-control-input" value="N" [(ngModel)]="polBenSelect.ProteccionBen">
+                                            <label class="frmLblColor" for="radioProteccionBenN">NO</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                                        <label class="frmLblColor">Boleta de Pago:</label>
+
+
+                                        <div class="custom-control custom-radio">
+                                            <input style="margin-right: 6px;" type="radio" id="radioBoletaBenS" name="radioBoletaBen" class="custom-control-input" value="S" [(ngModel)]="polBenSelect.BoletaBen">
+
+                                            <label class="frmLblColor" for="radioBoletaBenS">SÍ</label>
+                                        </div>
+                                        <div class="custom-control custom-radio">
+                                            <input style="margin-right: 6px;" type="radio" id="radioBoletaBenN" name="radioBoletaBen" class="custom-control-input" value="N" [(ngModel)]="polBenSelect.BoletaBen">
+                                            <label class="frmLblColor" for="radioBoletaBenN">NO</label>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="polBenSelect.MostrarTutor === 'TRUE'" class="form-group col-lg-2 col-md-2 col-sm-2">
+                                        <label class="frmLblColor">Tutor</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" id="txtTutor" value="{{this.polBenSelect.PrimerNombreTut + ' ' + this.polBenSelect.SegundoNombreTut + ' ' + this.polBenSelect.ApellidoPaternoTut + ' ' + this.polBenSelect.ApellidoMaternoTut}}" disabled>
+                                            <span class="input-group-btn">
+                                          <button class="btn btn-primary btnrad" type="button" data-toggle="modal"  data-target="#modalAgregarTutor" (click)="abrirModalTutor()"><i class="fa fa-edit exclam"></i></button>
+                                        </span>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-lg-2 col-md-2 col-sm-3 col-xs-12" style="padding-top: 22px;">
+                                        <button type="button " class="btn btn-azul btn-azul-fix col-md-12 col-xs-12" (click)="limpiarDataBen()"><i class="fa fa-file-o"></i> Cancelar/Limpiar</button>
+                                    </div>
+                                    <div class="form-group col-lg-2 col-md-2 col-sm-3 col-xs-12" style="padding-top: 22px;">
+                                        <button type="button " class="btn btn-azul btn-azul-fix col-md-12 col-xs-12" (click)="guardarBen()"><i class="fa fa-file"></i> Guardar</button>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+                <!-- Termina Pestaña Beneficiarios -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Botones principales -->
+<div class="col-lg-12 col-md-12 col-sm-12">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group spaceM btnAlign btnCenter">
+                <!-- <button *ngIf="this.tipoBusqueda === 'C'" type="button" [disabled]="isDisabled1" (click)="crearPrepoliza()" class="btn btn-azul mr"><i class="fa fa-file"></i> Crear Pre-Póliza</button> -->
+                <button *ngIf="this.tipoBusqueda === 'C' && this.valorBtnCancelar === false" type="button" [disabled]="isDisabled1" (click)="crearPrepoliza()" class="btn btn-azul btn-azul-fix mr"><i class="fa fa-file"></i> Crear Pre-Póliza</button>
+                <button *ngIf="this.tipoBusqueda === 'P'" type="button" [disabled]="isDisabled2" (click)="guardar()" class="btn btn-azul btn-azul-fix mr"><i class="fa fa-save"></i> Guardar</button>
+                <button *ngIf="this.tipoBusqueda === 'P' || this.botonGeneraPDF === true" type="button" (click)="exportar()" class="btn btn-azul btn-azul-fix mr"><i class="fa fa-print"></i> Generar pdf</button>
+                <button *ngIf="this.valorBtnCancelar === false" type="button" class="btn btn-azul btn-azul-fix mr" [routerLink]="['/consultaPrePolizas/']"> Cancelar</button>
+                <button *ngIf="this.valorBtnCancelar === true" type="button" id="btnRegresar" class="btn btn-azul mr" [routerLink]="['/consultaPrePolizas/']"> Regresar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Terminan Botones principales -->
+
+
+<!-- Modales -->
+
+<div class="modal fade" id="modalDirecciones" role="dialog" style="margin-top: 70px;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title text-center"><b>Dirección</b></h4>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <form>
+                        <div class="row">
+                            <!-- Dirección Expediente -->
+                            <div *ngIf="opcionDir === 'Exp'" class="form-group col-lg-3 col-md-3 col-sm-3 col-md-offset-1" id="custom-select">
+                                <label class="frmLblColor">Departamento</label>
+                                <select id="slcDepartamento" class="form-control" [(ngModel)]="Departamento" name="Departamento" (change)="selectDepto('')">
+                                    <option value="" selected>Seleccionar</option>
+                                    <option *ngFor="let item of this.cmbDepartamento" value="{{ item.CodRegion }}">{{ item.GlsRegion }}</option>
+                                </select>
+                            </div>
+                            <div *ngIf="opcionDir === 'Exp'" class="form-group col-lg-3 col-md-3 col-sm-3" id="custom-select">
+                                <label class="frmLblColor">Provincia</label>
+                                <select id="slcProvincia" class="form-control" [(ngModel)]="Provincia" name="Provincia" (change)="selectProvincia('')">
+                                    <option value="" selected>Seleccionar</option>
+                                    <option *ngFor="let item of this.cmbProvincia" value="{{ item.CodProvincia }}">{{ item.GlsProvincia }}</option>
+                                </select>
+                            </div>
+                            <div *ngIf="opcionDir === 'Exp'" class="form-group col-lg-3 col-md-3 col-sm-3" id="custom-select">
+                                <label class="frmLblColor">Distrito</label>
+                                <br>
+                                <mat-select [disableOptionCentering]="true" [(ngModel)]="Distrito" name="Distrito" (valueChange)="getInfo2($event)" (valueChange)="selectDistrito('')">
+                                    <mat-select-filter [placeholder]="'Filtro'" [displayMember]="'GlsDistrito'" [array]="cmbDistritoAll" (filteredReturn)="comboDistritoResp =$event"></mat-select-filter>
+                                    <mat-option [value]="0">Seleccionar</mat-option>
+                                    <mat-option *ngFor="let item of comboDistritoResp" [value]="item.CodDireccion">
+                                        {{item.GlsDistrito}}
+                                    </mat-option>
+                                </mat-select>
+                            </div>
+
+                            <!-- Dirección Correspondencia -->
+                            <div *ngIf="opcionDir === 'Corresp'" class="form-group col-lg-3 col-md-3 col-sm-3 col-md-offset-1" id="custom-select">
+                                <label class="frmLblColor">Departamento</label>
+                                <select id="slcDepartamento2" class="form-control" [(ngModel)]="Departamento2" name="Departamento2" (change)="selectDepto('')">
+                                    <option value="" selected>Seleccionar</option>
+                                    <option *ngFor="let item of this.cmbDepartamento2" value="{{ item.CodRegion }}">{{ item.GlsRegion }}</option>
+                                </select>
+                            </div>
+                            <div *ngIf="opcionDir === 'Corresp'" class="form-group col-lg-3 col-md-3 col-sm-3" id="custom-select">
+                                <label class="frmLblColor">Provincia</label>
+                                <select id="slcProvincia2" class="form-control" [(ngModel)]="Provincia2" name="Provincia2" (change)="selectProvincia('')">
+                                    <option value="" selected>Seleccionar</option>
+                                    <option *ngFor="let item of this.cmbProvincia2" value="{{ item.CodProvincia }}">{{ item.GlsProvincia }}</option>
+                                </select>
+                            </div>
+                            <div *ngIf="opcionDir === 'Corresp'" class="form-group col-lg-3 col-md-3 col-sm-3" id="custom-select">
+                                <label class="frmLblColor">Distrito</label>
+                                <br>
+                                <mat-select [disableOptionCentering]="true" id="slcDistrito2" [(ngModel)]="Distrito2" name="Distrito2" (valueChange)="getInfo2($event)" (valueChange)="selectDistrito('')">
+                                    <mat-select-filter [placeholder]="'Filtro'" [displayMember]="'GlsDistrito'" [array]="cmbDistritoAll2" (filteredReturn)="comboDistrito2Resp =$event"></mat-select-filter>
+                                    <mat-option [value]="0">Seleccionar</mat-option>
+                                    <mat-option *ngFor="let item of comboDistrito2Resp" [value]="item.CodDireccion">
+                                        {{item.GlsDistrito}}
+                                    </mat-option>
+                                </mat-select>
+                            </div>
+                            <!-- Dirección Expediente Beneficiarios -->
+                            <div *ngIf="opcionDir === 'ExpBen'" class="form-group col-lg-3 col-md-3 col-sm-3 col-md-offset-1" id="custom-select">
+                                <label class="frmLblColor">Departamento</label>
+                                <select id="slcDepartamentoBen" class="form-control" [(ngModel)]="DepartamentoBen" name="DepartamentoBen" (change)="selectDeptoBen('')">
+                                    <option value="" selected>Seleccionar</option>
+                                    <option *ngFor="let item of this.cmbDepartamentoBen" value="{{ item.CodRegion }}">{{ item.GlsRegion }}</option>
+                                </select>
+                            </div>
+                            <div *ngIf="opcionDir === 'ExpBen'" class="form-group col-lg-3 col-md-3 col-sm-3" id="custom-select">
+                                <label class="frmLblColor">Provincia</label>
+                                <select id="slcProvinciaBen" class="form-control" [(ngModel)]="ProvinciaBen" name="ProvinciaBen" (change)="selectProvinciaBen('')">
+                                    <option value="" selected>Seleccionar</option>
+                                    <option *ngFor="let item of this.cmbProvinciaBen" value="{{ item.CodProvincia }}">{{ item.GlsProvincia }}</option>
+                                </select>
+                            </div>
+                            <div *ngIf="opcionDir === 'ExpBen'" class="form-group col-lg-3 col-md-3 col-sm-3" id="custom-select">
+                                <label class="frmLblColor">Distrito</label>
+                                <br>
+                                <mat-select [disableOptionCentering]="true" [(ngModel)]="DistritoBen" name="DistritoBen" (valueChange)="getInfo2Ben($event)" (valueChange)="selectDistritoBen('')">
+                                    <mat-select-filter [placeholder]="'Filtro'" [displayMember]="'GlsDistrito'" [array]="cmbDistritoAllBen" (filteredReturn)="comboDistritoRespBen =$event"></mat-select-filter>
+                                    <mat-option [value]="0">Seleccionar</mat-option>
+                                    <mat-option *ngFor="let item of comboDistritoRespBen" [value]="item.CodDireccion">
+                                        {{item.GlsDistrito}}
+                                    </mat-option>
+                                </mat-select>
+                            </div>
+
+                            <!-- Dirección Correspondencia Beneficiarios -->
+                            <div *ngIf="opcionDir === 'CorrespBen'" class="form-group col-lg-3 col-md-3 col-sm-3 col-md-offset-1" id="custom-select">
+                                <label class="frmLblColor">Departamento</label>
+                                <select id="slcDepartamento2Ben" class="form-control" [(ngModel)]="Departamento2Ben" name="Departamento2Ben" (change)="selectDeptoBen('')">
+                                    <option value="" selected>Seleccionar</option>
+                                    <option *ngFor="let item of this.cmbDepartamento2Ben" value="{{ item.CodRegion }}">{{ item.GlsRegion }}</option>
+                                </select>
+                            </div>
+                            <div *ngIf="opcionDir === 'CorrespBen'" class="form-group col-lg-3 col-md-3 col-sm-3" id="custom-select">
+                                <label class="frmLblColor">Provincia</label>
+                                <select id="slcProvincia2Ben" class="form-control" [(ngModel)]="Provincia2Ben" name="Provincia2Ben" (change)="selectProvinciaBen('')">
+                                    <option value="" selected>Seleccionar</option>
+                                    <option *ngFor="let item of this.cmbProvincia2Ben" value="{{ item.CodProvincia }}">{{ item.GlsProvincia }}</option>
+                                </select>
+                            </div>
+                            <div *ngIf="opcionDir === 'CorrespBen'" class="form-group col-lg-3 col-md-3 col-sm-3" id="custom-select">
+                                <label class="frmLblColor">Distrito</label>
+                                <br>
+                                <mat-select [disableOptionCentering]="true" id="slcDistrito2Ben" [(ngModel)]="Distrito2Ben" name="Distrito2Ben" (valueChange)="getInfo2Ben($event)" (valueChange)="selectDistritoBen('')">
+                                    <mat-select-filter [placeholder]="'Filtro'" [displayMember]="'GlsDistrito'" [array]="cmbDistritoAll2Ben" (filteredReturn)="comboDistrito2RespBen =$event"></mat-select-filter>
+                                    <mat-option [value]="0">Seleccionar</mat-option>
+                                    <mat-option *ngFor="let item of comboDistrito2RespBen" [value]="item.CodDireccion">
+                                        {{item.GlsDistrito}}
+                                    </mat-option>
+                                </mat-select>
+                            </div>
+                        </div>
+                    </form>
+                    <div *ngIf="opcionDir === 'Corresp'" class="row" style="text-align: center; margin-bottom: 10px;">
+                        <button type="button" class="btn btn-azul btn-azul-fix mr" data-dismiss="modal"> Aceptar</button>
+                        <!-- <button type="button" class="btn btn-azul btn-azul-fix mr" data-dismiss="modal" (click)="cambioDirCorr()"> Aceptar</button> -->
+                    </div>
+                    <div *ngIf="opcionDir === 'Exp'" class="row" style="text-align: center; margin-bottom: 10px;">
+                        <button type="button" class="btn btn-azul btn-azul-fix mr" data-dismiss="modal"> Aceptar</button>
+                        <!-- <button type="button" class="btn btn-azul btn-azul-fix mr" data-dismiss="modal" (click)="cambioDir()"> Aceptar</button> -->
+                    </div>
+                    <div *ngIf="opcionDir === 'ExpBen'" class="row" style="text-align: center; margin-bottom: 10px;">
+                        <button type="button" class="btn btn-azul btn-azul-fix mr" data-dismiss="modal"> Aceptar</button>
+                        <!-- <button type="button" class="btn btn-azul btn-azul-fix mr" data-dismiss="modal" (click)="cambioDir()"> Aceptar</button> -->
+                    </div>
+                    <div *ngIf="opcionDir === 'CorrespBen'" class="row" style="text-align: center; margin-bottom: 10px;">
+                        <button type="button" class="btn btn-azul btn-azul-fix mr" data-dismiss="modal"> Aceptar</button>
+                        <!-- <button type="button" class="btn btn-azul btn-azul-fix mr" data-dismiss="modal" (click)="cambioDirCorr()"> Aceptar</button> -->
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="display: none;"></div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalCorreos" role="dialog" style="margin-top: 70px;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title text-center"><b>Correos Electrónicos</b></h4>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <form>
+                        <!-- Afiliado -->
+                        <div *ngIf="this.opcionCorreos === 'Afiliado'" class="col-md-12" style="margin-right: 0px;margin-left: 0px;">
+                            <div class="form-group col-md-7 col-md-offset-2">
+                                <label class="frmLblColor">Correo Electrónico 1</label>
+                                <input type="text" class="form-control" id="inpCorreo1" [(ngModel)]="dataConsulta.GlsCorreo" name="GlsCorreo" oninput="this.value = this.value.toUpperCase()">
+                            </div>
+                            <div class="form-group col-md-7 col-md-offset-2">
+                                <label class="frmLblColor">Correo Electrónico 2</label>
+                                <input type="text" class="form-control" id="inpCorreo2Afi" [(ngModel)]="dataConsulta.GlsCorreo2" name="GlsCorreo2" oninput="this.value = this.value.toUpperCase()">
+                            </div>
+                            <div class="form-group col-md-7 col-md-offset-2">
+                                <label class="frmLblColor">Correo Electrónico 3</label>
+                                <input type="text" class="form-control" id="inpCorreo3Afi" [(ngModel)]="dataConsulta.GlsCorreo3" name="GlsCorreo3" oninput="this.value = this.value.toUpperCase()">
+                            </div>
+                        </div>
+                        <!-- Beneficarios -->
+                        <div *ngIf="this.opcionCorreos === 'Ben'" class="col-md-12" style="margin-right: 0px;margin-left: 0px;">
+                            <div class="form-group col-md-7 col-md-offset-2">
+                                <label class="frmLblColor">Correo Electrónico 1</label>
+                                <input type="text" class="form-control" id="inpCorreo1" [(ngModel)]="polBenSelect.GlsCorreo" name="GlsCorreo" oninput="this.value = this.value.toUpperCase()">
+                            </div>
+                            <div class="form-group col-md-7 col-md-offset-2">
+                                <label class="frmLblColor">Correo Electrónico 2</label>
+                                <input type="text" class="form-control" id="inpCorreo2Ben" [(ngModel)]="polBenSelect.GlsCorreo2" name="GlsCorreo2" oninput="this.value = this.value.toUpperCase()">
+                            </div>
+                            <div class="form-group col-md-7 col-md-offset-2">
+                                <label class="frmLblColor">Correo Electrónico 3</label>
+                                <input type="text" class="form-control" id="inpCorreo3Ben" [(ngModel)]="polBenSelect.GlsCorreo3" name="GlsCorreo3" oninput="this.value = this.value.toUpperCase()">
+                            </div>
+
+                        </div>
+                    </form>
+                    <div class="row" style="text-align: center; margin-bottom: 10px;">
+                        <button type="button" class="btn btn-azul-fix btn-azul mr" (click)="checkMail();"> Aceptar</button> &nbsp;
+                        <!-- <button type="button" class="btn btn-azul mr" data-dismiss="modal"> Cancelar</button> -->
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="display: none;"></div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalTelefonos" role="dialog" data-backdrop="static" data-keyboard="false" style="margin-top: 70px;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" (click)="cerrarModalTel()">&times;</button>
+                <h4 class="modal-title text-center"><b>Teléfonos</b></h4>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <form>
+                        <!-- Afiliado -->
+                        <div *ngIf="this.opcionTelefonos === 'Afiliado'" class="col-md-12" style="margin-right: 0px;margin-left: 0px;">
+                            <div class="form-group col-md-7 col-md-offset-2">
+                                <label class="frmLblColor">Teléfono 1</label>
+                                <input type="text" class="form-control" id="inpTelefono1Afi" [(ngModel)]="dataConsulta.GlsFono" name="GlsFono" (keypress)="numberOnly($event)" minlength="7" maxlength="9">
+                            </div>
+                            <div class="form-group col-md-7 col-md-offset-2">
+                                <label class="frmLblColor">Teléfono 2</label>
+                                <input type="text" class="form-control" id="inpTelefono2Afi" [(ngModel)]="dataConsulta.GlsFono2" name="GlsFono2" (keypress)="numberOnly($event)" minlength="7" maxlength="9">
+                            </div>
+                            <div class="form-group col-md-7 col-md-offset-2">
+                                <label class="frmLblColor">Teléfono 3</label>
+                                <input type="text" class="form-control" id="inpTelefono3Afi" [(ngModel)]="dataConsulta.GlsFono3" name="GlsFono3" (keypress)="numberOnly($event)" minlength="7" maxlength="9">
+                            </div>
+
+                        </div>
+                        <!-- Beneficiarios -->
+                        <div *ngIf="this.opcionTelefonos === 'Ben'" class="col-md-12" style="margin-right: 0px;margin-left: 0px;">
+                            <div class="form-group col-md-7 col-md-offset-2">
+                                <label class="frmLblColor">Teléfono 1</label>
+                                <input type="text" class="form-control" id="inpTelefono1Ben" [(ngModel)]="polBenSelect.GlsFono" name="GlsFono" (keypress)="numberOnly($event)" minlength="7" maxlength="9">
+                            </div>
+                            <div class="form-group col-md-7 col-md-offset-2">
+                                <label class="frmLblColor">Teléfono 2</label>
+                                <input type="text" class="form-control" id="inpTelefono2Ben" [(ngModel)]="polBenSelect.GlsFono2" name="GlsFono2" (keypress)="numberOnly($event)" minlength="7" maxlength="9">
+                            </div>
+                            <div class="form-group col-md-7 col-md-offset-2">
+                                <label class="frmLblColor">Teléfono 3</label>
+                                <input type="text" class="form-control" id="inpTelefono3Ben" [(ngModel)]="polBenSelect.GlsFono3" name="GlsFono3" (keypress)="numberOnly($event)" minlength="7" maxlength="9">
+                            </div>
+
+                        </div>
+                    </form>
+                    <div class="row" style="text-align: center; margin-bottom: 10px;">
+                        <button type="button" class="btn btn-azul btn-azul-fix mr" (click)="aceptarModalTel()"> Aceptar</button> &nbsp;
+                        <!-- <button type="button" class="btn btn-azul mr" data-dismiss="modal"> Cancelar</button> -->
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="display: none;"></div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Tutor -->
+<div class="modal fade" id="modalAgregarTutor" role="dialog" style="margin-top: 70px;" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" (click)="cerrarModal()">&times;</button>
+                <h4 class="modal-title text-center"><b>Datos del Tutor-Apoderado</b></h4>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <form>
+                        <div class="row" style="margin-right: 0px;margin-left: 0px;">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h5 class="titulo tituloLinea"><b>Vigencia del Poder</b></h5>
+                                </div>
+                            </div>
+                            <div class="row" style="margin-right: 0px;margin-left: 0px;">
+                                <div class="form-group col-lg-2 col-md-2 col-sm-2">
+                                    <label class="frmLblColor">Duración(Meses)</label>
+                                    <input type="text" class="form-control" id="txtMesesTutor" [(ngModel)]="polBenSelect.NumMesesPoder" name="NumMesesPoder" (change)="validaFecVigenciaAndEfecto()">
+                                </div>
+                                <div class="form-group col-lg-5 col-md-5 col-sm-5" style="padding-top: 5px;">
+                                    <label class="frmLblColor col-lg-12 col-md-12 col-sm-12">Periodo de Vigencia</label>
+                                    <div class="row col-lg-5 col-md-5 col-sm-5" style="margin-right: 0px;margin-left: 0px; padding: 0px 0px 0px 15px;">
+                                        <input type="date" class="form-control" id="txtFecVigeDesdeTutor" [(ngModel)]="polBenSelect.FecVigenciaDesde" name="FecVigenciaDesde" (change)="validaFecVigenciaAndEfecto()">
+                                    </div>
+                                    <div class="row col-lg-1 col-md-1 col-sm-1" style="margin: 0px; padding: 5px 0px 0px 0px; text-align: center;">
+                                        <label class="frmLblColor"> - </label>
+                                    </div>
+                                    <div class="row col-lg-5 col-md-5 col-sm-5" style="margin-right: 0px;margin-left: 0px; padding: 0px 15px 0px 0px;">
+                                        <input type="date" class="form-control" id="txtFecVigHastaTutor" [(ngModel)]="polBenSelect.FecVigenciaHasta" name="FecVigenciaHasta" disabled>
+                                    </div>
+                                </div>
+                                <div class="form-group col-lg-2 col-md-2 col-sm-2">
+                                    <label class="frmLblColor">Periodo de Efecto</label>
+                                    <input type="date" class="form-control" id="txtPeriodoEfecto" [(ngModel)]="polBenSelect.FecEfecto" name="FecEfecto" disabled>
+                                </div>
+                                <div class="form-group col-lg-2 col-md-2 col-sm-2">
+                                    <label class="frmLblColor">Fecha de Recepción</label>
+                                    <input type="date" class="form-control" id="txtFecRecepcionTutor" [(ngModel)]="polBenSelect.FecRecepcion" name="FecRecepcion">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row" style="margin-right: 0px;margin-left: 0px;">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h5 class="titulo tituloLinea"><b>Antecedentes Personales del Tutor/Apoderado</b></h5>
+                                </div>
+                            </div>
+
+                            <div class="row" style="margin-right: 0px;margin-left: 0px;">
+                                <div class="form-group col-md-3">
+                                    <label class="frmLblColor">Tipo Documento</label>
+                                    <select class="form-control" [(ngModel)]="polBenSelect.TipoDocumentoTut" name="TipoDocumentoTut" (change)="cambiarTipoIdenBen('tutor')">
+                                        <option value="0">Seleccionar</option>
+                                        <option *ngFor="let item of this.cmbTipoIdenTutor"  value="{{ item.codigo }}">{{ item.Nombre}}</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label class="frmLblColor">Número de Documento</label>
+                                    <input type="text" [(ngModel)]="polBenSelect.NumeroDocumentoTut" name="NumeroDocumentoTut" class="form-control" oninput="this.value = this.value.toUpperCase()" [maxLength]="this.maxLengthNumDocTutor" (keyup)="$event.keyCode == 13 ? BusquedaTutDni() : 0">
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label class="frmLblColor">Ap. Paterno</label>
+                                    <input type="text" [(ngModel)]="polBenSelect.ApellidoPaternoTut" name="ApellidoPaternoTut" (keypress)="soloLetras($event)" class="form-control" oninput="this.value = this.value.toUpperCase()">
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label class="frmLblColor">Ap. Materno</label>
+                                    <input type="text" [(ngModel)]="polBenSelect.ApellidoMaternoTut" name="ApellidoMaternoTut" (keypress)="soloLetras($event)" class="form-control" oninput="this.value = this.value.toUpperCase()">
+                                </div>
+                            </div>
+
+                            <div class="row" style="margin-right: 0px;margin-left: 0px;">
+                                <div class="form-group col-md-3">
+                                    <label class="frmLblColor">Primer Nombre</label>
+                                    <input type="text" [(ngModel)]="polBenSelect.PrimerNombreTut" name="PrimerNombreTut" (keypress)="soloLetras($event)" class="form-control" oninput="this.value = this.value.toUpperCase()">
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label class="frmLblColor">Segundo Nombre</label>
+                                    <input type="text" [(ngModel)]="polBenSelect.SegundoNombreTut" name="SegundoNombreTut" (keypress)="soloLetras($event)" class="form-control" oninput="this.value = this.value.toUpperCase()">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label class="frmLblColor">Dirección</label>
+                                    <input type="text" [(ngModel)]="polBenSelect.GlsDireccionTut" name="GlsDireccionTut" class="form-control" oninput="this.value = this.value.toUpperCase()">
+                                </div>
+                            </div>
+
+                            <div class="row" style="margin-right: 0px;margin-left: 0px;">
+                                <div class="form-group col-md-3" id="custom-select">
+                                    <label class="frmLblColor">Departamento</label>
+                                    <select [(ngModel)]="this.DepartamentoTutor" name="DepartamentoTutor" (change)="selectDepto('tutor')" class="form-control">
+                                    <option value="">Seleccione una opción</option>
+                                    <option *ngFor="let item of this.cmbDepartamentoTutor"  value="{{ item.CodRegion }}">{{ item.GlsRegion}}</option>
+                                </select>
+                                </div>
+                                <div class="form-group col-md-3" id="custom-select">
+                                    <label class="frmLblColor">Provincia</label>
+                                    <select [(ngModel)]="this.ProvinciaTutor" name="ProvinciaTutor" (change)="selectProvincia('tutor')" class="form-control">
+                                    <option value="">Seleccione una opción</option>
+                                    <option *ngFor="let item of this.cmbProvinciaTutor"  value="{{ item.CodProvincia }}">{{ item.GlsProvincia}}</option>
+                                </select>
+                                </div>
+                                <div class="form-group col-md-3" id="custom-select">
+                                    <label class="frmLblColor">Distrito</label>
+                                    <br>
+                                    <mat-select [disableOptionCentering]="true" [(ngModel)]="polBenSelect.CodDireccionTut" name="CodDireccionTut" (valueChange)="getInfo2Tut($event)" (valueChange)="selectDistrito('tutor')">
+                                        <mat-select-filter [placeholder]="'Filtro'" [displayMember]="'GlsDistrito'" [array]="cmbDistritoAllTutor" (filteredReturn)="comboTutorResp =$event"></mat-select-filter>
+                                        <mat-option [value]="0">Seleccionar una opción</mat-option>
+                                        <mat-option *ngFor="let item of comboTutorResp" [value]="item.CodDireccion">
+                                            {{item.GlsDistrito}}
+                                        </mat-option>
+                                    </mat-select>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label class="frmLblColor">Teléfono 1</label>
+                                    <input type="text" [(ngModel)]="polBenSelect.GlsFono1Tut" name="GlsFono1Tut" (keypress)="numberOnly($event)" class="form-control" minlength="7" maxlength="9">
+                                </div>
+                            </div>
+                            <div class="row" style="margin-right: 0px;margin-left: 0px;">
+                                <div class="form-group col-md-3">
+                                    <label class="frmLblColor">Teléfono 2</label>
+                                    <input type="text" [(ngModel)]="polBenSelect.GlsFono2Tut" name="GlsFono2Tut" (keypress)="numberOnly($event)" class="form-control" minlength="7" maxlength="9">
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label class="frmLblColor">Teléfono 3</label>
+                                    <input type="text" [(ngModel)]="polBenSelect.GlsFono3Tut" name="GlsFono3Tut" (keypress)="numberOnly($event)" class="form-control" minlength="7" maxlength="9">
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label class="frmLblColor">Email 1</label>
+                                    <input type="text" [(ngModel)]="polBenSelect.GlsCorreo1Tut" name="GlsCorreo1Tut" class="form-control" oninput="this.value = this.value.toUpperCase()">
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label class="frmLblColor">Email 2</label>
+                                    <input type="text" [(ngModel)]="polBenSelect.GlsCorreo2Tut" name="GlsCorreo2Tut" class="form-control" oninput="this.value = this.value.toUpperCase()">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row" style="margin-right: 0px;margin-left: 0px;">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h5 class="titulo tituloLinea"><b>Forma de Pago de Pensión</b></h5>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-3 ">
+                                <label class="frmLblColor">Vía de Pago</label>
+                                <select [(ngModel)]="polBenSelect.CodViaPagoTut" name="CodViaPagoTut" (change)="selectViaPagoTutor('combo')" class="form-control" [disabled]="isDisabledViaPagoTutor">
+                                <option *ngFor="let item of this.cmbViaPagoTutor"  value="{{ item.cod_elemento }}">{{ item.gls_elemento}}</option>
+                            </select>
+                            </div>
+                            <div class="form-group col-md-6 ">
+                                <label class="frmLblColor">Sucursal</label>
+                                <select [(ngModel)]="polBenSelect.CodSucursalTut" name="CodSucursalTut" class="form-control" [disabled]="isDisabledSucursalTutor">
+                                <option *ngFor="let item of this.cmbSucursalTutor"  value="{{ item.cod_elemento }}">{{ item.gls_elemento }}</option>
+                            </select>
+                            </div>
+                            <div class="form-group col-md-3 ">
+                                <label class="frmLblColor">Banco</label>
+                                <select [(ngModel)]="polBenSelect.CodBancoTut" name="CodBancoTut" class="form-control" (change)="cambiarBanco('tutores')" [disabled]="isDisabledBancoTutor">
+                                <option *ngFor="let item of this.cmbBancoTutor"  value="{{ item.cod_elemento }}">{{ item.gls_elemento}}</option>
+                            </select>
+                            </div>
+                        </div>
+
+                        <div class="row" style="margin-right: 0px;margin-left: 0px;">
+
+                            <div class="form-group col-md-3 ">
+                                <label class="frmLblColor">Tipo Cta.</label>
+                                <select [(ngModel)]="polBenSelect.CodTipoCuentaTut" name="CodTipoCuentaTut" class="form-control" (change)="cambiarTipoCuenta('tutores')" [disabled]="isDisabledTipoCuentaTutor">
+                                    <option value="00">Seleccionar</option>
+                                    <option *ngFor="let item of this.cmbTipoCuentaTutor"  value="{{ item.COD_CUENTA }}">{{ item.GLS_CUENTA}}</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-6 ">
+                                <label class="frmLblColor">N° Cuenta</label>
+                                <input type="text" [maxlength]="maxLengthNumCuentaTut" [(ngModel)]="polBenSelect.NumCuentaTut" name="NumCuentaTut" oninput="this.value = this.value.toUpperCase()" class="form-control" [disabled]="isDisabledNumCuentaTutor">
+                            </div>
+                            <div class="form-group col-md-3 ">
+                                <label class="frmLblColor">N° Cuenta CCI</label>
+                                <input type="text" maxlength="20" [(ngModel)]="polBenSelect.NumCuentaCCITut" name="NumCuentaCCITut" (keypress)="numberOnly($event)" class="form-control" [disabled]="isDisabledNumCuentaCciTutor">
+                            </div>
+
+
+                        </div>
+                    </form>
+                    <div class="row" style="text-align: center; margin-bottom: 10px;">
+                        <!-- <button type="button" class="btn btn-azul mr" data-dismiss="modal"> Guardar</button> &nbsp; -->
+                        <button type="button" class="btn btn-azul btn-azul-fix mr" (click)="ocultarModalTutor()"> Aceptar</button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="display: none;"></div>
+        </div>
+    </div>
+</div>
+
+<!-- Fin Modales -->

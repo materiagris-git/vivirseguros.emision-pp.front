@@ -1,0 +1,111 @@
+table tr th,
+td {
+    text-align: center;
+}
+.campo {
+  background-color: lightgray;
+}
+.btn-azul-fix {
+  font-size: 11px;
+}
+
+.iconTbl {
+    color: #0090B2;
+}
+
+.column5 {
+    width: 20%;
+}
+
+.column4 {
+    width: 25%;
+}
+
+.column40 {
+    width: 40%;
+}
+
+.btnCircle {
+    border-radius: 20px;
+    background-color: #0090B2;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+    .column5 {
+        width: 100%;
+    }
+    .column40 {
+        width: 100%;
+    }
+    .column4 {
+        width: 100%;
+    }
+}
+
+
+/* Landscape phones and portrait tablets */
+
+@media (max-width: 767px) {
+    .column5 {
+        width: 100%;
+    }
+    .column40 {
+        width: 100%;
+    }
+    .column4 {
+        width: 100%;
+    }
+}
+
+
+/* Portrait phones and smaller */
+
+@media (max-width: 480px) {
+    .column5 {
+        width: 100%;
+    }
+    .column40 {
+        width: 100%;
+    }
+    .column4 {
+        width: 100%;
+    }
+}
+
+.text {
+    color: black;
+    font-size: 11px;
+}
+
+thead {
+    text-align-last: center;
+    color: black;
+    font-size: 12px;
+}
+
+.mat-table {
+    height: 410px;
+    overflow: auto;
+    background-color: #ffffff;
+}
+
+.mat-row {
+    border-bottom: 1px solid lightgray;
+}
+
+.mat-cell,
+.mat-header-cell {
+    color: black;
+    display: block;
+    background-color: #ffffff;
+    text-align: center;
+    font-size: 11px;
+    padding: 15px 0px;
+}
+
+.mat-header-cell {
+    color: black;
+    background-color: #ffffff;
+    display: block;
+    font-size: 12px;
+}

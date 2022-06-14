@@ -1,0 +1,163 @@
+<div class="col-lg-12 col-md-12 col-sm-12 ">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h5 class="titulo" style="margin: 0px;"><b>Buscar</b></h5>
+        </div>
+        <div class="panel-body camposForm">
+            <!--Campos de búsqueda -->
+            <form>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="form-group col-lg-2 col-md-2 col-sm-3 col-xs-12" id="custom-select">
+                                <label class="frmLblColor">Tipo de búsqueda</label>
+                                <select class="form-control" [(ngModel)]="TipoBusqueda" name="TipoBusqueda">
+                                    <option value="D" selected>Seleccionar</option>
+                                    <option value="P">Póliza</option>
+                                    <option value="C">Cotización</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-sm-3 col-xs-12">
+                                <label class="frmLblColor">N° Póliza/Cotización</label>
+                                <input type="text" class="form-control form-control-sm" [(ngModel)]="dataBusqueda.NumPoliza" name="NumPoliza" maxlength="10" (keypress)="numberOnly($event)">
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-sm-3 col-xs-12">
+                                <label class="frmLblColor">CUSPP</label>
+                                <input type="text" class="form-control form-control-sm" [(ngModel)]="dataBusqueda.CUSPP" name="CUSPP" oninput="this.value = this.value.toUpperCase()">
+                            </div>
+                            <div class="form-group col-lg-2 col-md-3 col-sm-3 col-xs-12">
+                                <label class="frmLblColor">Tipo de Documento</label>
+                                <select id="slcTipoIdent" class="form-control" (change)="cambiarTipoDoc()" [(ngModel)]="dataBusqueda.TipoDocumento" name="TipoDocumento">
+                                    <option value="0" selected>Seleccionar</option>
+                                    <option *ngFor="let item of this.cmbTipoDoc" value="{{ item.codigo }}">{{ item.Nombre}}</option>
+                                </select>
+                            </div>
+
+                            <div *ngIf="dataBusqueda.TipoDocumento === 0" class="form-group col-lg-2 col-md-3 col-sm-3 col-xs-12">
+                                <label class="frmLblColor">Número de Documento</label>
+                                <input type="text" class="form-control form-control-sm" disabled>
+                            </div>
+                            <div *ngIf="dataBusqueda.TipoDocumento !== 0" class="form-group col-lg-2 col-md-2 col-sm-3 col-xs-12">
+                                <label class="frmLblColor">Número de Documento</label>
+                                <input type="text" class="form-control form-control-sm" [(ngModel)]="dataBusqueda.NumDocumento" name="NumDocumento" oninput="this.value = this.value.toUpperCase()" [maxLength]="this.maxLengthNumDoc">
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="form-group col-lg-2 col-md-3 col-sm-4 col-xs-12">
+                                <label class="frmLblColor">Apellido Paterno</label>
+                                <input type="text" class="form-control form-control-sm" [(ngModel)]="dataBusqueda.ApellidoPaterno" name="ApellidoPaterno" (keypress)="soloLetras($event)" oninput="this.value = this.value.toUpperCase()">
+                            </div>
+                            <div class="form-group col-lg-2 col-md-3 col-sm-4 col-xs-12">
+                                <label class="frmLblColor">Apellido Materno</label>
+                                <input type="text" class="form-control form-control-sm" [(ngModel)]="dataBusqueda.ApellidoMaterno" name="ApellidoMaterno" (keypress)="soloLetras($event)" oninput="this.value = this.value.toUpperCase()">
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-sm-4 col-xs-12">
+                                <label class="frmLblColor">Primer Nombre</label>
+                                <input type="text" class="form-control form-control-sm" [(ngModel)]="dataBusqueda.PrimerNombre" name="PrimerNombre" (keypress)="soloLetras($event)" oninput="this.value = this.value.toUpperCase()">
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-sm-4 col-xs-12">
+                                <label class="frmLblColor">Segundo Nombre</label>
+                                <input type="text" class="form-control form-control-sm" [(ngModel)]="dataBusqueda.SegundoNombre" name="SegundoNombre" (keypress)="soloLetras($event)" oninput="this.value = this.value.toUpperCase()">
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-sm-3 col-xs-12" style="padding-top: 22px;">
+                                <button type="button " class="btn btn-azul btn-azul-fix col-md-12 col-xs-12" (click)="buscarData()"><i class="glyphicon glyphicon-search "></i> Buscar</button>
+                            </div>
+                            <div class="form-group col-lg-2 col-md-2 col-sm-3 col-xs-12" style="padding-top: 22px;">
+                                <button type="button " class="btn btn-azul btn-azul-fix col-md-12 col-xs-12" (click)="limpiarFiltros()"><i class="fa fa-file-o"></i> Limpiar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <!--Terminan Campos de búsqueda -->
+        </div>
+    </div>
+</div>
+<div>
+
+    <!--div de la tabla -->
+    <div class="col-lg-12 col-md-12 col-sm-12 marg-prim">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h5 class="titulo" style="margin: 0px;"><b>Resultados</b></h5>
+            </div>
+            <div class="panel-body camposForm">
+                <div class="table-responsive">
+                    <mat-table [dataSource]="dataSource" class="table table-hover">
+                        <mat-header-row *matHeaderRowDef="columnas; sticky: true"></mat-header-row>
+                        <mat-row *matRowDef="let row; columns: columnas;"></mat-row>
+                        <ng-container matColumnDef="item">
+                            <mat-header-cell *matHeaderCellDef>
+                                <div>Item</div>
+
+                            </mat-header-cell>
+                            <mat-cell class="duration-cell" *matCellDef="let lesson; let i=index">{{i+1}}</mat-cell>
+                        </ng-container>
+                        <ng-container *ngIf="this.TipoBusqueda === 'D'" matColumnDef="tipoBusqueda">
+                            <mat-header-cell *matHeaderCellDef>
+                                <div>Tipo</div>
+
+                            </mat-header-cell>
+                            <mat-cell class="duration-cell" *matCellDef="let lesson"></mat-cell>
+                        </ng-container>
+                        <ng-container *ngIf="this.TipoBusqueda === 'C'" matColumnDef="tipoBusqueda">
+                            <mat-header-cell *matHeaderCellDef>
+                                <div>Tipo</div>
+
+                            </mat-header-cell>
+                            <mat-cell class="duration-cell" *matCellDef="let lesson">Cotización</mat-cell>
+                        </ng-container>
+                        <ng-container *ngIf="this.TipoBusqueda === 'P'" matColumnDef="tipoBusqueda">
+                            <mat-header-cell *matHeaderCellDef>
+                                <div>Tipo</div>
+
+                            </mat-header-cell>
+                            <mat-cell class="duration-cell" *matCellDef="let lesson">Póliza</mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="numPol">
+                            <mat-header-cell *matHeaderCellDef>
+                                <div>N° Póliza/Cotización</div>
+
+                            </mat-header-cell>
+                            <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.NumPoliza}}</mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef="CUSPP">
+                            <mat-header-cell *matHeaderCellDef>
+                                <div>CUSPP</div>
+
+                            </mat-header-cell>
+                            <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.CUSPP}}</mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef="nomAfiliado">
+                            <mat-header-cell *matHeaderCellDef>
+                                <div>Nombre del Afiliado</div>
+
+                            </mat-header-cell>
+                            <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.NombreCompleto}}</mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="fecha">
+                            <mat-header-cell *matHeaderCellDef>
+                                <div>Fecha Emisión</div>
+
+                            </mat-header-cell>
+                            <mat-cell class="duration-cell" *matCellDef="let lesson">{{lesson.FecEmision}}</mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="acciones">
+                            <mat-header-cell *matHeaderCellDef>
+                                <div>Acciones</div>
+
+                            </mat-header-cell>
+                            <mat-cell class="duration-cell" *matCellDef="let lesson"><i style="color:#0090B2" title="Visualizar" class="fa fa-search exclam" (click)="polizaSeleccionada(lesson)"></i></mat-cell>
+                        </ng-container>
+                    </mat-table>
+                    <mat-paginator [length]="0" [pageSize]="20" [pageSizeOptions]="[5, 10, 20, 50]" [showFirstLastButtons]="true"></mat-paginator>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!--Termina div de la tabla -->
+</div>

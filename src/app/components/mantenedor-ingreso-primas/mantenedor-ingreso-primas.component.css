@@ -1,0 +1,154 @@
+.colum5 {
+  width: 20%;
+}
+
+.camposForm {
+    background-color: lightgray;
+}
+
+.frmLblColor {
+    font-size: 11px;
+}
+
+.btn-azul-fix {
+    font-size: 11px;
+}
+
+.mat-table {
+    height: 240px;
+    overflow: auto;
+    background-color: #ffffff;
+}
+
+.mat-row {
+    border-bottom: 1px solid lightgray;
+}
+
+.mat-cell,
+.mat-header-cell {
+    color: black;
+    display: block;
+    background-color: #ffffff;
+    text-align: center;
+    font-size: 11px;
+    padding: 15px 0px;
+}
+
+.mat-header-cell {
+    color: black;
+    background-color: #ffffff;
+    display: block;
+    font-size: 12px;
+}
+
+.mat-column-tipoIden {
+    word-wrap: break-word !important;
+    white-space: unset !important;
+    flex: 0 0 8% !important;
+    width: 8% !important;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word;
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+}
+
+.mat-column-parentesco {
+    word-wrap: break-word !important;
+    white-space: unset !important;
+    flex: 0 0 15% !important;
+    width: 15% !important;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word;
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+}
+
+input.form-control.filtroTabla {
+    height: 28px !important;
+}
+
+
+/* Large desktops and laptops */
+
+@media (min-width: 1200px) {
+    .inpLg {
+        width: 400px;
+    }
+    .spaceM {
+        margin-top: 10px;
+        margin-bottom: 35px;
+    }
+    .mr {
+        margin-right: 10px;
+    }
+    .btnAlign {
+        text-align: end;
+        margin-bottom: 30px;
+    }
+}
+
+
+/* Landscape tablets and medium desktops */
+
+@media (min-width: 992px) and (max-width: 1199px) {
+    .inpLg {
+        width: 300px;
+    }
+    .mr {
+        margin-right: 12px;
+    }
+    .btnAlign {
+        text-align: end;
+        margin-bottom: 30px;
+    }
+}
+
+
+/* Portrait tablets and small desktops */
+
+@media (min-width: 768px) and (max-width: 991px) {
+    .mr {
+        margin-right: 12px;
+    }
+    .btnAlign {
+        text-align: end;
+        margin-bottom: 30px;
+    }
+    .btnCalcular {
+        width: 149px;
+    }
+}
+
+
+/* Landscape phones and portrait tablets */
+
+@media (max-width: 767px) {
+    .btnCenter {
+        text-align: center;
+    }
+    .mr {
+        margin-right: 12px;
+    }
+}
+
+
+/* Portrait phones and smaller */
+
+@media (max-width: 480px) {
+    button {
+        width: 60%;
+    }
+    .mr {
+        margin-right: 0px;
+        margin-bottom: 12px;
+    }
+    .btnCenter {
+        text-align: center;
+    }
+}
